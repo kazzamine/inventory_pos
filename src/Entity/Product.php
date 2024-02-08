@@ -27,6 +27,12 @@ class Product
     #[ORM\ManyToOne(inversedBy: 'products')]
     private ?Category $cat_id = null;
 
+    #[ORM\ManyToOne(inversedBy: 'products')]
+    private ?User $user_id = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?float $tax = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -83,6 +89,30 @@ class Product
     public function setCatId(?Category $cat_id): static
     {
         $this->cat_id = $cat_id;
+
+        return $this;
+    }
+
+    public function getUserId(): ?User
+    {
+        return $this->user_id;
+    }
+
+    public function setUserId(?User $user_id): static
+    {
+        $this->user_id = $user_id;
+
+        return $this;
+    }
+
+    public function getTax(): ?float
+    {
+        return $this->tax;
+    }
+
+    public function setTax(?float $tax): static
+    {
+        $this->tax = $tax;
 
         return $this;
     }

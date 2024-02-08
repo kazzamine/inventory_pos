@@ -27,6 +27,9 @@ class Category
     #[ORM\OneToMany(targetEntity: Product::class, mappedBy: 'cat_id')]
     private Collection $products;
 
+    #[ORM\ManyToOne(inversedBy: 'categories')]
+    private ?User $user_id = null;
+
     public function __construct()
     {
         $this->products = new ArrayCollection();
@@ -94,6 +97,18 @@ class Category
                 $product->setCatId(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getUserId(): ?User
+    {
+        return $this->user_id;
+    }
+
+    public function setUserId(?User $user_id): static
+    {
+        $this->user_id = $user_id;
 
         return $this;
     }
