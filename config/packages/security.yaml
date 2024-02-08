@@ -20,8 +20,12 @@ security:
                 login_path: app_login
                 check_path: app_login
                 enable_csrf: true
+            login_throttling:
+                max_attempts: 5
+                interval: '10 minutes'
             logout:
                 path: /logout
+                target: app_login
                 clear_site_data:
                     - cache
                     - cookies
