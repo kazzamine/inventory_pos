@@ -1,3 +1,4 @@
 @import "bootstrap/scss/bootstrap";
-@import "@popperjs";
-@import "navbar";
+@import "bootstrap/dist/css/bootstrap.min.css";
+@import "navbar.css";
+@import "/assets/styles/loginStyle.css";

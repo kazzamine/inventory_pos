@@ -13,6 +13,12 @@
         {% endblock %}
     </head>
     <body>
+    {#including navbar #}
+    {% include 'attachements/navbar.html.twig' %}
+    <div class="mcw">
+        <div class="cv">
         {% block body %}{% endblock %}
+        </div>
+    </div>
     </body>
 </html>
