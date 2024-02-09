@@ -1,4 +1,36 @@
 {% extends 'base.html.twig' %}
 {% block body %}
-    list categories
-{% endblock %}
+
+    <div class="container-fluid">
+    <h3 class="text-dark mb-4">Categories</h3>
+    <div class="card shadow">
+        <div class="card-header py-3">
+            <p class="text-primary m-0 fw-bold">List of categories</p>
+        </div>
+        <div class="card-body">
+            <div class="row">
+            </div>
+            <div class="table-responsive table mt-2" id="dataTable" role="grid" aria-describedby="dataTable_info">
+                <table class="table my-0" id="dataTable">
+                    <thead>
+                    <tr>
+                        <th>category name</th>
+                        <th>description</th>
+                        <th>added by</th>
+                        <th>update</th>
+                        <th>remove</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {# loop through categories #}
+                    <tr>
+
+                    </tr>
+
+                    </tbody>
+                    <tfoot>
+                </table>
+            </div>
+        </div>
+    </div>
+    </div>{% endblock %}

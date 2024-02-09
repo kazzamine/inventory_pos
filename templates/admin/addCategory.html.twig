@@ -1,4 +1,28 @@
 {% extends 'base.html.twig' %}
 {% block body %}
-    add new categories
+    <div class="container">
+        <form id="contactForm-2" method="post">
+            <div class="row">
+                <div class="col-md-6">
+                    <div id="successfail"></div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 col-lg-12" id="message">
+                    <fieldset></fieldset>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="has-feedback form-group mb-3"><label class="form-label" for="category_name">Category name</label><input class="form-control" type="text" id="category_name" name="category_name" placeholder="category_name" required></div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="has-feedback form-group mb-3"><label class="form-label" for="description">Category description</label><input class="form-control" type="text" id="description" name="description" placeholder="description" required></div>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="form-group mb-3"><button class="btn btn-primary d-block w-100" id="btn_addCat" type="button">add</button></div>
+                    <hr>
+                </div>
+            </div>
+        </form>
+    </div>
 {% endblock %}

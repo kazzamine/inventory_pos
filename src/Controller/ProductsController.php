@@ -13,7 +13,7 @@ class ProductsController extends AbstractController
     {
         return $this->render('admin/listProducts.html.twig');
     }
-    #[Route('/admin/product/add',name: 'add_product')]
+    #[Route('/product/add',name: 'add_product')]
     public function addProductPage():Response{
         return $this->render('admin/addProduct.html.twig');
     }

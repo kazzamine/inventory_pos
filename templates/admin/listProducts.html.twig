@@ -1,4 +1,37 @@
 {% extends 'base.html.twig' %}
 {% block body %}
-    list products
+    <div class="container-fluid">
+    <h3 class="text-dark mb-4">Products</h3>
+    <div class="card shadow">
+        <div class="card-header py-3">
+            <p class="text-primary m-0 fw-bold">List of Products</p>
+        </div>
+        <div class="card-body">
+            <div class="row">
+            </div>
+            <div class="table-responsive table mt-2" id="dataTable" role="grid" aria-describedby="dataTable_info">
+                <table class="table my-0" id="dataTable">
+                    <thead>
+                    <tr>
+                        <th>product name</th>
+                        <th>description</th>
+                        <th>price</th>
+                        <th>tax</th>
+                        <th>added by</th>
+                        <th>update</th>
+                        <th>remove</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {# loop through products #}
+                    <tr>
+
+                    </tr>
+
+                    </tbody>
+                    <tfoot>
+                </table>
+            </div>
+        </div>
+    </div>
 {% endblock %}
