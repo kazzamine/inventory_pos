@@ -25,13 +25,23 @@
                                             <label class="form-label" for="password">Password</label>
                                         </div>
                                         <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
-
+                                        {% if user_role=='ROLE_ADMIN' %}
+                                            <input type="hidden" name="_target_path" value="/dashboard">
+                                        {% endif %}
                                         <button class="btn btn-primary btn-block fa-lg gradient-custom-2 mb-3" id='loginBtn' type="submit">Login</button>
                                         <div class="text-center pt-1 mb-5 pb-1">
 
                                             <a class="text-muted" href="#!">Forgot password?</a>
                                         </div>
                                     </form>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 d-flex align-items-center gradient-custom-2">
+                                <div class="text-white px-3 py-4 p-md-5 mx-md-4">
+                                    <h4 class="mb-4">Welcome to our inventory</h4>
+                                    <p class="small mb-0">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+                                        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
+                                        exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
                                 </div>
                             </div>
                         </div>

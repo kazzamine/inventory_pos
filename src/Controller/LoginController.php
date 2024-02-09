@@ -16,13 +16,13 @@ class LoginController extends AbstractController
     #[Route('/', name: 'app_login')]
     public function index(AuthenticationUtils $authenticationUtils): Response
     {
-        $message=null;
         $user=$this->getUser();
         $error=$authenticationUtils->getLastAuthenticationError();
+        $user_role=null;
         #check if logged credentials matches existing user
         if($user instanceof UserInterface){
             flash()->addFlash('success','logged in','you successfuly logged in!!');
-
+            $user_role=$user->getRoles();
         }
         #check if there is an error
             if ($error) {
@@ -31,6 +31,7 @@ class LoginController extends AbstractController
 
         return $this->render('login/index.html.twig', [
             'messageerr' => $error,
+            'user_role'=>$user_role
         ]);
     }
 }
