@@ -15,7 +15,7 @@ class CategoriesController extends AbstractController
         return $this->render('admin/listCategories.html.twig');
     }
     #[Route('/admin/category/add', name: 'add_category')]
-    public function addCatPAge(): Response
+    public function addCatView(): Response
     {
         return $this->render('admin/addCategory.html.twig');
     }
