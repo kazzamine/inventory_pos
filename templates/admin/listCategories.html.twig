@@ -10,6 +10,7 @@
         <div class="card-body">
             <div class="row">
             </div>
+
             <div class="table-responsive table mt-2" id="dataTable" role="grid" aria-describedby="dataTable_info">
                 <table class="table my-0" id="dataTable">
                     <thead>
@@ -23,13 +24,29 @@
                     </thead>
                     <tbody>
                     {# loop through categories #}
-                    <tr>
+                    {% if categories %}
 
-                    </tr>
+                        {% for category in categories %}
+                            <tr>
+                            <td>{{ category.catName}}</td>
+                            <td>{{ category.catDesc}} </td>
+                            <td>{{ category.userId.username }}</td>
+                            <td>update</td>
+                            <td>remove</td>
+                            </tr>
+                        {% endfor %}
 
+                    {% else %}
+                        <tr>
+                            no data found
+                        </tr>
+                    {% endif %}
                     </tbody>
-                    <tfoot>
                 </table>
+                <div class="navigation">
+                    {{ knp_pagination_render(categories) }}
+                </div>
+
             </div>
         </div>
     </div>

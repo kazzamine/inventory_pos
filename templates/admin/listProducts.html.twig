@@ -17,6 +17,7 @@
                         <th>description</th>
                         <th>price</th>
                         <th>tax</th>
+                        <th>category</th>
                         <th>added by</th>
                         <th>update</th>
                         <th>remove</th>
@@ -24,10 +25,25 @@
                     </thead>
                     <tbody>
                     {# loop through products #}
-                    <tr>
+                     {% if products %}
+                         {% for product in products %}
+                            <tr>
+                                <th>{{ product.prodName }}</th>
+                                <th>{{ product.prodDesc }}</th>
+                                <th>{{ product.price }}</th>
+                                <th>{{ product.tax }}</th>
+                                <th>{{ product.catId.catName }}</th>
+                                <th>{{ product.userID.userName }}</th>
+                                <th>update</th>
+                                <th>remove</th>
 
-                    </tr>
-
+                            </tr>
+                         {% endfor %}
+                         {% else %}
+                         <tr>
+                             no data found
+                         </tr>
+                    {% endif %}
                     </tbody>
                     <tfoot>
                 </table>

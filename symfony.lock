@@ -26,6 +26,9 @@
             "migrations/.gitignore"
         ]
     },
+    "knplabs/knp-paginator-bundle": {
+        "version": "v6.3.0"
+    },
     "php-flasher/flasher-symfony": {
         "version": "v1.15.9"
     },
