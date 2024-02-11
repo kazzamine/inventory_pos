@@ -38,9 +38,17 @@ class Product
     #[ORM\OneToMany(targetEntity: Order::class, mappedBy: 'prod_id')]
     private Collection $orders;
 
+    #[ORM\Column(nullable: true)]
+    private ?\DateTimeImmutable $created_at = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?\DateTimeImmutable $updated_at = null;
+
     public function __construct()
     {
         $this->orders = new ArrayCollection();
+        $this->created_at=new \DateTimeImmutable('now');
+        $this->updated_at=new \DateTimeImmutable('now');
     }
 
     public function getId(): ?int
@@ -156,4 +164,29 @@ class Product
 
         return $this;
     }
+
+    public function getCreatedAt(): ?\DateTimeImmutable
+    {
+        return $this->created_at;
+    }
+
+    public function setCreatedAt(?\DateTimeImmutable $created_at): static
+    {
+        $this->created_at = $created_at;
+
+        return $this;
+    }
+
+    public function getUpdatedAt(): ?\DateTimeImmutable
+    {
+        return $this->updated_at;
+    }
+
+    public function setUpdatedAt(?\DateTimeImmutable $updated_at): static
+    {
+        $this->updated_at = $updated_at;
+
+        return $this;
+    }
+
 }

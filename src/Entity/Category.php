@@ -24,15 +24,24 @@ class Category
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $cat_desc = null;
 
-    #[ORM\OneToMany(targetEntity: Product::class, mappedBy: 'cat_id')]
+    #[ORM\OneToMany(targetEntity: Product::class, mappedBy: 'cat_id',cascade: ['remove'])]
     private Collection $products;
 
     #[ORM\ManyToOne(inversedBy: 'categories')]
     private ?User $user_id = null;
 
+    #[ORM\Column(nullable: true)]
+    private ?\DateTimeImmutable $created_at = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?\DateTimeImmutable $updated_at = null;
+
     public function __construct()
     {
         $this->products = new ArrayCollection();
+        $this->created_at=new \DateTimeImmutable('now');
+        $this->updated_at=new \DateTimeImmutable('now');
+
     }
 
     public function getId(): ?int
@@ -112,4 +121,29 @@ class Category
 
         return $this;
     }
+
+    public function getCreatedAt(): ?\DateTimeImmutable
+    {
+        return $this->created_at;
+    }
+
+    public function setCreatedAt(?\DateTimeImmutable $created_at): static
+    {
+        $this->created_at = $created_at;
+
+        return $this;
+    }
+
+    public function getUpdatedAt(): ?\DateTimeImmutable
+    {
+        return $this->updated_at;
+    }
+
+    public function setUpdatedAt(?\DateTimeImmutable $updated_at): static
+    {
+        $this->updated_at = $updated_at;
+
+        return $this;
+    }
+
 }

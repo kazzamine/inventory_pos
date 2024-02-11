@@ -1,7 +1,12 @@
 {% extends 'base.html.twig' %}
 {% block body %}
     <div class="container">
-        <form id="contactForm-2" method="post">
+        <h3 class="text-dark mb-4">Categories</h3>
+        <div class="card shadow">
+            <div class="card-header py-3">
+                <p class="text-primary m-0 fw-bold">add new category</p>
+            </div>
+        <form id="contactForm-2" method="post" class="card-body">
             <div class="row">
                 <div class="col-md-6">
                     <div id="successfail"></div>
@@ -21,11 +26,17 @@
                             <div class="has-feedback form-group mb-3"><label class="form-label" for="description">product description</label><input class="form-control" type="text" id="description" name="description" placeholder="description" required></div>
                         </div>
                         <div class="col-sm-6">
-                            <div class="has-feedback form-group mb-3"><label class="form-label" for="tax">product tax</label><input class="form-control" type="text" id="description" name="tax" placeholder="tax %" required></div>
+                            <div class="has-feedback form-group mb-3"><label class="form-label" for="tax">product tax</label><input class="form-control" type="text" id="tax" name="tax" placeholder="tax %" required></div>
                         </div>
                         <div class="col-sm-6">
-                            <div class="has-feedback form-group mb-3"><label class="form-label" for="tax">product category</label><input class="form-control" type="text" id="description" name="tax" placeholder="tax %" required></div>
+                            <div class="form-group mb-3"><label class="form-label" for="category">Categories</label><select class="form-select" id="category" name="category">
+                                    {% for category in categories %}
+                                        <option value="{{ category.id }}">
+                                            {{ category.catName }}</option>
+                                    {% endfor %}
+                                </select></div>
                         </div>
+                        <input type="hidden" name="_csrf_token" id="_csrf_token" value="{{ csrf_token('addProd') }}">
                     </div>
                     <hr>
                     <div class="form-group mb-3"><button class="btn btn-primary d-block w-100" id="btn_addProd" type="button">add</button></div>

@@ -22,6 +22,7 @@ services:
     App\Service\ModelService:
         arguments:
             $entityManager: '@doctrine.orm.entity_manager'
+            $tokenStorage: '@security.token_storage'
     App\Twig\Extension\ModelExtension:
         arguments:
             $ModelService: '@App\Service\ModelService'

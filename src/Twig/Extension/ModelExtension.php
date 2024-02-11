@@ -32,7 +32,7 @@ class ModelExtension extends AbstractExtension
             new TwigFunction('get_model_items', [$this, 'getModelItems']),
         ];
     }
-    public function getModelItems():array
+    public function getModelItems()
     {
         return $this->ModelService->getModelItems();
     }
