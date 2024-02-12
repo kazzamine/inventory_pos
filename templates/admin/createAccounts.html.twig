@@ -79,8 +79,12 @@
                             <div class="has-feedback form-group mb-3">{{ form_row(form.phone) }}</div>
                         </div>
                         <div class="col-sm-6">
+                            <div class="has-feedback form-group mb-3">{{ form_row(form.roleId) }}</div>
+                        </div>
+                        <div class="col-sm-6">
                             <div class="has-feedback form-group mb-3">{{ form_row(form.password) }}</div>
                         </div>
+                        {{ form_widget(form._token) }}
                     </div>
                     <hr>
                     <div class="form-group mb-3">{{ form_row(form.createuser) }}</div>

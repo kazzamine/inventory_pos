@@ -10,17 +10,23 @@ import {addUser} from "./admin/users";
 import {addAjax} from "./admin/addAjax";
 import {toggleEditable} from "./common";
 import {makeReadOnly} from "./common";
-import {toggleDiv} from "./common";
+import {toggleDivVisibility} from "./common";
 
 //toggle divs
-const toggleList=$('#toggleList')
+const toggleList=$('#listModelContainer')
+const eventToggleList=$('#toggleList')
+eventToggleList.on('click',()=>{
+    toggleDivVisibility(toggleList)
 
-const listDiv=$('#listModelContainer')
-toggleList.on('click',()=>{
-    toggleDiv(listDiv);
 })
 
+const addToggle=$('#addToggle')
+const toggleAdd=$('#toggleAdd')
+toggleAdd.on('click',()=>{
+    toggleDivVisibility(addToggle)
 
+})
+//toggleAdd
 
 //for category
 
@@ -242,8 +248,10 @@ const providerChoice=$('#providers')
 const providerName=$('#provider_name')
 const btnUpdateProvider=$('#btnUpdateProvider')
 providerChoice.on('change',()=>{
-    providerName.val('');
-    providerName.val(providerChoice.text())
+    let selectedValue = providerChoice.options[providerChoice.selectedIndex].value;
+    console.log(selectedValue)
+    // Display the selected value in the text box
+    providerName.val(selectedValue)
 })
 btnUpdateProvider.on('click',()=>{
     const data={

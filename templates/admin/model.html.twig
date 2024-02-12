@@ -32,7 +32,7 @@
                                 <td class="editable" data-field="modName">{{ model.modName }}</td>
                                 <td class="editable" data-field="modPath">{{ model.path }}</td>
                                 <td class="editable" data-field="modIcon">{{ model.icon }}</td>
-                                <td class="editable" data-field="modRole">{{ model.role }}</td>
+                                <td class="editable" data-field="modRole">{{ model.roleId.roleName }}</td>
                                 <td><button class="btn btn-warning updateProdBtn">update</button>
                                     <button style="display: none;" class="btn btn-success saveBtn" value="{{ model.id }}">save</button></td>
 
@@ -80,7 +80,11 @@
                     </div>
                     <div class="col-sm-6">
                         <div class="has-feedback form-group mb-3"><label class="form-label" for="model_role">Model Role</label>
-                            <input class="form-control" type="text" id="model_role" name="model_role" placeholder="model role" required>
+                            <select class="form-select" id="model_role" name="model_role">
+                                {% for role in roles %}
+                                    <option value="{{ role.id }}">{{ role.roleName }}</option>
+                                {% endfor %}
+                            </select>
                         </div>
                     </div>
                 </div>

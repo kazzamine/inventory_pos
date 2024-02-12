@@ -55,6 +55,9 @@ class User implements UserInterface,PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(targetEntity: OrderDetail::class, mappedBy: 'user_id')]
     private Collection $orderDetails;
 
+    #[ORM\ManyToOne(inversedBy: 'users')]
+    private ?Roles $role_id = null;
+
     public function __construct()
     {
         $this->products = new ArrayCollection();
@@ -135,7 +138,7 @@ class User implements UserInterface,PasswordAuthenticatedUserInterface
         return array_unique($roles);
     }
 
-    public function setRoles(array $roles): static
+    public function setRoles(array $roles): self
     {
         $this->roles = $roles;
 
@@ -307,6 +310,18 @@ class User implements UserInterface,PasswordAuthenticatedUserInterface
                 $orderDetail->setUserId(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getRoleId(): ?Roles
+    {
+        return $this->role_id;
+    }
+
+    public function setRoleId(?Roles $role_id): static
+    {
+        $this->role_id = $role_id;
 
         return $this;
     }

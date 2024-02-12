@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Roles;
 use App\Entity\User;
 use App\Form\CreateUserForm;
 use App\Repository\UserRepository;
@@ -23,9 +24,20 @@ class AccountsController extends AbstractController
 
 
         $user =new User();
-        $form=$this->createForm(CreateUserForm::class,$user);
+        $form=$this->createForm(CreateUserForm::class);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
+            $user->setUsername($form->get('username')->getData());
+            $user->setUsername($form->get('firstname')->getData());
+            $user->setUsername($form->get('lastname')->getData());
+            $user->setUsername($form->get('adress')->getData());
+            $user->setUsername($form->get('phone')->getData());
+            $user->setUsername($form->get('city')->getData());
+            $role=$entityManager->getRepository(Roles::class)->find($form->get('roleId')->getData());
+            $user->setRoleId($role);
+            $user->setRoles( [$role->getRoleName()] );
+            $user->setRoles($form->get('password')->getData());
+
             $entityManager->persist($user);
             $entityManager->flush();
         }

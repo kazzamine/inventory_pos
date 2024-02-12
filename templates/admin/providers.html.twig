@@ -7,9 +7,9 @@
         <div class="card shadow">
             <div class="card-header py-3">
                 <p class="text-primary m-0 fw-bold">List of providers</p>
-                <a>  <i class="fa-solid fa-arrow-down" ></i> </a>
+                <a role="button"  class="offset-11" id="toggleList">  <i class="fa-solid fa-arrow-down" ></i> </a>
             </div>
-            <div class="card-body" id="listModelContainer" >
+            <div class="card-body" id="listModelContainer" style="display: none;" >
                 <div class="row">
                 </div>
                 <div class="row">
@@ -43,7 +43,7 @@
 
         </div>
         {{ form_start(form) }}
-            <div class="row">
+            <div class="row" id="addToggle">
                 <div class="col-md-6">
                     <div id="successfail">
                         {{ form_errors(form) }}

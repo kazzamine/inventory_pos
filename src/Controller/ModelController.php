@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Model;
+use App\Repository\RolesRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Exception\ORMException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -17,9 +18,12 @@ class ModelController extends AbstractController
 {
     //render model view
     #[Route('/admin/model/list', name: 'app_model')]
-    public function listModel(): Response
+    public function listModel(RolesRepository $repository): Response
     {
-        return $this->render('admin/model.html.twig');
+        $roles=$repository->findAll();
+        return $this->render('admin/model.html.twig',[
+            'roles'=>$roles
+        ]);
     }
     //update model
     #[Route('/admin/model/list/update', name: 'app_model_update')]
@@ -48,7 +52,7 @@ class ModelController extends AbstractController
 
         }
 
-        //removing the category
+        //removing the model
         $entityManager->remove($modelToRemove);
         $entityManager->flush();
         //success response

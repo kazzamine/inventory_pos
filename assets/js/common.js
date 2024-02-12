@@ -61,10 +61,7 @@ export const makeReadOnly=(input)=>{
     }
 }
 
-export const toggleDiv=(divId)=>{
-    if(divId.hasClass('hidden')){
-        divId.show()
-    }else {
-       divId.hide()
-    }
+export const toggleDivVisibility=(divId)=> {
+    // Toggle the visibility of the div
+    divId.style.display = (divId.style.display === 'none' || divId.style.display === '') ? 'block' : 'none';
 }

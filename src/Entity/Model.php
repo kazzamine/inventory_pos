@@ -32,6 +32,9 @@ class Model
     #[ORM\Column(length: 100)]
     private ?string $role = null;
 
+    #[ORM\ManyToOne(inversedBy: 'models')]
+    private ?Roles $role_id = null;
+
     public function __construct()
     {
         $this->subModels = new ArrayCollection();
@@ -116,6 +119,18 @@ class Model
     public function setRole(string $role): static
     {
         $this->role = $role;
+
+        return $this;
+    }
+
+    public function getRoleId(): ?Roles
+    {
+        return $this->role_id;
+    }
+
+    public function setRoleId(?Roles $role_id): static
+    {
+        $this->role_id = $role_id;
 
         return $this;
     }
