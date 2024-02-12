@@ -34,14 +34,18 @@ class ModelController extends AbstractController
     #[Route('/admin/model/list/remove', name: 'app_model_remove')]
     public function removeModel(Request $request,EntityManagerInterface $entityManager,UrlGeneratorInterface $urlGenerator): Response
     {
+        $urlGenerate = $urlGenerator->generate('app_model');
         $modId = $request->query->get('modId');
 
         if (!$modId) {
             flash()->addFlash('error', 'Empty', 'model to be removed not specified');
+            return $this->redirect($urlGenerate);
         }
         $modelToRemove = $entityManager->getRepository(Model::class)->find($modId);
         if (!$modelToRemove) {
             flash()->addFlash('error', 'Empty', 'model to be removed not found!!');
+            return $this->redirect($urlGenerate);
+
         }
 
         //removing the category
@@ -49,7 +53,6 @@ class ModelController extends AbstractController
         $entityManager->flush();
         //success response
         flash()->addFlash('success', 'Removed', 'you successfuly removed the model');
-        $urlGenerate = $urlGenerator->generate('app_model');
         return $this->redirect($urlGenerate);
     }
     //add model

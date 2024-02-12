@@ -2,12 +2,12 @@
 const $ = require('jquery');
 
 global.$ = global.jQuery = $;
-import {users} from "./admin/users";
-import {addAjax} from "./admin/addAjax";
 import Toastify from "toastify-js";
+
+import {addUser} from "./admin/users";
+import {addAjax} from "./admin/addAjax";
 import {toggleEditable} from "./common";
 import {makeReadOnly} from "./common";
-import {updateAjax} from "./admin/updateAjax";
 import {toggleDiv} from "./common";
 
 //toggle divs
@@ -232,3 +232,23 @@ addSubModel.on('click',()=>{
     txtSubModIcon.val('')
     txtSubModModId.val('')
 })
+
+
+//users
+// const btnAddUser=$('#btn_addUser');
+// const newUsername=$('#newUsername');
+// const newFirstName=$('#newfirst_name');
+// const newLastName=$('#newlast_name');
+// const newAddress=$('#newaddress');
+// const newPhone=$('#newphone');
+// const newPassword=$('#newpassword')
+// btnAddUser.on('click',()=>{
+//     const data={
+//         'username':newUsername.val(),
+//         'firstname':newFirstName.val(),
+//         'lastname':newLastName.val(),
+//         'address':newAddress.val(),
+//         'phone':newPhone
+//     }
+//     addUser()
+// })

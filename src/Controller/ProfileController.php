@@ -4,7 +4,6 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Repository\UserRepository;
-use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Exception\ORMException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -22,7 +21,7 @@ class ProfileController extends AbstractController
         //getting current user
         $userId=$this->getUser()->getUserIdentifier();
         $user=$userRepository->findOneBy(['username'=>$userId]);
-        return $this->render('admin/profile.html.twig',[
+        return $this->render('user/profile.html.twig',[
             'userInfo' =>$user,
         ]);
     }
@@ -46,7 +45,8 @@ class ProfileController extends AbstractController
         $user->setPhone($jsonData['phone']);
         $user->setCity($jsonData['city']);
         try{
-            $entityManager->flush($user);
+            $entityManager->persist($user);
+            $entityManager->flush();
         }catch ( ORMException $exception){
             $this->json(['exception'=>$exception->getMessage()]);
         }

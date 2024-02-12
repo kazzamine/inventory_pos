@@ -6,7 +6,7 @@
         <h3 class="text-dark mb-4">users</h3>
         <div class="card shadow">
             <div class="card-header py-3">
-                <p class="text-primary m-0 fw-bold">Users information</p>
+                <p class="text-primary m-0 fw-bold">Users information <a id="toggleList" class="offset-11" role="button">  <i class="fa-solid fa-arrow-down" ></i> </a></p>
             </div>
             <div class="card-body">
                 <div class="row">
@@ -15,39 +15,45 @@
                     <table class="table my-0" id="dataTable">
                         <thead>
                         <tr>
-                            <th>name</th>
+                            <th>username</th>
                             <th>first name</th>
                             <th>last name</th>
                             <th>address</th>
                             <th>phone number</th>
-                            <th>roles</th>
-                            <th>update</th>
                             <th>remove</th>
                         </tr>
                         </thead>
                         <tbody>
-                            {# loop through users #}
+                            {% for user in allUser %}
                             <tr>
+                                <td>{{ user.username }}</td>
+                                <td>{{ user.firstName }}</td>
+                                <td>{{ user.lastName }}</td>
+                                <td>{{ user.adress }}</td>
+                                <td>{{ user.phone }}</td>
+                                <td><a role="button" class="btn btn-danger" href={{ path('remove_user',{'userId':user.id()}) }} >remove</a></td>
 
                             </tr>
-
+                            {% endfor %}
                         </tbody>
                         <tfoot>
                     </table>
                 </div>
             </div>
         </div>
-
+    <br>
     <div class="card shadow">
         <div class="card-header py-3">
-            <p class="text-primary m-0 fw-bold">add new user</p>
+            <p class="text-primary m-0 fw-bold">add new user <a id="toggleAdd" class="offset-11" role="button">  <i class="fa-solid fa-arrow-down" ></i> </a></p>
         </div>
         <div class="card-body">
-
+        {{ form_start(form) }}
         <form id="contactForm-2" method="post">
             <div class="row">
                 <div class="col-md-6">
-                    <div id="successfail"></div>
+                    <div id="successfail">
+                        {{ form_errors(form) }}
+                    </div>
                 </div>
             </div>
             <div class="row">
@@ -55,33 +61,34 @@
                     <fieldset></fieldset>
                     <div class="row">
                         <div class="col-sm-6">
-                            <div class="has-feedback form-group mb-3"><label class="form-label" for="username">username</label><input class="form-control" type="text" id="username" name="username" placeholder="username" required></div>
+                            <div class="has-feedback form-group mb-3">{{ form_row(form.username) }}</div>
                         </div>
                         <div class="col-sm-6">
-                            <div class="has-feedback form-group mb-3"><label class="form-label" for="first_name">first name</label><input class="form-control" type="text" id="first_name" name="first_name" placeholder="first_name" required></div>
+                            <div class="has-feedback form-group mb-3">{{ form_row(form.firstname) }}</div>
                         </div>
                         <div class="col-sm-6">
-                            <div class="has-feedback form-group mb-3"><label class="form-label" for="last_name">last name</label><input class="form-control" type="text" id="last_name" name="last_name" placeholder="last_name" required></div>
+                            <div class="has-feedback form-group mb-3">{{ form_row(form.lastname) }}</div>
                         </div>
                         <div class="col-sm-6">
-                            <div class="has-feedback form-group mb-3"><label class="form-label" for="address">address</label><input class="form-control" type="text" id="address" name="address" placeholder="address" required></div>
+                            <div class="has-feedback form-group mb-3">{{ form_row(form.adress) }}</div>
                         </div>
                         <div class="col-sm-6">
-                            <div class="has-feedback form-group mb-3"><label class="form-label" for="city">city</label><input class="form-control" type="text" id="city" name="city" placeholder="city" required></div>
+                            <div class="has-feedback form-group mb-3">{{ form_row(form.city) }}</div>
                         </div>
                         <div class="col-sm-6">
-                            <div class="has-feedback form-group mb-3"><label class="form-label" for="phone">phone</label><input class="form-control" type="text" id="phone" name="phone" placeholder="phone" required></div>
+                            <div class="has-feedback form-group mb-3">{{ form_row(form.phone) }}</div>
                         </div>
                         <div class="col-sm-6">
-                            <div class="has-feedback form-group mb-3"><label class="form-label" for="password">password</label><input class="form-control" type="text" id="password" name="password" placeholder="password" required></div>
+                            <div class="has-feedback form-group mb-3">{{ form_row(form.password) }}</div>
                         </div>
                     </div>
                     <hr>
-                    <div class="form-group mb-3"><button class="btn btn-primary d-block w-100" id="btn_addUser" type="button">add</button></div>
+                    <div class="form-group mb-3">{{ form_row(form.createuser) }}</div>
                     <hr>
                 </div>
             </div>
         </form>
+            {{ form_end(form) }}
         </div>
     </div>
 

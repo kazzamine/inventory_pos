@@ -15,9 +15,9 @@ export const addAjax=(url,data,csrf)=>{
             return response.json()
         })
         .then((data)=>{
-            if(data.key =='success'){
+
                 Toastify({
-                    text: 'successful!!!',
+                    text: data.success,
                     title:'Success' ,
                     duration: 3000,
                     gravity: 'center',
@@ -25,17 +25,6 @@ export const addAjax=(url,data,csrf)=>{
                     backgroundColor: 'green',
                     stopOnFocus: true,
                 }).showToast();
-            }else{
-                Toastify({
-                    text: data.error,
-                    title:'Error!!' ,
-                    duration: 3000,
-                    gravity: 'center',
-                    position: 'top',
-                    backgroundColor: 'red',
-                    stopOnFocus: true,
-                }).showToast();
-            }
 
         })
         .catch(error=>{
