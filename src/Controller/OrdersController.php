@@ -23,7 +23,7 @@ class OrdersController extends AbstractController
         return $this->render('user/ordersList.html.twig');
     }
 
-    #[Route('/admin/orders/makeOrder', name: 'app_make_order_admin')]
+    #[Route('/user/orders/makeOrder', name: 'app_make_order')]
 
     public function makeOrderView():Response
     {

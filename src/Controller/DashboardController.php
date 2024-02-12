@@ -10,10 +10,10 @@ use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 
 class DashboardController extends AbstractController
 {
-    #[Route('/dashboard', name: 'app_dashboard')]
+    #[Route('/admin/dashboard', name: 'app_dashboard')]
     public function index(ModelRepository $modRepo): Response
     {
-        return $this->render('dashboard.html.twig',[
+        return $this->render('admin/dashboard.html.twig',[
 
         ]);
     }
