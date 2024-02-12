@@ -60,3 +60,11 @@ export const makeReadOnly=(input)=>{
         input.setAttribute('readonly',true)
     }
 }
+
+export const toggleDiv=(divId)=>{
+    if(divId.hasClass('hidden')){
+        divId.show()
+    }else {
+       divId.hide()
+    }
+}

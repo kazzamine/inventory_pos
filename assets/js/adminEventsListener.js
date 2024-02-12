@@ -8,6 +8,17 @@ import Toastify from "toastify-js";
 import {toggleEditable} from "./common";
 import {makeReadOnly} from "./common";
 import {updateAjax} from "./admin/updateAjax";
+import {toggleDiv} from "./common";
+
+//toggle divs
+const toggleList=$('#toggleList')
+
+const listDiv=$('#listModelContainer')
+toggleList.on('click',()=>{
+    toggleDiv(listDiv);
+})
+
+
 
 //for category
 

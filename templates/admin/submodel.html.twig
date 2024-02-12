@@ -1,13 +1,14 @@
 {% extends 'base.html.twig' %}
+{% block title %}Sub models {% endblock %}
 {% block body %}
     <div class="container container-fluid">
     <h3 class="text-dark mb-4">Sub Models</h3>
     <div class="card shadow">
         <div class="card-header py-3">
-            <p class="text-primary m-0 fw-bold">List of Sub Models</p>
-            <a>  <i class="fa-solid fa-arrow-down" ></i> </a>
+            <p class="text-primary m-0 fw-bold">List of Sub Models <a id="toggleList" class="offset-11" role="button">  <i class="fa-solid fa-arrow-down" ></i> </a></p>
+
         </div>
-        <div class="card-body" id="listModelContainer" >
+        <div class="card-body hidden" id="listModelContainer" >
             <div class="row">
             </div>
             <div class="table-responsive table mt-2" id="dataTable" role="grid" aria-describedby="dataTable_info">
@@ -53,8 +54,8 @@
 
     <br>
     <div class="card shadow" id="addModelContainer" ><div class="card-header py-3">
-            <p class="text-primary m-0 fw-bold">add new sub model</p>
-            <a>  <i class="fa-solid fa-arrow-down" ></i> </a>
+            <p class="text-primary m-0 fw-bold">add new sub model <a id="toggleList" class="offset-11" role="button">  <i class="fa-solid fa-arrow-down" ></i> </a></p>
+
         </div>
         <form id="contactForm-2" method="post" class="card-body">
             <div class="row">
