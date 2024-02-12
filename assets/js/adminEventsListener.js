@@ -1,4 +1,6 @@
 // handling events triggered by admin
+import {updateAjax} from "./admin/updateAjax";
+
 const $ = require('jquery');
 
 global.$ = global.jQuery = $;
@@ -234,21 +236,20 @@ addSubModel.on('click',()=>{
 })
 
 
-//users
-// const btnAddUser=$('#btn_addUser');
-// const newUsername=$('#newUsername');
-// const newFirstName=$('#newfirst_name');
-// const newLastName=$('#newlast_name');
-// const newAddress=$('#newaddress');
-// const newPhone=$('#newphone');
-// const newPassword=$('#newpassword')
-// btnAddUser.on('click',()=>{
-//     const data={
-//         'username':newUsername.val(),
-//         'firstname':newFirstName.val(),
-//         'lastname':newLastName.val(),
-//         'address':newAddress.val(),
-//         'phone':newPhone
-//     }
-//     addUser()
-// })
+//providers
+
+const providerChoice=$('#providers')
+const providerName=$('#provider_name')
+const btnUpdateProvider=$('#btnUpdateProvider')
+providerChoice.on('change',()=>{
+    providerName.val('');
+    providerName.val(providerChoice.text())
+})
+btnUpdateProvider.on('click',()=>{
+    const data={
+        'providerId':providerChoice.val(),
+        'providerName':providerName.val()
+    }
+
+    updateAjax('/admin/provider/update',data);
+})

@@ -79,7 +79,9 @@
                         <div class="has-feedback form-group mb-3"><label class="form-label" for="model_icon">Model icon</label><input class="form-control" type="text" id="model_icon" name="model_icon" placeholder="model icon" required></div>
                     </div>
                     <div class="col-sm-6">
-                        <div class="has-feedback form-group mb-3"><label class="form-label" for="model_role">Model Role</label><input class="form-control" type="text" id="model_role" name="model_role" placeholder="model role" required></div>
+                        <div class="has-feedback form-group mb-3"><label class="form-label" for="model_role">Model Role</label>
+                            <input class="form-control" type="text" id="model_role" name="model_role" placeholder="model role" required>
+                        </div>
                     </div>
                 </div>
                 <input type="hidden" name="_csrf_token" id="_csrf_token_addmodel" value="{{ csrf_token('addModel') }}">

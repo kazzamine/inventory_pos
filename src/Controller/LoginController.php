@@ -23,6 +23,7 @@ class LoginController extends AbstractController
         if($user instanceof UserInterface){
             flash()->addFlash('success','logged in','you successfuly logged in!!');
             $user_role=$user->getRoles();
+
         }
         #check if there is an error
             if ($error) {

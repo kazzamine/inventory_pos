@@ -15,7 +15,7 @@ export const updateAjax=(url,data)=>{
             return response.json()
         })
         .then((data)=>{
-            if(data.key =='success'){
+
                 Toastify({
                     text: 'successful update',
                     title:'Success' ,
@@ -25,17 +25,6 @@ export const updateAjax=(url,data)=>{
                     backgroundColor: 'green',
                     stopOnFocus: true,
                 }).showToast();
-            }else{
-                Toastify({
-                    text: data.error,
-                    title:'Error!!' ,
-                    duration: 3000,
-                    gravity: 'center',
-                    position: 'top',
-                    backgroundColor: 'red',
-                    stopOnFocus: true,
-                }).showToast();
-            }
 
         })
         .catch(error=>{
