@@ -9,7 +9,12 @@
                         {% for item in get_model_items() %}
                             {% if item.subModels|length == 0 %}
                                 <li class="nav-item">
-                                    <a href="{{ path(item.path ) }}" class="nav-link align-middle px-0">
+                                    <a {% if item.path=='#' %}
+
+                                    {% else %}
+                                            href="{{ path(item.path ) }}"
+                                    {% endif %}
+                                            class="nav-link align-middle px-0">
                                         <i class="{{ item.icon }}"></i><span class="ms-1 d-none d-sm-inline">{{ item.modName }}</span>
                                     </a>
                                 </li>

@@ -1,0 +1,99 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+    <div class="container container-fluid">
+    <h3 class="text-dark mb-4">Sub Models</h3>
+    <div class="card shadow">
+        <div class="card-header py-3">
+            <p class="text-primary m-0 fw-bold">List of Sub Models</p>
+            <a>  <i class="fa-solid fa-arrow-down" ></i> </a>
+        </div>
+        <div class="card-body" id="listModelContainer" >
+            <div class="row">
+            </div>
+            <div class="table-responsive table mt-2" id="dataTable" role="grid" aria-describedby="dataTable_info">
+                <table class="table my-0" id="dataTable">
+                    <thead>
+                    <tr>
+                        <th>sub model name</th>
+                        <th>path</th>
+                        <th>icon</th>
+                        <th>related model</th>
+                        <th>update</th>
+                        <th>remove</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {# loop through products #}
+                    {% if get_model_items() %}
+                        {% for model in get_model_items() %}
+                            {% for submodel in model.subModels %}
+                            <tr>
+                                <td class="editable" data-field="submodName">{{ submodel.submodName }}</td>
+                                <td class="editable" data-field="path">{{ submodel.path }}</td>
+                                <td class="editable" data-field="icon">{{ submodel.icon }}</td>
+                                <td class="editable" data-field="submodelId">{{ submodel.modelId.modName }}</td>
+                                <td><button class="btn btn-warning updateProdBtn">update</button>
+                                    <button style="display: none;" class="btn btn-success saveBtn" value="{{ submodel.id }}">save</button></td>
+
+                                <td><a role="button" class="btn btn-danger" href={{ path('app_submodel_remove',{'submodId':submodel.id()}) }} >remove</a></td>
+                            </tr>
+                                {% endfor %}
+                        {% endfor %}
+                    {% else %}
+                        <tr>
+                            no data found
+                        </tr>
+                    {% endif %}
+                    </tbody>
+                    <tfoot>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <br>
+    <div class="card shadow" id="addModelContainer" ><div class="card-header py-3">
+            <p class="text-primary m-0 fw-bold">add new sub model</p>
+            <a>  <i class="fa-solid fa-arrow-down" ></i> </a>
+        </div>
+        <form id="contactForm-2" method="post" class="card-body">
+            <div class="row">
+                <div class="col-md-6">
+                    <div id="successfail"></div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 col-lg-12" id="message">
+                    <fieldset></fieldset>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="has-feedback form-group mb-3"><label class="form-label" for="sub_model_name">Sub Model name</label><input class="form-control" type="text" id="sub_model_name" name="sub_model_name" placeholder="sub model name" required></div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="has-feedback form-group mb-3"><label class="form-label" for="sub_model_path">Sub Model path</label><input class="form-control" type="text" id="sub_model_path" name="sub_model_path" placeholder="sub model path" required></div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="has-feedback form-group mb-3"><label class="form-label" for="sub_model_icon">Sub Model icon</label><input class="form-control" type="text" id="sub_model_icon" name="sub_model_icon" placeholder="sub model icon" required></div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="has-feedback form-group mb-3"><label class="form-label" for="sub_model_mod">related model</label>
+                                <select class="form-select" id="sub_model_mod" name="sub_model_mod">
+                                    {% for model in models %}
+                                        <option value="{{ model.id }}">{{ model.modName }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <input type="hidden" name="_csrf_token" id="_csrf_token_addsubmodel" value="{{ csrf_token('addSubModel') }}">
+
+                    <hr>
+                    <div class="form-group mb-3"><button class="btn btn-primary d-block w-100" id="btn_addSubModel" type="button">add</button></div>
+                </div>
+            </div>
+        </form>
+    </div>
+{% endblock %}

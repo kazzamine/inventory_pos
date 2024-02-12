@@ -195,3 +195,29 @@ addModel.on('click',()=>{
     txtModIcon.val('')
     txtModRole.val('')
 })
+
+
+
+
+//sub model actions
+
+const addSubModel=$('#btn_addSubModel');
+const txtSubModName=$('#sub_model_name');
+const txtSubModPath=$('#sub_model_path');
+const txtSubModIcon=$('#sub_model_icon');
+const txtSubModModId=$('#sub_model_mod');
+const SubModelCsrfToken=$('#_csrf_token_addsubmodel')
+addSubModel.on('click',()=>{
+    const data={
+        'submodName':txtSubModName.val(),
+        'submodIcon':txtSubModPath.val(),
+        'submodPath':txtSubModIcon.val(),
+        'submodid':txtSubModModId.val()
+    }
+    console.log(data)
+    addAjax('/admin/submodel/list/add',data,SubModelCsrfToken.val());
+    txtSubModName.val('')
+    txtSubModPath.val('')
+    txtSubModIcon.val('')
+    txtSubModModId.val('')
+})
