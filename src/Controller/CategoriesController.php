@@ -75,8 +75,6 @@ class CategoriesController extends AbstractController
         $catId = $request->query->get('catId');
         if (!$catId) {
             flash()->addFlash('error', 'Empty', 'category to be removed not specified');
-
-
         }
         $categoryToRemove = $entityManager->getRepository(Category::class)->find($catId);
         if (!$categoryToRemove) {

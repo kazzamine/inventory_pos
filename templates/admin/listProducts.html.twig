@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 {% block body %}
-    <div class="container-fluid">
+    <div class="container container-fluid">
     <h3 class="text-dark mb-4">Products</h3>
     <div class="card shadow">
         <div class="card-header py-3">
@@ -28,13 +28,15 @@
                      {% if products %}
                          {% for product in products %}
                             <tr>
-                                <td class="editable" data-field="catName">{{ product.prodName }}</td>
-                                <td class="editable" data-field="catName">{{ product.prodDesc }}</td>
-                                <td class="editable" data-field="catName">{{ product.price }}</td>
-                                <td class="editable" data-field="catName">{{ product.tax }}</td>
-                                <td class="editable" data-field="catName">{{ product.catId.catName }}</td>
+                                <td class="editable" data-field="prodName">{{ product.prodName }}</td>
+                                <td class="editable" data-field="prodDesc">{{ product.prodDesc }}</td>
+                                <td class="editable" data-field="prodPrice">{{ product.price }}</td>
+                                <td class="editable" data-field="prodTax">{{ product.tax }}</td>
+                                <td >{{ product.catId.catName }}</td>
                                 <td>{{ product.userID.userName }}</td>
-                                <td><button class="btn btn-warning updateProdBtn">update</button></td>
+                                <td><button class="btn btn-warning updateProdBtn">update</button>
+                                    <button style="display: none;" class="btn btn-success saveBtn" value="{{ product.id }}">save</button></td>
+
                                 <td><a role="button" class="btn btn-danger" href={{ path('remove_product',{'prodId':product.id()}) }} >remove</a></td>
                             </tr>
                          {% endfor %}

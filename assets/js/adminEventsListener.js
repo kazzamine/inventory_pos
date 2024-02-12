@@ -1,18 +1,22 @@
 // handling events triggered by admin
+const $ = require('jquery');
 
-import {createUser} from "./user/createUser";
+global.$ = global.jQuery = $;
+import {users} from "./admin/users";
 import {addAjax} from "./admin/addAjax";
 import Toastify from "toastify-js";
-import {toggleEditable} from "./comon";
+import {toggleEditable} from "./common";
+import {makeReadOnly} from "./common";
+import {updateAjax} from "./admin/updateAjax";
 
 //for category
 
 //detecting clicks
-let btnAddCat=$('#btn_addCat');
+const btnAddCat=$('#btn_addCat');
 //getting fields
-let txtCatName=$('#category_name')
-let txtCatDesc=$('#cat_desc')
-let csrfToken=$('#_csrf_token')
+const txtCatName=$('#category_name')
+const txtCatDesc=$('#cat_desc')
+const csrfToken=$('#_csrf_token')
 //event of addinf new category
 btnAddCat.on('click',(e)=>{
     e.preventDefault();
@@ -50,19 +54,38 @@ toggleEditable(updateButtons);
 //updateProdBtn
 const updateProdBtn = $('.updateProdBtn');
 toggleEditable(updateProdBtn);
+const saveUpdatedProd=$('.saveBtn');
+
+Array.from(saveUpdatedProd).forEach( (button)=> {
+    const prodName=$('#prodName');
+    const prodDesc=$('#prodDesc');
+    const prodPrice=$('#prodPrice')
+    const prodTax=$('#prodTax');
+    button.addEventListener('click', function () {
+        const data={
+            'prodName':prodName.data('field'),
+            'prodDesc':prodDesc.value,
+            'prodPrice':prodPrice.value,
+            'prodTax':prodTax.value,
+            'prodId':button.value
+        }
+        console.log(data)
+    });
+});
+
+
+
 
 //add product
-
-//detecting clicks
-let btnAddProd=$('#btn_addProd');
+const btnAddProd=$('#btn_addProd');
 //getting fields
-let txtProdName=$('#product_name')
-let txtProdPrice=$('#price')
-let txtProdDesc=$('#description')
-let txtProdTax=$('#tax')
-let txtProdCat=$('#category')
+const txtProdName=$('#product_name')
+const txtProdPrice=$('#price')
+const txtProdDesc=$('#description')
+const txtProdTax=$('#tax')
+const txtProdCat=$('#category')
 
-let prodCsrfToken=$('#_csrf_token')
+const prodCsrfToken=$('#_csrf_token')
 //event of addinf new category
 btnAddProd.on('click',(e)=>{
     e.preventDefault();
@@ -87,4 +110,88 @@ btnAddProd.on('click',(e)=>{
         }).showToast();
     }
 
+})
+
+
+//update user
+import {updateUser} from "./admin/users";
+
+
+const updateinfoClick=$('#updateInfo');
+const saveInfoChanges=$('#saveUpdatedUser');
+const userInfo=$('.userInfo')
+updateinfoClick.on('click',()=>{
+    // toggleHiddenButton(updateinfoClick);
+    Array.from(userInfo).forEach(txtInput=>{
+        console.log(txtInput)
+        makeReadOnly(txtInput)
+    })
+    if(updateinfoClick.text('update'))
+    {
+        updateinfoClick.text('cancel')
+        saveInfoChanges.show();
+
+    }else{
+        updateinfoClick.text('update')
+        saveInfoChanges.hide();
+
+    }
+})
+
+//data to be updated
+const txtUsername=$('#txtUsername');
+const txtFirstName=$('#txtFirstName');
+const txtLastName=$('#txtLastName');
+const txtAddress=$('#txtAddress');
+const txtPhone=$('#txtPhone');
+const txtCity=$('#txtCity');
+
+const ProfilecsrfToken=$('#_csrf_token_userUpdate')
+saveInfoChanges.on('click',()=>{
+    let data={
+        'id':saveInfoChanges.data('userId'),
+        'username':txtUsername.val(),
+        'firstname':txtFirstName.val(),
+        'lastname':txtLastName.val(),
+        'address':txtAddress.val(),
+        'phone':txtPhone.val(),
+        'city':txtCity.val()
+    }
+
+    updateUser('/user/profile/update',data,ProfilecsrfToken.val());
+    Array.from(userInfo).forEach(txtInput=>{
+        console.log(txtInput)
+        makeReadOnly(txtInput)
+    })
+    if(updateinfoClick.text('cancel'))
+    {
+        updateinfoClick.text('update')
+        saveInfoChanges.hide();
+    }else{
+        updateinfoClick.text('cancel')
+
+    }
+})
+
+
+//actions for model
+
+const addModel=$('#btn_addModel');
+const txtModName=$('#model_name');
+const txtModPath=$('#model_path');
+const txtModIcon=$('#model_icon');
+const txtModRole=$('#model_role');
+const ModelCsrfToken=$('#_csrf_token_addmodel')
+addModel.on('click',()=>{
+    const data={
+        'modName':txtModName.val(),
+        'modIcon':txtModIcon.val(),
+        'modPath':txtModPath.val(),
+        'modRole':txtModRole.val()
+    }
+    addAjax('/admin/model/list/add',data,ModelCsrfToken.val());
+    txtModName.val('')
+    txtModPath.val('')
+    txtModIcon.val('')
+    txtModRole.val('')
 })
