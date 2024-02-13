@@ -65,3 +65,23 @@ export const toggleDivVisibility=(divId)=> {
     // Toggle the visibility of the div
     divId.style.display = (divId.style.display === 'none' || divId.style.display === '') ? 'block' : 'none';
 }
+
+
+//get products based on select
+export const getProds=(prodId)=>{
+
+    let retData;
+    fetch('/user/prodbyid?prodId='+prodId,
+        {
+            method:'GET',
+            headers:{
+                'content-type':'application/json'
+            }
+        })
+        .then(Response=>{
+            return Response.json();
+        })
+        .then(data=>{
+           return data;
+        })
+}

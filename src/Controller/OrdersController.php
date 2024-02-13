@@ -2,11 +2,16 @@
 
 namespace App\Controller;
 
+use App\Entity\Product;
+use App\Entity\Provider;
 use App\Repository\OrderRepository;
+use App\Repository\ProductRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+
 
 class OrdersController extends AbstractController
 {
@@ -22,11 +27,24 @@ class OrdersController extends AbstractController
     {
         return $this->render('user/ordersList.html.twig');
     }
-
-    #[Route('/user/orders/makeOrder', name: 'app_make_order')]
-
-    public function makeOrderView():Response
+    //make order view
+    #[Route('/user/orders/makeOrder/view', name: 'app_make_order')]
+    public function makeOrderView(EntityManagerInterface $entityManager):Response
     {
-        return $this->render('user/makeOrder.html.twig');
+        $allProducts=$entityManager->getRepository(Product::class)->findAll();
+        $providers=$entityManager->getRepository(Provider::class)->findAll();
+        return $this->render('user/makeOrder.html.twig',
+        ['products'=>$allProducts,
+            'providers'=>$providers
+        ]);
+    }
+    //fetch product by id
+    #[Route('/user/prodbyid',name:'prod_by_id')]
+    public function productById (Request $request,ProductRepository $productRepository):Response
+    {
+        $prod_id=$request->query->get('prodId');
+        $searchedProd=$productRepository->find("1");
+        $retData=(['price'=>$searchedProd->getPrice(),'desc'=>$searchedProd->getProdDesc(),'tax'=>$searchedProd->getTax()]);
+        return $this->json($retData);
     }
 }

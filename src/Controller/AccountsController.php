@@ -5,12 +5,11 @@ namespace App\Controller;
 use App\Entity\Roles;
 use App\Entity\User;
 use App\Form\CreateUserForm;
-use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\PasswordHasher\Hasher\PasswordHasherFactory;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
@@ -26,20 +25,26 @@ class AccountsController extends AbstractController
         $user =new User();
         $form=$this->createForm(CreateUserForm::class);
         $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()) {
+        if ($form->isSubmitted()) {
             $user->setUsername($form->get('username')->getData());
-            $user->setUsername($form->get('firstname')->getData());
-            $user->setUsername($form->get('lastname')->getData());
-            $user->setUsername($form->get('adress')->getData());
-            $user->setUsername($form->get('phone')->getData());
-            $user->setUsername($form->get('city')->getData());
+            $user->setFirstName($form->get('firstname')->getData());
+            $user->setLastName($form->get('lastname')->getData());
+            $user->setAdress($form->get('adress')->getData());
+            $user->setPhone($form->get('phone')->getData());
+            $user->setCity($form->get('city')->getData());
             $role=$entityManager->getRepository(Roles::class)->find($form->get('roleId')->getData());
             $user->setRoleId($role);
-            $user->setRoles( [$role->getRoleName()] );
-            $user->setRoles($form->get('password')->getData());
-
+            $user->setRoles( array('role'=>$role->getRoleName()) );
+            $password=$form->get('password')->getData();
+            //crypting password
+            $passwordHasherFactory= new PasswordHasherFactory([
+                'common' => ['algorithm' => 'bcrypt']
+            ]);
+            $passwordHasher = $passwordHasherFactory->getPasswordHasher('common');
+            $user->setPassword($passwordHasher->hash( $form->get('password')->getData()));
             $entityManager->persist($user);
             $entityManager->flush();
+            return $this->redirect($request->getUri());
         }
         return $this->render('admin/createAccounts.html.twig',
         ['form'=>$form,
