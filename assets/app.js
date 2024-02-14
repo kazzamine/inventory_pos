@@ -9,8 +9,5 @@ import './js/theme';
 import  './js/bs-init';
 import './js/user/makeOrder';
 import './js/multiForm'
-import 'datatables.net-dt'
-import './js/dataTables'
-
-
+import 'jquery-ui/dist/jquery-ui.min'
 

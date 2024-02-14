@@ -20,8 +20,12 @@ const discount=$('#discount')
 
 
 
-selectedProd.on('change',()=>{
-    const prodId=selectedProd.val();
+selectedProd.on('click',()=>{
+    let prodId=selectedProd.val();
+    console.log(prodId)
+    price.val('')
+    description.val('')
+    tax.val('')
     fetch('/user/prodbyid?prodId='+prodId,
         {
             method:'GET',
@@ -92,6 +96,12 @@ const accNumber=$('#accNumber')
 const expireDate=$('#expDate')
 const makeOrder=$("#makeOrder")
 const csrfToken=$("#_csrf_token_make_order")
+
+amount.on('change',()=>{
+    let restt=amount.val()-total.val()
+    rest.val(restt);
+    console.log(restt)
+})
 makeOrder.on('click',()=>{
     const data={
         'prodId':selectedProd.val(),
@@ -114,6 +124,14 @@ makeOrder.on('click',()=>{
                 'X-CSRF-TOKEN':csrfToken.val()
             },
             body:JSON.stringify(data)
+        })
+        .then(Response=>{
+            return Response.json()
+        })
+        .then(data=>{
+            window.open('http://inventory.test/user/pdf?orderId='+data.orderId, '_blank');
+            window.open('http://inventory.test/user/orders/makeOrder/view');
+
         })
 
 })

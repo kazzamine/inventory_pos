@@ -14,6 +14,11 @@
             <form>
                 <div class="row">
                     <div class="col">
+                        <div class="mb-3"><label class="form-label" ><strong></strong></label><img src="{{picture }}"></div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
                         <div class="mb-3"><label class="form-label" ><strong>Username</strong></label><input class="form-control userInfo"  readonly type="text" id="txtUsername" value="{{ userInfo.username }}" name="txtUsername" ></div>
                     </div>
                 </div>
@@ -36,7 +41,7 @@
                 </div>
                 <div class="row">
                     <div class="col">
-                        <div class="mb-3"><label class="form-label" ><strong>Email</strong></label><input class="form-control userInfo" readonly type="email" id="txtMail" value="" name="mail" ></div>
+                        <div class="mb-3"><label class="form-label" ><strong>Email</strong></label><input class="form-control userInfo" readonly type="email" id="txtMail" value="{{ userInfo.email }}" name="mail" ></div>
                     </div>
                     <div class="col">
                         <div class="mb-3"><label class="form-label" ><strong>Telephone</strong></label><input class="form-control userInfo" readonly type="text" id="txtPhone" value="{{ userInfo.phone }}" name="phone" ></div>

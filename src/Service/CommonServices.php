@@ -12,7 +12,7 @@ use Doctrine\ORM\EntityManagerInterface;
 class CommonServices
 {
     //add to payement method
-    public function addToPaymentMethod(EntityManagerInterface $entityManager,$accnumber,$expdate,$user,$provider):int
+    public function addToPaymentMethod(EntityManagerInterface $entityManager,$accnumber,$expdate,$user,$provider)
     {
         $addPayment=new PaymentMethod();
         $addPayment->setAccNumber($accnumber);
@@ -22,7 +22,7 @@ class CommonServices
         $addPayment->setProviderId($providerId);
         $entityManager->persist($addPayment);
         $entityManager->flush();
-        return $addPayment->getId();
+        return $addPayment;
     }
 
     //add payment
@@ -50,7 +50,7 @@ class CommonServices
 
     }
     //add Order
-    public function addOrder(EntityManagerInterface $entityManager,$prodId,$orderDetail,$payment,$quantity,$discount):void
+    public function addOrder(EntityManagerInterface $entityManager,$prodId,$orderDetail,$payment,$quantity,$discount)
     {
         $order=new Order();
         $order->setOrderDetail($orderDetail);
@@ -61,5 +61,6 @@ class CommonServices
         $order->setOrderDate(new \DateTime('now'));
         $entityManager->persist($order);
         $entityManager->flush();
+        return $order->getId();
     }
 }

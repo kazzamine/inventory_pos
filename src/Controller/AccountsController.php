@@ -26,7 +26,10 @@ class AccountsController extends AbstractController
         $form=$this->createForm(CreateUserForm::class);
         $form->handleRequest($request);
         if ($form->isSubmitted()) {
+            $picture=file_get_contents($form->get('picture')->getData());
+            $user->setPicture(base64_encode($picture));
             $user->setUsername($form->get('username')->getData());
+            $user->setEmail($form->get('email')->getData());
             $user->setFirstName($form->get('firstname')->getData());
             $user->setLastName($form->get('lastname')->getData());
             $user->setAdress($form->get('adress')->getData());

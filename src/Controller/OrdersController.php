@@ -47,7 +47,7 @@ class OrdersController extends AbstractController
     public function productById (Request $request,ProductRepository $productRepository):Response
     {
         $prod_id=$request->query->get('prodId');
-        $searchedProd=$productRepository->find("1");
+        $searchedProd=$productRepository->find($prod_id);
         $retData=(['price'=>$searchedProd->getPrice(),'desc'=>$searchedProd->getProdDesc(),'tax'=>$searchedProd->getTax()]);
         return $this->json($retData);
     }
@@ -90,7 +90,7 @@ class OrdersController extends AbstractController
         try {
 
             if ($data['method'] == 'Visa' || $data['method'] == 'MasterCard') {
-                $paymentMethodId = $commonService->addToPaymentMethod($entityManager, $data['accNumber'], $data['expDate'], $user, $data['method']);
+                $paymentMethodId = $commonService->addToPaymentMethod($entityManager, $data['accNumber'],$expdate, $user, $data['method']);
                 $paymentId = $commonService->addPayment($entityManager, $paymentMethodId, $data['total'], 0);
 
             } else {
@@ -99,9 +99,10 @@ class OrdersController extends AbstractController
 
             }
             $orderDetId=$commonService->addDetail($entityManager,$user,$data['total']);
-            $commonService->addOrder($entityManager,$prod,$orderDetId,$paymentId,$data['quantity'],$data['discount']);
+            $orderId=$commonService->addOrder($entityManager,$prod,$orderDetId,$paymentId,$data['quantity'],$data['discount']);
             flash()->addFlash('success','order Made','order made succesfully');
             $entityManager->getConnection()->commit();
+            return $this->json(['orderId'=>$orderId]);
         }catch (\Exception $exception){
             $entityManager->getConnection()->rollBack();
             throw $exception;

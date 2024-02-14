@@ -21,8 +21,11 @@ class ProfileController extends AbstractController
         //getting current user
         $userId=$this->getUser()->getUserIdentifier();
         $user=$userRepository->findOneBy(['username'=>$userId]);
+        $parsePic=file_get_contents($user->getPicture());
+        $userPic=base64_decode($parsePic);
         return $this->render('user/profile.html.twig',[
             'userInfo' =>$user,
+            'picture'=>$userPic
         ]);
     }
     #[Route('/user/profile/update', name: 'update_profile')]
