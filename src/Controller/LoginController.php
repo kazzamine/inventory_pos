@@ -19,6 +19,7 @@ class LoginController extends AbstractController
         $user=$this->getUser();
         $error=$authenticationUtils->getLastAuthenticationError();
         $user_role=null;
+        $role='ROLE_USER';
         #check if logged credentials matches existing user
         if($user instanceof UserInterface){
             flash()->addFlash('success','logged in','you successfuly logged in!!');
@@ -26,13 +27,18 @@ class LoginController extends AbstractController
 
         }
         #check if there is an error
-            if ($error) {
-                flash()->addFlash('warning', $error->getMessage(), 'retry again');
-            }
+        if ($error) {
+            flash()->addFlash('warning', $error->getMessage(), 'retry again');
+        }
+        if($user_role!=null){
 
+            if (in_array('ROLE_ADMIN', $user_role, true)) {
+                $role='ROLE_ADMIN';
+            }
+        }
         return $this->render('login/index.html.twig', [
             'messageerr' => $error,
-            'user_role'=>$user_role
+            'user_role'=>$role
         ]);
     }
 }
