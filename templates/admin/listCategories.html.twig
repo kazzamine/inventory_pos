@@ -14,7 +14,7 @@
             </div>
 
             <div class="table-responsive table mt-2" id="dataTable" role="grid" aria-describedby="dataTable_info">
-                <table class="table my-0" id="dataTable">
+                <table class="table my-0" id="category_datatable">
                     <thead>
                     <tr>
                         <th>category name</th>
@@ -36,17 +36,18 @@
                                 <td>{{ category.userId.username }}</td>
                                 <td >{{ category.createdAt|date}} </td>
                                 <td><button class="btn btn-warning updateBtn">update</button></td>
-                                <td><a role="button" class="btn btn-danger" href={{ path('remove_category',{'catId':category.id()}) }} >remove</a></td>
+                                <td><a role="button" class="btn btn-danger" onclick="return confirm('are you sure??')" href={{ path('remove_category',{'catId':category.id()}) }} >remove</a></td>
                             </tr>
                         {% endfor %}
 
                     {% else %}
-                        <tr>
-                            no data found
-                        </tr>
+
                     {% endif %}
                     </tbody>
                 </table>
+                <div id="dialog-confirm" title="Empty the recycle bin?">
+                    <p><span class="ui-icon ui-icon-alert" style="float:left; margin:12px 12px 20px 0;"></span>These items will be permanently deleted and cannot be recovered. Are you sure?</p>
+                </div>
                 <div class="navigation">
                     {{ knp_pagination_render(categories) }}
                 </div>

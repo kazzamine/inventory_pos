@@ -39,7 +39,7 @@
                                 <td><button class="btn btn-warning updateProdBtn">update</button>
                                     <button style="display: none;" class="btn btn-success saveBtn" value="{{ product.id }}">save</button></td>
 
-                                <td><a role="button" class="btn btn-danger" href={{ path('remove_product',{'prodId':product.id()}) }} >remove</a></td>
+                                <td><a role="button" class="btn btn-danger" onclick="return confirm('are you sure??')" href={{ path('remove_product',{'prodId':product.id()}) }} >remove</a></td>
                             </tr>
                          {% endfor %}
                          {% else %}

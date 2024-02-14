@@ -21,6 +21,7 @@ Encore
      * and one CSS file (e.g. app.scss) if your JavaScript imports CSS.
      */
     .addEntry('app', './assets/app.js')
+    .addEntry('datatable','./node_modules/datatables.net/js/jquery.dataTables.js')
     .addEntry('appstyle', './assets/styles/app.scss')
     .addEntry('loginStyle','./assets/styles/loginStyle.css')
     .addEntry('adminEventListner','./assets/js/adminEventsListener.js')

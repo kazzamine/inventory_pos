@@ -36,7 +36,7 @@
                                 <td><button class="btn btn-warning updateProdBtn">update</button>
                                     <button style="display: none;" class="btn btn-success saveBtn" value="{{ submodel.id }}">save</button></td>
 
-                                <td><a role="button" class="btn btn-danger" href={{ path('app_submodel_remove',{'submodId':submodel.id()}) }} >remove</a></td>
+                                <td><a role="button" onclick="return confirm('are you sure??')" class="btn btn-danger" href={{ path('app_submodel_remove',{'submodId':submodel.id()}) }} >remove</a></td>
                             </tr>
                                 {% endfor %}
                         {% endfor %}

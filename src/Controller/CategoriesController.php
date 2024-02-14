@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Category;
+use App\Form\ConfirmationForm;
 use App\Repository\CategoryRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
@@ -18,16 +19,25 @@ class CategoriesController extends AbstractController
 {
     #retrieving all available categories in database and rendering them with the admin view
     #[Route('/admin/categories', name: 'app_categories')]
-    public function adminCat(CategoryRepository $categoryRepository, PaginatorInterface $paginator, Request $request): Response
+    public function adminCat(CategoryRepository $categoryRepository,UrlGeneratorInterface $urlGenerator ,PaginatorInterface $paginator, Request $request): Response
     {
+        $urlGenerate=$urlGenerator->generate('remove_category');
         $allCategories = $categoryRepository->findAll();
         $currentPage = !$request->get('page') ? 1 : $request->get('page');
         $paginat = $paginator->paginate($allCategories, $currentPage, 10, [
             'defaultSortFieldName' => 'category.catName',
             'defaultSortDirection' => 'desc'
         ]);
+
+        $confirmationForm=$this->createForm(ConfirmationForm::class);
+
+        $confirmationForm->handleRequest($request);
+        if ($confirmationForm->isSubmitted()) {
+            return $this->redirect($urlGenerate);
+        }
         return $this->render('admin/listCategories.html.twig',
-            ['categories' => $paginat]);
+            ['categories' => $paginat,
+                'form'=>$confirmationForm]);
     }
 
     //render adding category view
@@ -45,7 +55,7 @@ class CategoriesController extends AbstractController
 
         $data = json_decode($request->getContent(), true);
         //checking if csrftoken is valid
-        $token = new CsrfToken('addCat', $request->headers->get('X-CSRF-TOKEN'));
+        $token = new CsrfToken('makeOrder', $request->headers->get('X-CSRF-TOKEN'));
         if (!$csrfTokenManager->isTokenValid($token)) {
             throw $this->createAccessDeniedException('invalid csrf token');
         }

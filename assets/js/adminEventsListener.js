@@ -261,3 +261,5 @@ btnUpdateProvider.on('click',()=>{
 
     updateAjax('/admin/provider/update',data);
 })
+
+//

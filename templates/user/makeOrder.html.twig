@@ -51,9 +51,9 @@
                 <div class="mb-3">
                     <input type="text" placeholder="discount only for over 5 item" value="0" id="discount"  name="discount" readonly>
                 </div>
-{#                <div class="mb-3">#}
-{#                    <input type="number" step="0.01" readonly placeholder="your total" id="total" name="total">#}
-{#                </div>#}
+                <div class="mb-3">
+                    <input type="number" step="0.01" readonly placeholder="your total" id="total" name="total">
+                </div>
             </div>
 
             <!-- step three -->
@@ -67,12 +67,41 @@
                 </div>
                 {% endfor %}
                 </div>
+
+                <div class="row" id="cash" style="display: none">
+                    <div class="col-sm-6">
+                           <div class="has-feedback form-group mb-3"><label class="form-label" for="amount">cash amount</label><input class="form-control" type="number"  id="amount" name="amount" required></div>
+                        </div>
+                    <div class="col-sm-6">
+                           <div class="has-feedback form-group mb-3"><label class="form-label" for="rest"> rest</label><input class="form-control" type="number"  id="rest" name="rest" required></div>
+                        </div>
+                </div>
+                <div class="row" id="cashContainer" style="display: none">
+                    <div class="col-sm-6">
+                        <div class="has-feedback form-group mb-3"><label class="form-label" for="amount">cash amount</label><input class="form-control" type="number"  id="amount" name="amount" required></div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="has-feedback form-group mb-3"><label class="form-label" for="rest"> rest</label><input class="form-control" type="number"  id="rest" name="rest" required></div>
+                    </div>
+                </div>
+                <div class="row" id="bankContainer" style="display: none">
+
+                <div class="col-sm-6">
+                       <div class="has-feedback form-group mb-3"><label class="form-label" for="accNumber">account number</label><input class="form-control" type="text"  id="accNumber" name="accNumber" required></div>
+                    </div>
+                <div class="col-sm-6">
+                       <div class="has-feedback form-group mb-3"><label class="form-label" for="expDate">account number</label><input class="form-control" type="date"  id="expDate" name="expDate" required></div>
+                    </div>
+                </div>
             </div>
+            <input type="hidden" name="_csrf_token" id="_csrf_token_make_order" value="{{ csrf_token('makeOrder') }}">
 
             <!-- start previous / next buttons -->
             <div class="form-footer d-flex">
                 <button type="button" id="prevBtn" >Previous</button>
                 <button type="button" id="nextBtn" >Next</button>
+                <button class="btn btn-success" id="makeOrder" type="button">make order</button>
+
             </div>
             <!-- end previous / next buttons -->
         </form>

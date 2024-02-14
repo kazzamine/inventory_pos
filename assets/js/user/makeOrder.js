@@ -10,6 +10,16 @@ const selectedProd=$('#selectedProd')
 const price=$('#price')
 const description=$('#description')
 const tax=$('#tax')
+const total=$('#total')
+const visa=$('#Visa')
+const cash=$('#cash')
+const masterCard=$('#MasterCard')
+const paymentMethod=$('#paymentMethod')
+const quantity=$('#quantity')
+const discount=$('#discount')
+
+
+
 selectedProd.on('change',()=>{
     const prodId=selectedProd.val();
     fetch('/user/prodbyid?prodId='+prodId,
@@ -26,6 +36,84 @@ selectedProd.on('change',()=>{
             price.val(data.price)
             description.val(data.desc)
             tax.val(data.tax)
+        })
+
+})
+//
+let method='';
+
+visa.on('click',()=>{
+    method='Visa'
+    document.getElementById("cashContainer").style.display = "none";
+    document.getElementById("bankContainer").style.display = "inline";
+})
+
+masterCard.on('click',()=>{
+    method='MasterCard'
+    document.getElementById("cashContainer").style.display = "none";
+    document.getElementById("bankContainer").style.display = "inline";
+})
+
+cash.on('click',()=>{
+    method='cash'
+    document.getElementById("bankContainer").style.display = "none";
+    document.getElementById("cashContainer").style.display = "inline";
+})
+
+
+//display total on quantity change
+
+quantity.on('change',()=>{
+    const data={
+        'quantity':quantity.val(),
+        'tax':tax.val(),
+        'prodId':selectedProd.val()
+    }
+    fetch('/user/order/total',{
+        method:'POST',
+        headers:{
+            'content-type':'application/json'
+        },
+        body:JSON.stringify(data)
+    })
+        .then(Response=>{
+            return Response.json()
+        })
+        .then(data=>{
+            total.val(data.total)
+            discount.val(data.discount)
+    })
+})
+
+//making order
+const rest=$('#rest')
+const amount=$('#amount')
+const accNumber=$('#accNumber')
+const expireDate=$('#expDate')
+const makeOrder=$("#makeOrder")
+const csrfToken=$("#_csrf_token_make_order")
+makeOrder.on('click',()=>{
+    const data={
+        'prodId':selectedProd.val(),
+        'total':total.val(),
+        'discount':discount.val(),
+        'toGive':amount.val(),
+        'rest':rest.val(),
+        'method':method,
+        'quantity':quantity.val(),
+        'expDate':expireDate.val(),
+        'accNumber':accNumber.val(),
+    }
+    console.log(data)
+
+    fetch('/user/orders/makeOrder',
+        {
+            method:'POST',
+            headers:{
+                'content-type':'application/json',
+                'X-CSRF-TOKEN':csrfToken.val()
+            },
+            body:JSON.stringify(data)
         })
 
 })
