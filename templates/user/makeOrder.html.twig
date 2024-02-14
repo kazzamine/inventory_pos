@@ -59,6 +59,18 @@
             <!-- step three -->
             <div class="step">
                 <p class="text-center mb-4">payment</p>
+                {% if role=='ROLE_ADMIN' %}
+                <div class="row">
+                    <div class="form-group mb-3"><label class="form-label" for="selectUser">FOR</label>
+                        <select class="form-select" id="selectUser" name="selectUser">
+                            {% for user in alluser %}
+                                <option value="{{ user.id }}">
+                                    {{ user.username }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+                {% endif %}
                 <div class="row">
                 {% for provider in providers %}
                 <div class="col-sm-4">

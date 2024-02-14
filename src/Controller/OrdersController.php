@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Product;
 use App\Entity\Provider;
+use App\Entity\User;
 use App\Repository\OrderRepository;
 use App\Repository\ProductRepository;
 use App\Service\CommonServices;
@@ -35,11 +36,20 @@ class OrdersController extends AbstractController
     #[Route('/user/orders/makeOrder/view', name: 'app_make_order')]
     public function makeOrderView(EntityManagerInterface $entityManager):Response
     {
+        $allusers=$entityManager->getRepository(User::class)->findAll();
         $allProducts=$entityManager->getRepository(Product::class)->findAll();
         $providers=$entityManager->getRepository(Provider::class)->findAll();
+        $user = $this->getUser();
+        $roles=$user->getRoles();
+        $userRole='ROLE_USER';
+        if (in_array('ROLE_ADMIN', $roles, true)) {
+            $userRole='ROLE_ADMIN';
+        }
         return $this->render('user/makeOrder.html.twig',
         ['products'=>$allProducts,
-            'providers'=>$providers
+            'providers'=>$providers,
+            'alluser'=>$allusers,
+            'role'=>$userRole
         ]);
     }
     //fetch product by id
@@ -74,6 +84,7 @@ class OrdersController extends AbstractController
     #[Route('/user/orders/makeOrder', name: 'make_order')]
     public function makeOrder(EntityManagerInterface $entityManager,Request $request,CsrfTokenManagerInterface $csrfTokenManager,UrlGeneratorInterface $urlGenerator):Response
     {
+
         //generate redirect route
         $urlGenerate=$urlGenerator->generate('app_make_order');
         //recieving data and parsing it
@@ -84,6 +95,10 @@ class OrdersController extends AbstractController
         }
         $prod=$entityManager->getRepository(Product::class)->find($data['prodId']);
         $user = $this->getUser();
+        $roles=$user->getRoles();
+        if (in_array('ROLE_ADMIN', $roles, true)) {
+            $user= $entityManager->getRepository(User::class)->find($data['userId']);
+        }
         $paymentId=null;
         $commonService=new CommonServices();
         $entityManager->getConnection()->beginTransaction();

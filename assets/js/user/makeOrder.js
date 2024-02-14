@@ -96,12 +96,14 @@ const accNumber=$('#accNumber')
 const expireDate=$('#expDate')
 const makeOrder=$("#makeOrder")
 const csrfToken=$("#_csrf_token_make_order")
-
+const userid=$('#selectUser')
 amount.on('change',()=>{
     let restt=amount.val()-total.val()
     rest.val(restt);
     console.log(restt)
 })
+
+
 makeOrder.on('click',()=>{
     const data={
         'prodId':selectedProd.val(),
@@ -113,6 +115,7 @@ makeOrder.on('click',()=>{
         'quantity':quantity.val(),
         'expDate':expireDate.val(),
         'accNumber':accNumber.val(),
+        'userId':userid.val()
     }
     console.log(data)
 
