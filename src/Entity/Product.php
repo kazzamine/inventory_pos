@@ -36,7 +36,7 @@ class Product
     #[ORM\Column(nullable: true)]
     private ?float $tax = null;
 
-    #[ORM\OneToMany(targetEntity: Order::class, mappedBy: 'prod_id')]
+    #[ORM\OneToMany(targetEntity: Order::class, mappedBy: 'prod_id',cascade: ['remove'])]
     private Collection $orders;
 
     #[ORM\Column(nullable: true)]

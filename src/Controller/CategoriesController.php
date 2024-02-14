@@ -22,22 +22,23 @@ class CategoriesController extends AbstractController
     public function adminCat(CategoryRepository $categoryRepository,UrlGeneratorInterface $urlGenerator ,PaginatorInterface $paginator, Request $request): Response
     {
         $urlGenerate=$urlGenerator->generate('remove_category');
+        //search
         $allCategories = $categoryRepository->findAll();
+
+//        $searchTerm = $request->query->get('search', '');
+//        $allCategories = $categoryRepository->findBySearchTerm($searchTerm);
+        //sorting
+        $sortBy = $request->query->get('sort_by', 'cat_name');
+        $sortOrder = $request->query->get('sort_order', 'asc');
         $currentPage = !$request->get('page') ? 1 : $request->get('page');
-        $paginat = $paginator->paginate($allCategories, $currentPage, 10, [
-            'defaultSortFieldName' => 'category.catName',
-            'defaultSortDirection' => 'desc'
-        ]);
+        $allCategories = $categoryRepository->findBy([], [$sortBy => $sortOrder]);
+        //paginating
+        $paginat = $paginator->paginate($allCategories, $currentPage, 10);
 
-        $confirmationForm=$this->createForm(ConfirmationForm::class);
-
-        $confirmationForm->handleRequest($request);
-        if ($confirmationForm->isSubmitted()) {
-            return $this->redirect($urlGenerate);
-        }
         return $this->render('admin/listCategories.html.twig',
             ['categories' => $paginat,
-                'form'=>$confirmationForm]);
+                'sort_by' => $sortBy,
+                'sort_order' => $sortOrder]);
     }
 
     //render adding category view

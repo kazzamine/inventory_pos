@@ -2,13 +2,17 @@
 
 namespace App\Controller;
 
+use App\Entity\Order;
 use App\Entity\Product;
 use App\Entity\Provider;
 use App\Entity\User;
 use App\Repository\OrderRepository;
+use DateTimeImmutable;
+use DateTime;
 use App\Repository\ProductRepository;
 use App\Service\CommonServices;
 use Doctrine\ORM\EntityManagerInterface;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -21,10 +25,33 @@ use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 class OrdersController extends AbstractController
 {
     #[Route('/admin/orders/list', name: 'app_orders')]
-    public function orderList(OrderRepository $orderRepository): Response
+    public function orderList(Request $request,OrderRepository $orderRepository,PaginatorInterface $paginator): Response
     {
 
-        return $this->render('admin/ordersList.html.twig');
+        $user = $this->getUser();
+        $roles=$user->getRoles();
+        $allOrder=$orderRepository->findAll();
+
+        if (in_array('ROLE_USER', $roles, true)) {
+
+        }
+        //search
+
+//        $searchTerm = $request->query->get('search', '');
+//        $allCategories = $categoryRepository->findBySearchTerm($searchTerm);
+        //sorting
+        $sortBy = $request->query->get('sort_by', 'id');
+        $sortOrder = $request->query->get('sort_order', 'asc');
+        $currentPage = !$request->get('page') ? 1 : $request->get('page');
+        $allOrder = $orderRepository->findBy([], [$sortBy => $sortOrder]);
+        //paginating
+        $paginat = $paginator->paginate($allOrder, $currentPage, 10);
+
+        return $this->render('user/ordersList.html.twig',
+            ['orders'=>$paginat,
+                'sort_by' => $sortBy,
+                'sort_order' => $sortOrder]);
+
     }
 
     #[Route('/user/orders',name: 'user_orders')]
@@ -105,6 +132,11 @@ class OrdersController extends AbstractController
         try {
 
             if ($data['method'] == 'Visa' || $data['method'] == 'MasterCard') {
+                $inputFormat = 'Y-m-d';
+
+                // Create a DateTimeImmutable object from the string
+                $expdate = DateTime::createFromFormat('Y-m-d', $data['expDate']);
+
                 $paymentMethodId = $commonService->addToPaymentMethod($entityManager, $data['accNumber'],$expdate, $user, $data['method']);
                 $paymentId = $commonService->addPayment($entityManager, $paymentMethodId, $data['total'], 0);
 
@@ -125,4 +157,30 @@ class OrdersController extends AbstractController
         }
         return $this->json(['result'=>'success']);
     }
+
+    //remove order
+    #[Route('/admin/orders/remove', name: 'remove_order')]
+    public function removeOrder(EntityManagerInterface $entityManager, Request $request,UrlGeneratorInterface $urlGenerator):Response
+    {
+        //recieving the id and fetching if available product
+        $ordeId = $request->query->get('orderId');
+        if (!$ordeId) {
+            flash()->addFlash('error', 'Empty', 'order to be removed not specified');
+
+
+        }
+        $orderToRemove = $entityManager->getRepository(Order::class)->find($ordeId);
+        if (!$orderToRemove) {
+            flash()->addFlash('error', 'Empty', 'order to be removed not found!!');
+        }
+
+        //removing the category
+        $entityManager->remove($orderToRemove);
+        $entityManager->flush();
+        //success response
+        flash()->addFlash('success', 'Removed', 'you successfuly removed the order');
+        $urlGenerate=$urlGenerator->generate('app_orders');
+        return $this->redirect($urlGenerate);
+    }
+
 }

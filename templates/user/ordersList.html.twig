@@ -1,4 +1,53 @@
 {% extends 'base.html.twig' %}
-{% block body %}
+{% block title %}orders list {% endblock %}
 
+{% block body %}
+    <div class="container container-fluid">
+    <h3 class="text-dark mb-4">Orders</h3>
+    <div class="card shadow">
+        <div class="card-header py-3">
+            <p class="text-primary m-0 fw-bold">List of all orders</p>
+        </div>
+        <div class="card-body">
+            <div class="row">
+            </div>
+            <div class="table-responsive table mt-2" id="dataTable" role="grid" aria-describedby="dataTable_info">
+                <table class="table my-0" id="dataTable">
+                    <thead>
+                    <tr>
+                        <th>order id<a href="{{ path('app_orders', { 'sort_by': 'id', 'sort_order': (sort_by == 'id' and sort_order == 'asc') ? 'desc' : 'asc' }) }}"><i class="fa-solid fa-sort"></i> </a></th>
+                        <th>product</th>
+                        <th>quantity   <a href="{{ path('app_orders', { 'sort_by': 'quantity', 'sort_order': (sort_by == 'quantity' and sort_order == 'asc') ? 'desc' : 'asc' }) }}"><i class="fa-solid fa-sort"></i> </a></th>
+                        <th>total</th>
+                        <th>date</th>
+                        <th>remove</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {# loop through products #}
+                    {% if orders %}
+                        {% for order in orders %}
+                            <tr>
+                                <td >{{ order.id }}</td>
+                                <td >{{ order.prodId.prodName }}</td>
+                                <td >{{ order.quantity }}</td>
+                                <td >{{ order.orderDetail.total }}</td>
+                                <td >{{ order.orderDate|date('d-m-Y-H-i-s') }}</td>
+                                <td><a role="button" class="btn btn-danger" onclick="return confirm('are you sure??')" href={{ path('remove_order',{'orderId':order.id()}) }} >remove</a></td>
+                            </tr>
+                        {% endfor %}
+                    {% else %}
+                        <tr>
+                            no data found
+                        </tr>
+                    {% endif %}
+                    </tbody>
+                    <tfoot>
+                </table>
+                <div class="navigation">
+                    {{ knp_pagination_render(orders) }}
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}

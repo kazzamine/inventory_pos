@@ -6,6 +6,7 @@ use App\Entity\Roles;
 use App\Entity\User;
 use App\Form\CreateUserForm;
 use Doctrine\ORM\EntityManagerInterface;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -17,11 +18,23 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 class AccountsController extends AbstractController
 {
     #[Route('/accounts/create', name: 'app_accounts_create')]
-    public function index(Request $request,EntityManagerInterface $entityManager): Response
+    public function index(Request $request,EntityManagerInterface $entityManager,PaginatorInterface $paginator): Response
     {
+        //getting all users
         $allUsers=$entityManager->getRepository(User::class)->findAll();
+        //search
 
+//        $searchTerm = $request->query->get('search', '');
+//        $allCategories = $categoryRepository->findBySearchTerm($searchTerm);
+        //sorting
+        $sortBy = $request->query->get('sort_by', 'username');
+        $sortOrder = $request->query->get('sort_order', 'asc');
+        $currentPage = !$request->get('page') ? 1 : $request->get('page');
+        $allUsers = $entityManager->getRepository(User::class)->findBy([], [$sortBy => $sortOrder]);
+        //paginating
+        $paginat = $paginator->paginate($allUsers, $currentPage, 10);
 
+        //creating user
         $user =new User();
         $form=$this->createForm(CreateUserForm::class);
         $form->handleRequest($request);
@@ -51,7 +64,9 @@ class AccountsController extends AbstractController
         }
         return $this->render('admin/createAccounts.html.twig',
         ['form'=>$form,
-            'allUser'=>$allUsers]
+            'allUser'=>$paginat,
+            'sort_by' => $sortBy,
+            'sort_order' => $sortOrder]
         );
     }
 

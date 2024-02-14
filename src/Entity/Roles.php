@@ -20,10 +20,10 @@ class Roles
     #[ORM\Column(length: 100)]
     private ?string $role_name = null;
 
-    #[ORM\OneToMany(targetEntity: User::class, mappedBy: 'role_id')]
+    #[ORM\OneToMany(targetEntity: User::class, mappedBy: 'role_id',cascade: ['remove'])]
     private Collection $users;
 
-    #[ORM\OneToMany(targetEntity: Model::class, mappedBy: 'role_id')]
+    #[ORM\OneToMany(targetEntity: Model::class, mappedBy: 'role_id',cascade: ['remove'])]
     private Collection $models;
 
     public function __construct()

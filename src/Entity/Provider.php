@@ -20,7 +20,7 @@ class Provider
     #[ORM\Column(length: 255)]
     private ?string $provider_name = null;
 
-    #[ORM\OneToMany(targetEntity: PaymentMethod::class, mappedBy: 'provider_id')]
+    #[ORM\OneToMany(targetEntity: PaymentMethod::class, mappedBy: 'provider_id',cascade: ['remove'])]
     private Collection $paymentMethods;
 
     public function __construct()

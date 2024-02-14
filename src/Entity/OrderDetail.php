@@ -17,7 +17,7 @@ class OrderDetail
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\OneToMany(targetEntity: Order::class, mappedBy: 'orderDetail')]
+    #[ORM\OneToMany(targetEntity: Order::class, mappedBy: 'orderDetail',cascade: ['remove'])]
     private Collection $order_id;
 
     #[ORM\ManyToOne(inversedBy: 'orderDetails')]

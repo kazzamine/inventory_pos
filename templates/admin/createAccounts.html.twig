@@ -15,9 +15,9 @@
                     <table class="table my-0" id="dataTable">
                         <thead>
                         <tr>
-                            <th>username</th>
-                            <th>first name</th>
-                            <th>last name</th>
+                            <th>username<a href="{{ path('app_accounts_create', { 'sort_by': 'username', 'sort_order': (sort_by == 'username' and sort_order == 'asc') ? 'desc' : 'asc' }) }}"><i class="fa-solid fa-sort"></i> </a></th>
+                            <th>first name<a href="{{ path('app_accounts_create', { 'sort_by': 'first_name', 'sort_order': (sort_by == 'first_name' and sort_order == 'asc') ? 'desc' : 'asc' }) }}"><i class="fa-solid fa-sort"></i> </a></th>
+                            <th>last name<a href="{{ path('app_accounts_create', { 'sort_by': 'last_name', 'sort_order': (sort_by == 'last_name' and sort_order == 'asc') ? 'desc' : 'asc' }) }}"><i class="fa-solid fa-sort"></i> </a></th>
                             <th>address</th>
                             <th>phone number</th>
                             <th>remove</th>

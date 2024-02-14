@@ -2,7 +2,8 @@
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>{% block title %}{% endblock %}</title>
+        <title>  {% block title %}{% endblock %}</title>
+        <link rel="icon" type="image/png" href="{{ asset('build/images/icon.13da4f47.png') }}">
         {% block stylesheets %}
             {{ encore_entry_link_tags('appstyle') }}
         {% endblock %}
@@ -11,7 +12,6 @@
             {{ encore_entry_script_tags('app') }}
 {% block importmap %}{{ importmap('app') }}{% endblock %}
             {{ encore_entry_script_tags('adminEventListner') }}
-            {{ encore_entry_script_tags('datatable') }}
         {% endblock %}
     </head>
     <body>

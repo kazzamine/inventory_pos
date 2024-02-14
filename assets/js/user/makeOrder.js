@@ -132,9 +132,8 @@ makeOrder.on('click',()=>{
             return Response.json()
         })
         .then(data=>{
+            location.reload(true);
             window.open('http://inventory.test/user/pdf?orderId='+data.orderId, '_blank');
-            window.open('http://inventory.test/user/orders/makeOrder/view');
-
         })
 
 })

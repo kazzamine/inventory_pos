@@ -26,7 +26,7 @@ class Model
     #[ORM\Column(length: 200)]
     private ?string $path = null;
 
-    #[ORM\OneToMany(targetEntity: SubModel::class, mappedBy: 'model_id')]
+    #[ORM\OneToMany(targetEntity: SubModel::class, mappedBy: 'model_id',cascade: ['remove'])]
     private Collection $subModels;
 
     #[ORM\Column(length: 100)]

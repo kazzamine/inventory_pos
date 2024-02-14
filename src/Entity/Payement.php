@@ -21,7 +21,7 @@ class Payement
     #[ORM\Column(nullable: true)]
     private ?float $rest = null;
 
-    #[ORM\ManyToOne]
+    #[ORM\ManyToOne(cascade: ['remove'])]
     private ?Provider $payment_provider = null;
 
     public function getId(): ?int
