@@ -22,7 +22,6 @@ const discount=$('#discount')
 
 selectedProd.on('click',()=>{
     let prodId=selectedProd.val();
-    console.log(prodId)
     price.val('')
     description.val('')
     tax.val('')
@@ -90,17 +89,17 @@ quantity.on('change',()=>{
 })
 
 //making order
-const rest=$('#rest')
-const amount=$('#amount')
+const rest=$('#giveBack')
+const amount=$('#payed')
 const accNumber=$('#accNumber')
 const expireDate=$('#expDate')
 const makeOrder=$("#makeOrder")
 const csrfToken=$("#_csrf_token_make_order")
 const userid=$('#selectUser')
+
 amount.on('change',()=>{
     let restt=amount.val()-total.val()
     rest.val(restt);
-    console.log(restt)
 })
 
 

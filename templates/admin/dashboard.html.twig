@@ -1,6 +1,29 @@
 {% extends 'base.html.twig' %}
 {% block body %}
 
-    {#content dashboard based on each role #}
-    {# include(...) #}
+    <div class="row">
+        <div class="col-md-6">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h3 class="panel-title">
+                        <span class="glyphicon glyphicon-bookmark"></span> Quick Shortcuts</h3>
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        {{ render_chart(chart) }}
+
+                        {#                        <div class="col-xs-6 col-md-6">#}
+{#                            <a href="#" class="btn btn-success btn-lg" role="button"><span class="glyphicon glyphicon-user"></span> <br/>Users</a>#}
+{#                            <a href="#" class="btn btn-info btn-lg" role="button"><span class="glyphicon glyphicon-file"></span> <br/>Notes</a>#}
+{#                            <a href="#" class="btn btn-primary btn-lg" role="button"><span class="glyphicon glyphicon-picture"></span> <br/>Photos</a>#}
+{#                            <a href="#" class="btn btn-primary btn-lg" role="button"><span class="glyphicon glyphicon-tag"></span> <br/>Tags</a>#}
+{#                        </div>#}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row" id="chartData">
+
+    </div>
 {% endblock %}
