@@ -32,9 +32,8 @@ class OrdersController extends AbstractController
         $allOrder=$orderRepository->findAll();
 
         //search
-
-//        $searchTerm = $request->query->get('search', '');
-//        $allCategories = $categoryRepository->findBySearchTerm($searchTerm);
+        $searchTerm = $request->query->get('search', '');
+        $searchedData = $orderRepository->findBySearchTerm($searchTerm);
         //sorting
         $sortBy = $request->query->get('sort_by', 'id');
         $sortOrder = $request->query->get('sort_order', 'asc');
@@ -42,12 +41,14 @@ class OrdersController extends AbstractController
         $allOrder = $orderRepository->findBy([], [$sortBy => $sortOrder]);
         //paginating
         $paginat = $paginator->paginate($allOrder, $currentPage, 10);
-
+        if($searchTerm!=''){
+            $paginat = $paginator->paginate($searchedData, $currentPage, 10);
+        }
         return $this->render('admin/adminOrdersList.html.twig',
             ['orders'=>$paginat,
                 'sort_by' => $sortBy,
                 'sort_order' => $sortOrder,
-                ]);
+                'search_term'=>$searchTerm]);
 
     }
 
@@ -57,9 +58,8 @@ class OrdersController extends AbstractController
         $user=$entityManager->getRepository(User::class)->findOneBy(['username'=>$this->getUser()->getUserIdentifier()]);
         $userOrders=$entityManager->getRepository(OrderDetail::class)->findOneBy(['user_id'=>$user]);
         //search
-
-//        $searchTerm = $request->query->get('search', '');
-//        $allCategories = $categoryRepository->findBySearchTerm($searchTerm);
+        $searchTerm = $request->query->get('search', '');
+        $searchedData = $entityManager->getRepository(Order::class)->findBySearchTerm($searchTerm);
         //sorting
         $sortBy = $request->query->get('sort_by', 'id');
         $sortOrder = $request->query->get('sort_order', 'asc');
@@ -67,11 +67,14 @@ class OrdersController extends AbstractController
         $allOrder = $entityManager->getRepository(Order::class)->findBy(['orderDetail'=>$userOrders], [$sortBy => $sortOrder]);
         //paginating
         $paginat = $paginator->paginate($allOrder, $currentPage, 10);
-
+        if($searchTerm!=''){
+            $paginat = $paginator->paginate($searchedData, $currentPage, 10);
+        }
         return $this->render('user/ordersList.html.twig',
             ['orders'=>$paginat,
                 'sort_by' => $sortBy,
-                'sort_order' => $sortOrder]);
+                'sort_order' => $sortOrder,
+                'search_term'=>$searchTerm]);
     }
     //make order view
     #[Route('/user/orders/makeOrder/view', name: 'app_make_order')]

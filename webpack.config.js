@@ -25,6 +25,7 @@ Encore
     .addEntry('appstyle', './assets/styles/app.scss')
     .addEntry('loginStyle','./assets/styles/loginStyle.css')
     .addEntry('adminEventListner','./assets/js/adminEventsListener.js')
+    .addEntry('error','./assets/js/error.js')
     // When enabled, Webpack "splits" your files into smaller pieces for greater optimization.
     .splitEntryChunks()
 

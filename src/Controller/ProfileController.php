@@ -9,6 +9,7 @@ use Doctrine\ORM\Exception\ORMException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\PasswordHasher\Hasher\PasswordHasherFactory;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Csrf\CsrfToken;
 use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
@@ -26,6 +27,7 @@ class ProfileController extends AbstractController
             'userInfo' =>$user
         ]);
     }
+    //update informations
     #[Route('/user/profile/update', name: 'update_profile')]
     public function updateProfile(EntityManagerInterface $entityManager,Request $request,CsrfTokenManagerInterface $csrfTokenManager): Response
     {
@@ -45,6 +47,51 @@ class ProfileController extends AbstractController
         $user->setAdress($jsonData['address']);
         $user->setPhone($jsonData['phone']);
         $user->setCity($jsonData['city']);
+        try{
+            $entityManager->persist($user);
+            $entityManager->flush();
+        }catch ( ORMException $exception){
+            $this->json(['exception'=>$exception->getMessage()]);
+        }
+
+        return $this->json(['success'=>'updated successfully!!']);
+    }
+    //change password view
+    #[Route('/user/profile/changepwd', name: 'app_changepwd')]
+    public function changepwd(UserRepository $userRepository): Response
+    {
+        //getting current user
+        $userId=$this->getUser()->getUserIdentifier();
+        $user=$userRepository->findOneBy(['username'=>$userId]);
+
+        return $this->render('user/updatePassword.html.twig',[
+            'userInfo' =>$user
+        ]);
+    }
+    //change password
+    #[Route('/user/profile/changepsd', name: 'change_password')]
+    public function changePassword(EntityManagerInterface $entityManager,Request $request,CsrfTokenManagerInterface $csrfTokenManager): Response
+    {
+        $jsonData=json_decode($request->getContent(),true);
+        $csrfToken=new CsrfToken('updatePassword',$request->headers->get('X-CSRF-TOKEN'));
+        if (!$csrfTokenManager->isTokenValid($csrfToken)) {
+            throw $this->createAccessDeniedException('invalid csrf token');
+        }
+        if (!$jsonData) {
+            return $this->json(['error' => 'empty'], 400);
+        }
+        $useID=$jsonData['userId'];
+        $user=$entityManager->getRepository(User::class)->find($useID);
+        $passwordHasherFactory= new PasswordHasherFactory([
+            'common' => ['algorithm' => 'bcrypt']
+        ]);
+        $passwordHasher = $passwordHasherFactory->getPasswordHasher('common');
+        $newPassword=$passwordHasher->hash($jsonData['newPwd']);
+        if($newPassword==$user->getPassword()){
+            return $this->json(['exists'=>'new password can\'t be as the same existing one']);
+        }
+        $user->setPassword($newPassword);
+
         try{
             $entityManager->persist($user);
             $entityManager->flush();

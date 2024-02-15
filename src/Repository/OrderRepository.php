@@ -26,7 +26,15 @@ class OrderRepository extends ServiceEntityRepository
         parent::__construct($registry, Order::class);
     }
 
+    public function findBySearchTerm(string $searchTerm)
+    {
+        $qb = $this->createQueryBuilder('u')
+            ->andWhere('u.order_date LIKE :searchTerm')
+            ->setParameter('searchTerm', '%' . $searchTerm . '%')
+            ->getQuery();
 
+        return $qb->getResult();
+    }
     public function findByGroup(){
         $sql =
             'SELECT MONTHNAME(o.order_date) as month,  p.prod_name as productName, SUM(o.quantity) as totalSales

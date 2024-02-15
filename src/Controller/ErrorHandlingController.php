@@ -11,6 +11,6 @@ class ErrorHandlingController extends AbstractController
     #[Route('/error403', name: 'error403')]
     public function error403():Response
     {
-        return $this->render('Bundles/TwigBundle/Exceptions/error403.html.twig',[]);
+        return $this->render('Bundles/TwigBundle/Exception/error403.html.twig',[]);
     }
 }

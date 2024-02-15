@@ -23,9 +23,8 @@ class AccountsController extends AbstractController
         //getting all users
         $allUsers=$entityManager->getRepository(User::class)->findAll();
         //search
-
-//        $searchTerm = $request->query->get('search', '');
-//        $allCategories = $categoryRepository->findBySearchTerm($searchTerm);
+        $searchTerm = $request->query->get('search', '');
+        $searchedData = $entityManager->getRepository(User::class)->findBySearchTerm($searchTerm);
         //sorting
         $sortBy = $request->query->get('sort_by', 'username');
         $sortOrder = $request->query->get('sort_order', 'asc');
@@ -33,6 +32,10 @@ class AccountsController extends AbstractController
         $allUsers = $entityManager->getRepository(User::class)->findBy([], [$sortBy => $sortOrder]);
         //paginating
         $paginat = $paginator->paginate($allUsers, $currentPage, 10);
+
+        if($searchTerm!=''){
+            $paginat = $paginator->paginate($searchedData, $currentPage, 10);
+        }
 
         //creating user
         $user =new User();
@@ -68,7 +71,8 @@ class AccountsController extends AbstractController
         ['form'=>$form,
             'allUser'=>$paginat,
             'sort_by' => $sortBy,
-            'sort_order' => $sortOrder]
+            'sort_order' => $sortOrder,
+            'search_term'=>$searchTerm]
         );
     }
 

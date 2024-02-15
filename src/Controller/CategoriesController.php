@@ -25,10 +25,8 @@ class CategoriesController extends AbstractController
     {
         $urlGenerate=$urlGenerator->generate('remove_category');
         //search
-        $allCategories = $categoryRepository->findAll();
-
-//        $searchTerm = $request->query->get('search', '');
-//        $allCategories = $categoryRepository->findBySearchTerm($searchTerm);
+        $searchTerm = $request->query->get('search', '');
+        $searchedData = $categoryRepository->findBySearchTerm($searchTerm);
         //sorting
         $sortBy = $request->query->get('sort_by', 'cat_name');
         $sortOrder = $request->query->get('sort_order', 'asc');
@@ -36,14 +34,17 @@ class CategoriesController extends AbstractController
         $allCategories = $categoryRepository->findBy([], [$sortBy => $sortOrder]);
         //paginating
         $paginat = $paginator->paginate($allCategories, $currentPage, 10);
-
+        if($searchTerm!=''){
+            $paginat = $paginator->paginate($searchedData, $currentPage, 10);
+        }
         //update form
 //        $updateForm=$this->createForm(UpdateCategoryForm::class);
 
         return $this->render('admin/listCategories.html.twig',
             ['categories' => $paginat,
                 'sort_by' => $sortBy,
-                'sort_order' => $sortOrder]);
+                'sort_order' => $sortOrder,
+                'search_term'=>$searchTerm]);
     }
 
     //render adding category view

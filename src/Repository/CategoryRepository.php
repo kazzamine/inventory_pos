@@ -21,7 +21,15 @@ class CategoryRepository extends ServiceEntityRepository
         parent::__construct($registry, Category::class);
     }
 
+    public function findBySearchTerm(string $searchTerm)
+    {
+        $qb = $this->createQueryBuilder('u')
+            ->andWhere('u.cat_name LIKE :searchTerm')
+            ->setParameter('searchTerm', '%' . $searchTerm . '%')
+            ->getQuery();
 
+        return $qb->getResult();
+    }
     public function getDatatableData($start, $length, $searchValue, $orderColumn, $orderDirection)
     {
         // Define the query builder for your entity

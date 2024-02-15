@@ -23,10 +23,9 @@ class ProductsController extends AbstractController
     public function index(ProductRepository $productRepository,PaginatorInterface $paginator,Request $request): Response
     {
         $allProduct=$productRepository->findAll();
-        //search
-
-//        $searchTerm = $request->query->get('search', '');
-//        $allCategories = $categoryRepository->findBySearchTerm($searchTerm);
+//search
+        $searchTerm = $request->query->get('search', '');
+        $searchedData = $productRepository->findBySearchTerm($searchTerm);
         //sorting
         $sortBy = $request->query->get('sort_by', 'prod_name');
         $sortOrder = $request->query->get('sort_order', 'asc');
@@ -34,11 +33,14 @@ class ProductsController extends AbstractController
         $allProduct = $productRepository->findBy([], [$sortBy => $sortOrder]);
         //paginating
         $paginat = $paginator->paginate($allProduct, $currentPage, 10);
-
+        if($searchTerm!=''){
+            $paginat = $paginator->paginate($searchedData, $currentPage, 10);
+        }
         return $this->render('admin/listProducts.html.twig',
         ['products'=>$paginat,
             'sort_by' => $sortBy,
-            'sort_order' => $sortOrder]);
+            'sort_order' => $sortOrder,
+            'search_term'=>$searchTerm]);
     }
     //render add product view
     #[Route('/admin/product/addView',name: 'add_product_view')]
