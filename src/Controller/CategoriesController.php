@@ -4,6 +4,8 @@ namespace App\Controller;
 
 use App\Entity\Category;
 use App\Form\ConfirmationForm;
+use App\Form\UpdateCategoryForm;
+use App\Form\UpdateProductForm;
 use App\Repository\CategoryRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
@@ -34,6 +36,9 @@ class CategoriesController extends AbstractController
         $allCategories = $categoryRepository->findBy([], [$sortBy => $sortOrder]);
         //paginating
         $paginat = $paginator->paginate($allCategories, $currentPage, 10);
+
+        //update form
+//        $updateForm=$this->createForm(UpdateCategoryForm::class);
 
         return $this->render('admin/listCategories.html.twig',
             ['categories' => $paginat,
@@ -107,18 +112,22 @@ class CategoriesController extends AbstractController
     {
         //recieving the id and fetching if available
         $catId = $request->query->get('catId');
+        $catName = $request->query->get('catName');
+        $catDesc = $request->query->get('catDesc');
+
+
         if (!$catId) {
             flash()->addFlash('error', 'Empty', 'category to be removed not specified');
 
 
         }
-        $categoryToRemove = $entityManager->getRepository(Category::class)->find($catId);
-        if (!$categoryToRemove) {
+        $categoryToUpdate = $entityManager->getRepository(Category::class)->find($catId);
+        if (!$categoryToUpdate) {
             flash()->addFlash('error', 'Empty', 'category to be updated not found!!');
         }
-
-        //removing the category
-        $entityManager->remove($categoryToRemove);
+        $categoryToUpdate->setCatName($catName);
+        $categoryToUpdate->setCatDesc($catDesc);
+        $entityManager->persist($categoryToUpdate);
         $entityManager->flush();
         //success response
         flash()->addFlash('success', 'updated', 'you successfuly updated the category');

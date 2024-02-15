@@ -33,10 +33,65 @@
                                 <td class="editable" data-field="path">{{ submodel.path }}</td>
                                 <td class="editable" data-field="icon">{{ submodel.icon }}</td>
                                 <td class="editable" data-field="submodelId">{{ submodel.modelId.modName }}</td>
-                                <td><button class="btn btn-warning updateProdBtn">update</button>
-                                    <button style="display: none;" class="btn btn-success saveBtn" value="{{ submodel.id }}">save</button></td>
+                                <td> <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#updateModel{{ model.id }}">update</button></td>
+                                <div class="modal fade" id="updateModel{{ model.id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" >
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="exampleModalLabel">update Model</h5>
+                                                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <form action="{{  path('update_model') }}">
+                                                    <div class="form-group">
+                                                        <label  class="col-form-label">model name :</label>
+                                                        <input class="form-control" type="text" name="subModelName" value="{{ submodel.submodName }}" >
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label  class="col-form-label">model path :</label>
+                                                        <input class="form-control" type="text" name="subModelPath" value="{{ submodel.path }}" >
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="col-form-label">model icon: </label>
+                                                        <input class="form-control" type="text" name="SubModelIcon" value="{{ submodel.icon }}" >
+                                                        <input class="form-control" type="text" hidden name="SubModelId" value="{{ submodel.id }}" >
 
-                                <td><a role="button" onclick="return confirm('are you sure??')" class="btn btn-danger" href={{ path('app_submodel_remove',{'submodId':submodel.id()}) }} >remove</a></td>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <button type="submit" class="btn btn-warning" >update</button>
+                                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <td> <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#removeSubmodel{{ submodel.id }}">Remove</button></td>
+                                <div class="modal fade" id="removeSubmodel{{ submodel.id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" >
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="exampleModalLabel">Remove Product</h5>
+                                                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <form>
+                                                    <div class="form-group">
+                                                        <a role="button" class="btn btn-danger" href={{ path('app_submodel_remove',{'submodId':submodel.id()}) }} >remove</a>
+                                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </tr>
                                 {% endfor %}
                         {% endfor %}

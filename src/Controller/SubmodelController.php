@@ -78,4 +78,34 @@ class SubmodelController extends AbstractController
     }
 
     //update sub model
+    #[Route('/admin/submodel/update', name: 'update_submodel')]
+    public function updateSubModel(EntityManagerInterface $entityManager, Request $request,UrlGeneratorInterface $urlGenerator):Response
+    {
+        //recieving the id and fetching if available
+        $SubModelID = $request->query->get('modelId');
+        $SubModelName = $request->query->get('subModelName');
+        $SubmodelIcon = $request->query->get('SubModelIcon');
+        $SubModelPath = $request->query->get('subModelPath');
+
+
+        if (!$SubModelID) {
+            flash()->addFlash('error', 'Empty', 'model to be updated not specified');
+
+
+        }
+        $SubModelToUpdate = $entityManager->getRepository(SubModel::class)->find($SubModelID);
+        if ($SubModelToUpdate) {
+            flash()->addFlash('error', 'Empty', 'Sub model to be updated not found!!');
+        }
+        $SubModelToUpdate->setModName($SubModelName);
+        $SubModelToUpdate->setIcon($SubmodelIcon);
+        $SubModelToUpdate->setPath($SubModelPath);
+        $entityManager->persist($SubModelToUpdate);
+        $entityManager->flush();
+        //success response
+        flash()->addFlash('success', 'updated', 'you successfuly updated the Sub model');
+        $urlGenerate=$urlGenerator->generate('app_submodel');
+        return $this->redirect($urlGenerate);
+    }
+
 }

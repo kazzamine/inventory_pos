@@ -1,6 +1,6 @@
 
         <div class="col-auto col-md-3 col-xl-2 px-sm-2 px-0 bg-dark">
-            <div class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white min-vh-100 position-fixed">
+            <div class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white min-vh-100">
                 <a  class="d-flex align-items-center pb-3 mb-md-0 me-md-auto text-white text-decoration-none">
                     <span class="fs-5 d-none d-sm-inline"> <img class="col-sm-1 img-fluid" src="{{ asset('/build/images/icon.13da4f47.png') }}"> Menu</span>
                 </a>
@@ -21,11 +21,11 @@
                             {% else%}
                                 <li>
                                     <a href="#submenu{{ item.id }}" data-bs-toggle="collapse" class="nav-link px-0 align-middle">
-                                        <i class="{{ item.icon }}"></i><span class="ms-1 d-none d-sm-inline">{{ item.modName }}</span> </a>
+                                        <i title="{{ item.modName }}" class="{{ item.icon }}"></i><span class="ms-1 d-none d-sm-inline">{{ item.modName }}</span> </a>
                                     <ul class="collapse nav flex-column ms-1" id="submenu{{ item.id }}" data-bs-parent="#menu">
                                         {% for subitem in item.subModels %}
                                         <li class="w-100">
-                                            <a href="{{ path( subitem.path ) }}" class="nav-link px-0"><i class="{{ subitem.icon }}"></i> <span class="d-none d-sm-inline">{{ subitem.subModName }}</span> </a>
+                                            <a href="{{ path( subitem.path ) }}" class="nav-link px-0"><i title="{{ subitem.subModName }}" class="{{ subitem.icon }}"></i> <span class="d-none d-sm-inline">{{ subitem.subModName }}</span> </a>
                                         </li>
                                         {% endfor %}
                                     </ul>

@@ -26,14 +26,36 @@ class ModelController extends AbstractController
         ]);
     }
     //update model
-    #[Route('/admin/model/list/update', name: 'app_model_update')]
-    public function updateModel(): Response
+    #[Route('/admin/model/update', name: 'update_model')]
+    public function updateModel(EntityManagerInterface $entityManager, Request $request,UrlGeneratorInterface $urlGenerator):Response
     {
-        return $this->json([
-            'message' => 'Welcome to your new controller!',
-            'path' => 'src/Controller/ModelController.php',
-        ]);
+        //recieving the id and fetching if available
+        $modelID = $request->query->get('modelId');
+        $modelName = $request->query->get('modelName');
+        $modelIcon = $request->query->get('modelIcon');
+        $modelPath = $request->query->get('modelPath');
+
+
+        if (!$modelID) {
+            flash()->addFlash('error', 'Empty', 'model to be updated not specified');
+
+
+        }
+        $modelToUpdate = $entityManager->getRepository(Model::class)->find($modelID);
+        if (!$modelToUpdate) {
+            flash()->addFlash('error', 'Empty', 'model to be updated not found!!');
+        }
+        $modelToUpdate->setModName($modelName);
+        $modelToUpdate->setIcon($modelIcon);
+        $modelToUpdate->setPath($modelPath);
+        $entityManager->persist($modelToUpdate);
+        $entityManager->flush();
+        //success response
+        flash()->addFlash('success', 'updated', 'you successfuly updated the model');
+        $urlGenerate=$urlGenerator->generate('app_model');
+        return $this->redirect($urlGenerate);
     }
+
     //remove model
     #[Route('/admin/model/list/remove', name: 'app_model_remove')]
     public function removeModel(Request $request,EntityManagerInterface $entityManager,UrlGeneratorInterface $urlGenerator): Response

@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Order;
+use App\Entity\OrderDetail;
 use App\Entity\Product;
 use App\Entity\Provider;
 use App\Entity\User;
@@ -27,14 +28,9 @@ class OrdersController extends AbstractController
     #[Route('/admin/orders/list', name: 'app_orders')]
     public function orderList(Request $request,OrderRepository $orderRepository,PaginatorInterface $paginator): Response
     {
-
         $user = $this->getUser();
-        $roles=$user->getRoles();
         $allOrder=$orderRepository->findAll();
 
-        if (in_array('ROLE_USER', $roles, true)) {
-
-        }
         //search
 
 //        $searchTerm = $request->query->get('search', '');
@@ -47,17 +43,35 @@ class OrdersController extends AbstractController
         //paginating
         $paginat = $paginator->paginate($allOrder, $currentPage, 10);
 
-        return $this->render('user/ordersList.html.twig',
+        return $this->render('admin/adminOrdersList.html.twig',
             ['orders'=>$paginat,
                 'sort_by' => $sortBy,
-                'sort_order' => $sortOrder]);
+                'sort_order' => $sortOrder,
+                ]);
 
     }
 
     #[Route('/user/orders',name: 'user_orders')]
-    public function userOrders():Response
+    public function userOrders(EntityManagerInterface $entityManager,PaginatorInterface $paginator,Request $request):Response
     {
-        return $this->render('user/ordersList.html.twig');
+        $user=$entityManager->getRepository(User::class)->findOneBy(['username'=>$this->getUser()->getUserIdentifier()]);
+        $userOrders=$entityManager->getRepository(OrderDetail::class)->findOneBy(['user_id'=>$user]);
+        //search
+
+//        $searchTerm = $request->query->get('search', '');
+//        $allCategories = $categoryRepository->findBySearchTerm($searchTerm);
+        //sorting
+        $sortBy = $request->query->get('sort_by', 'id');
+        $sortOrder = $request->query->get('sort_order', 'asc');
+        $currentPage = !$request->get('page') ? 1 : $request->get('page');
+        $allOrder = $entityManager->getRepository(Order::class)->findBy(['orderDetail'=>$userOrders], [$sortBy => $sortOrder]);
+        //paginating
+        $paginat = $paginator->paginate($allOrder, $currentPage, 10);
+
+        return $this->render('user/ordersList.html.twig',
+            ['orders'=>$paginat,
+                'sort_by' => $sortBy,
+                'sort_order' => $sortOrder]);
     }
     //make order view
     #[Route('/user/orders/makeOrder/view', name: 'app_make_order')]

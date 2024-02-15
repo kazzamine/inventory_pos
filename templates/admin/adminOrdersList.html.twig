@@ -20,7 +20,8 @@
                         <th>quantity   <a href="{{ path('app_orders', { 'sort_by': 'quantity', 'sort_order': (sort_by == 'quantity' and sort_order == 'asc') ? 'desc' : 'asc' }) }}"><i class="fa-solid fa-sort"></i> </a></th>
                         <th>total</th>
                         <th>date</th>
-                        <th>detail</th>
+                        <th>Detail</th>
+                        <th>remove</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -31,8 +32,8 @@
                                 <td >{{ order.id }}</td>
                                 <td >{{ order.prodId.prodName }}</td>
                                 <td >{{ order.quantity }}</td>
-                                <td >{{ order.orderDetail.total }}</td>s
-                                <td >{{ order.orderDate|date('d-m-Y') }}</td>
+                                <td >{{ order.orderDetail.total }}</td>
+                                <td >{{ order.orderDate|date('d-m-Y-H-i-s') }}</td>
                                 <td> <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#orderDetail" data-bs-whatever="{{ order.id }}">order detail</button></td>
                                 <div class="modal fade" id="orderDetail" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" >
                                     <div class="modal-dialog" role="document">
@@ -61,13 +62,32 @@
                                                     </div>
                                                 </form>
                                             </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <td> <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#removeOrder">Remove</button></td>
+                                <div class="modal fade" id="removeOrder" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" >
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="exampleModalLabel">Remove Order</h5>
+                                                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <form>
+                                                    <div class="form-group">
+                                                        <a role="button" class="btn btn-danger" href={{ path('remove_order',{'orderId':order.id()}) }} >remove</a>                                                    </div>
+                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+
+                                                </form>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </tr
+
+                            </tr>
                         {% endfor %}
                     {% else %}
                         <tr>
@@ -83,6 +103,4 @@
             </div>
         </div>
     </div>
-
-
 {% endblock %}

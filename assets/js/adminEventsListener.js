@@ -8,7 +8,6 @@ import Toastify from "toastify-js";
 
 import {addUser} from "./admin/users";
 import {addAjax} from "./admin/addAjax";
-import {toggleEditable} from "./common";
 import {makeReadOnly} from "./common";
 import {toggleDivVisibility} from "./common";
 
@@ -63,34 +62,27 @@ btnAddCat.on('click',(e)=>{
 
 
 //change fields of list to be editable
-const updateButtons = $('.updateBtn');
-toggleEditable(updateButtons);
-
-
-
 
 //for products
 //updateProdBtn
-const updateProdBtn = $('.updateProdBtn');
-toggleEditable(updateProdBtn);
-const saveUpdatedProd=$('.saveBtn');
-
-Array.from(saveUpdatedProd).forEach( (button)=> {
-    const prodName=$('#prodName');
-    const prodDesc=$('#prodDesc');
-    const prodPrice=$('#prodPrice')
-    const prodTax=$('#prodTax');
-    button.addEventListener('click', function () {
-        const data={
-            'prodName':prodName.data('field'),
-            'prodDesc':prodDesc.value,
-            'prodPrice':prodPrice.value,
-            'prodTax':prodTax.value,
-            'prodId':button.value
-        }
-        console.log(data)
-    });
-});
+// const saveUpdatedProd=$('.saveBtn');
+//
+// Array.from(saveUpdatedProd).forEach( (button)=> {
+//     const prodName=$('#prodName');
+//     const prodDesc=$('#prodDesc');
+//     const prodPrice=$('#prodPrice')
+//     const prodTax=$('#prodTax');
+//     button.addEventListener('click', function () {
+//         const data={
+//             'prodName':prodName.data('field'),
+//             'prodDesc':prodDesc.value,
+//             'prodPrice':prodPrice.value,
+//             'prodTax':prodTax.value,
+//             'prodId':button.value
+//         }
+//         console.log(data)
+//     });
+// });
 
 
 

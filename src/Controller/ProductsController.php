@@ -108,4 +108,37 @@ class ProductsController extends AbstractController
         return $this->redirect($urlGenerate);
     }
 
+    //update product
+    #[Route('/admin/products/update', name: 'update_product')]
+    public function updateProd(EntityManagerInterface $entityManager, Request $request,UrlGeneratorInterface $urlGenerator):Response
+    {
+        //recieving the id and fetching if available
+        $prodId = $request->query->get('prodId');
+        $prodName = $request->query->get('prodName');
+        $prodDesc = $request->query->get('prodDesc');
+        $prodPrice = $request->query->get('prodPrice');
+        $prodTax = $request->query->get('prodTax');
+
+
+        if (!$prodId) {
+            flash()->addFlash('error', 'Empty', 'product to be removed not specified');
+
+
+        }
+        $productToUpdate = $entityManager->getRepository(Product::class)->find($prodId);
+        if (!$productToUpdate) {
+            flash()->addFlash('error', 'Empty', 'product to be updated not found!!');
+        }
+        $productToUpdate->setProdName($prodName);
+        $productToUpdate->setProdDesc($prodDesc);
+        $productToUpdate->setTax($prodTax);
+        $productToUpdate->setPrice($prodPrice);
+        $entityManager->persist($productToUpdate);
+        $entityManager->flush();
+        //success response
+        flash()->addFlash('success', 'updated', 'you successfuly updated the product');
+        $urlGenerate=$urlGenerator->generate('app_products');
+        return $this->redirect($urlGenerate);
+    }
+
 }
