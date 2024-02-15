@@ -36,18 +36,20 @@ class AccountsController extends AbstractController
 
         //creating user
         $user =new User();
-        $form=$this->createForm(CreateUserForm::class);
+        $form=$this->createForm(CreateUserForm::class,$user);
         $form->handleRequest($request);
         if ($form->isSubmitted()) {
-            $picture=file_get_contents($form->get('picture')->getData());
-            $user->setPicture(base64_encode($picture));
-            $user->setUsername($form->get('username')->getData());
-            $user->setEmail($form->get('email')->getData());
-            $user->setFirstName($form->get('firstname')->getData());
-            $user->setLastName($form->get('lastname')->getData());
-            $user->setAdress($form->get('adress')->getData());
-            $user->setPhone($form->get('phone')->getData());
-            $user->setCity($form->get('city')->getData());
+            $imageFile = $form->get('picture')->getData();
+            if ($imageFile) {
+                $originalFilename = pathinfo($imageFile->getClientOriginalName(), PATHINFO_FILENAME);
+                $newFilename = $originalFilename . '-' . uniqid() . '.' . $imageFile->guessExtension();
+                $imageFile->move(
+                    $this->getParameter('image_directory'),
+                    $newFilename
+                );
+                $user->setPicture($newFilename);
+            }
+
             $role=$entityManager->getRepository(Roles::class)->find($form->get('roleId')->getData());
             $user->setRoleId($role);
             $user->setRoles( array('role'=>$role->getRoleName()) );

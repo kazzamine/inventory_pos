@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Order;
 use App\Repository\ModelRepository;
+use App\Repository\OrderRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -15,29 +16,12 @@ class DashboardController extends AbstractController
 {
     //render admin dashboard
     #[Route('/admin/dashboard', name: 'admin_dashboard')]
-    public function adminDashboard(EntityManagerInterface $entityManager,ChartBuilderInterface $builder): Response
+    public function adminDashboard(EntityManagerInterface $entityManager,OrderRepository $orderRepository): Response
     {
-        $sales=$entityManager->getRepository(Order::class)->findAll();
-
-        $chart=$builder->createChart(Chart::TYPE_BAR);
-        $chart->setData(
-            [
-                'labels'=>['january','february','march'],
-                'datasets'=>[
-                    'data'=>[0,5,80]
-                ]
-            ]
-        );
-        $chart->setOptions([
-            'scales' => [
-                'y' => [
-                    'suggestedMin' => 0,
-                    'suggestedMax' => 100,
-                ],
-            ],
-        ]);
+        //get the monthly sale for each product
+        $sales=$orderRepository->findByGroup();
         return $this->render('admin/dashboard.html.twig',[
-            'chart'=>$chart
+            'sales'=>$sales
         ]);
     }
     //render user dashboard

@@ -4,7 +4,12 @@ namespace App\Repository;
 
 use App\Entity\Order;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Query\ResultSetMapping;
 use Doctrine\Persistence\ManagerRegistry;
+use DoctrineExtensions\Query\Mysql\Month;
+use DoctrineExtensions\Query\Mysql\Year;
+
+
 
 /**
  * @extends ServiceEntityRepository<Order>
@@ -22,7 +27,23 @@ class OrderRepository extends ServiceEntityRepository
     }
 
 
+    public function findByGroup(){
+        $sql =
+            'SELECT MONTHNAME(o.order_date) as month,  p.prod_name as productName, SUM(o.quantity) as totalSales
+            FROM `order` o
+            JOIN product p ON o.prod_id_id = p.id
+            GROUP BY  month, productName
+            ORDER BY  month'
+        ;
 
+
+        $entityManager = $this->getEntityManager()->getConnection();
+        $query = $entityManager->prepare($sql);
+
+        $result= $query->executeQuery();
+        return $result->fetchAllAssociative();
+
+    }
 //    /**
 //     * @return Order[] Returns an array of Order objects
 //     */

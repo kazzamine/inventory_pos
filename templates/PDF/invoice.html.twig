@@ -65,7 +65,7 @@
                     <div class="invoice-title">
                         <div class="row">
                             <div class="col-xs-12">
-                                <img src="http://vergo-kertas.herokuapp.com/assets/img/logo.png" alt="" height="35">
+                                <img src="{{ asset('build/images/icon.13da4f47.png') }}" alt="" height="35">
                             </div>
                         </div>
                         <br>
@@ -83,7 +83,7 @@
                                 <strong>shipped To:</strong><br>
                                 {{ order.orderDetail.userId.adress }}.<br>
                                 {{ order.orderDetail.userId.city }}<br>
-                                <abbr title="Phone">P:</abbr> {{ order.orderDetail.userId.phone }}
+                                <abbr title="Phone">P: </abbr> {{ order.orderDetail.userId.phone }}
                             </address>
                         </div>
 

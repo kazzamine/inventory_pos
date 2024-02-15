@@ -62,8 +62,8 @@ class User implements UserInterface,PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 255)]
     private ?string $email = null;
 
-    #[ORM\Column(type: Types::BLOB, nullable: true)]
-    private $picture = null;
+    #[ORM\Column(type: Types::STRING, nullable: true)]
+    private ?string $picture = null;
 
     public function __construct()
     {

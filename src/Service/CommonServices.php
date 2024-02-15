@@ -5,6 +5,7 @@ use App\Entity\OrderDetail;
 use App\Entity\Payement;
 use App\Entity\PaymentMethod;
 use App\Entity\Provider;
+use App\Entity\Storage;
 use App\Entity\User;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
@@ -62,5 +63,14 @@ class CommonServices
         $entityManager->persist($order);
         $entityManager->flush();
         return $order->getId();
+    }
+        //update storage
+    public function updateStorage(EntityManagerInterface $entityManager,$prodId,$quantity)
+    {
+        $storage=$entityManager->getRepository(Storage::class)->findOneBy(['prod_id'=>$prodId]);
+        $leftInStorage=$storage->getStorageQuantity()-$quantity;
+        $storage->setStorageQuantity($leftInStorage);
+        $entityManager->persist($storage);
+        $entityManager->flush();
     }
 }

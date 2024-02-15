@@ -85,6 +85,7 @@ quantity.on('change',()=>{
         .then(data=>{
             total.val(data.total)
             discount.val(data.discount)
+            quantity.val(data.quantity)
     })
 })
 
@@ -131,8 +132,9 @@ makeOrder.on('click',()=>{
             return Response.json()
         })
         .then(data=>{
-            location.reload(true);
             window.open('http://inventory.test/user/pdf?orderId='+data.orderId, '_blank');
+            location.reload(true);
+
         })
 
 })

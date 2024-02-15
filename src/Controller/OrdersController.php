@@ -109,16 +109,23 @@ class OrdersController extends AbstractController
     {
         $data=json_decode($request->getContent(),true);
         $prod=$entityManager->getRepository(Product::class)->find($data['prodId']);
+        $onStorage=$prod->getStorage()->getStorageQuantity();
+        $quantityNeeded=$data['quantity'];
 
         $tax=($prod->getPrice()*$prod->getTax())/100;
         $discountValue=0;
-        if($data['quantity']>=5){
+        if($quantityNeeded>=5){
             $discountValue=15;
+        }elseif ($quantityNeeded>=10){
+            $discountValue=25;
+        }
+        if($quantityNeeded>$onStorage){
+            $quantityNeeded=$onStorage;
         }
         $totalTax=($prod->getPrice()+$tax)*$data['quantity'];
         $discount=($totalTax*$discountValue)/100;
         $total=$totalTax-$discount;
-        return $this->json(['total'=>$total,'discount'=>$discountValue]);
+        return $this->json(['quantity'=>$quantityNeeded,'total'=>$total,'discount'=>$discountValue]);
     }
 
     //make order
@@ -161,6 +168,7 @@ class OrdersController extends AbstractController
             }
             $orderDetId=$commonService->addDetail($entityManager,$user,$data['total']);
             $orderId=$commonService->addOrder($entityManager,$prod,$orderDetId,$paymentId,$data['quantity'],$data['discount']);
+            $commonService->updateStorage($entityManager,$prod,$data['quantity']);
             flash()->addFlash('success','order Made','order made succesfully');
             $entityManager->getConnection()->commit();
             return $this->json(['orderId'=>$orderId]);

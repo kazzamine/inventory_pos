@@ -48,6 +48,9 @@ class Product
     #[ORM\Column(type: Types::BLOB, nullable: true)]
     private $picture = null;
 
+    #[ORM\OneToOne(mappedBy: 'prod_id', cascade: ['persist', 'remove'])]
+    private ?Storage $storage = null;
+
     public function __construct()
     {
         $this->orders = new ArrayCollection();
@@ -201,6 +204,28 @@ class Product
     public function setPicture($picture): static
     {
         $this->picture = $picture;
+
+        return $this;
+    }
+
+    public function getStorage(): ?Storage
+    {
+        return $this->storage;
+    }
+
+    public function setStorage(?Storage $storage): static
+    {
+        // unset the owning side of the relation if necessary
+        if ($storage === null && $this->storage !== null) {
+            $this->storage->setProdId(null);
+        }
+
+        // set the owning side of the relation if necessary
+        if ($storage !== null && $storage->getProdId() !== $this) {
+            $storage->setProdId($this);
+        }
+
+        $this->storage = $storage;
 
         return $this;
     }
