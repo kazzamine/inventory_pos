@@ -3,9 +3,6 @@
 namespace App\Controller;
 
 use App\Entity\Category;
-use App\Form\ConfirmationForm;
-use App\Form\UpdateCategoryForm;
-use App\Form\UpdateProductForm;
 use App\Repository\CategoryRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
@@ -116,15 +113,12 @@ class CategoriesController extends AbstractController
         $catName = $request->query->get('catName');
         $catDesc = $request->query->get('catDesc');
 
-
         if (!$catId) {
             flash()->addFlash('error', 'Empty', 'category to be removed not specified');
-
-
         }
         $categoryToUpdate = $entityManager->getRepository(Category::class)->find($catId);
         if (!$categoryToUpdate) {
-            flash()->addFlash('error', 'Empty', 'category to be updated not found!!');
+            flash()->addFlash('error', 'Not Found', 'category to be updated not found!!');
         }
         $categoryToUpdate->setCatName($catName);
         $categoryToUpdate->setCatDesc($catDesc);

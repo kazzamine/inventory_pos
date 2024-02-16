@@ -1,14 +1,14 @@
 {% extends 'base.html.twig' %}
 {% block title %} {% endblock %}
 {% block body %}
-    <div class="row">
+    <div class="row offset-3">
         <div class="align-items-center">
             <div class="panel panel-primary">
                 <div class="panel-heading">
                     <h3 class="panel-title">
                         <span class=""></span>hello admin what is our <span class="text-capitalize text-primary-emphasis"> mission</span> today</h3>
                 </div>
-                <div class="panel-body">
+                <div class="panel-body offset-3">
                     <div class="row">
                         <div class="col-xs-6 col-md-6">
                             <p>let dive into this!!!</p>
@@ -22,28 +22,80 @@
         <div >
             <div class="panel panel-primary">
                 <div class="panel-heading">
-                    <h3 class="panel-title">
+                    <h3 class="panel-title offset-4">
                         <span class="fa-solid fa-bookmark"></span> Quick Shortcuts</h3>
                 </div>
-                <div class="panel-body">
+                <div class="panel-body offset-3">
+                    {%if userRole=='ROLE_ADMIN' %}
                     <div class="row">
                         <div class="col-xs-6 col-md-6">
                             <a href="{{ path('make_order') }}" class="btn btn-outline-secondary btn-lg" role="button"><i class="fa-solid fa-plus"></i> <br/>order</a>
 
                             <a href="{{ path('app_make_order') }}" class="btn btn-outline-info btn-lg" role="button"><i class="fa-solid fa-calendar"></i> <br/>Monthly sales</a>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-xs-6 col-md-6">
-                            <a href="{{ path('app_accounts_create') }}" class="btn btn-outline-secondary btn-lg" role="button"><i class="fa-solid fa-user"></i> <br/>users</a>
+                            <a href="{{ path('app_accounts_create') }}" class="btn btn-outline-success btn-lg" role="button"><i class="fa-solid fa-user"></i> <br/>users</a>
+
 
                         </div>
                     </div>
+
                 </div>
             </div>
         </div>
     </div>
+    <br>
+    <br>
+    <div class="row">
+        <div >
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h3 class="panel-title offset-4">
+                        <i class="fa-solid fa-square-poll-vertical"></i>   statics</h3>
+                </div>
+                <div class="panel-body offset-3">
+                    <div class="row">
+                        <div class="col-xs-6 col-md-6">
+                            <div class="btn btn-outline-secondary">
+                                <div class="card-title">
+                                    <span class="">total Users</span>
+                                </div>
+                                <div class="">
+                                    <span class="card-text offset-2">{{ totalUsers }}</span>
+                                </div>
+                            </div>
+                            <div class="btn btn-outline-secondary">
+                                <div class="card-title">
+                                    <span class="">total Orders</span>
+                                </div>
 
+                                <div class="">
+                                    <span class="card-text offset-2">{{ totalOrders }}</span>
+                                </div>
+                            </div>
+                            <div class="btn btn-outline-secondary">
+                                <div class="card-title">
+                                    <span class="">total Users</span>
+                                </div>
 
+                                <div class="">
+                                    <span class="card-text offset-2">{{ totalUsers }}</span>
+                                </div>
+                            </div>
+                        </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+                    {% else %}
+                        <div class="row">
+                            <div class="col-xs-6 col-md-6">
+                                <a href="{{ path('make_order') }}" class="btn btn-outline-secondary btn-lg" role="button"><i class="fa-solid fa-plus"></i> <br/>order</a>
+
+                                <a href="{{ path('app_make_order') }}" class="btn btn-outline-info btn-lg" role="button"><i class="fa-solid fa-user"></i> <br/>change your infos</a>
+                            </div>
+                        </div>
+                    {% endif %}
 
 {% endblock %}

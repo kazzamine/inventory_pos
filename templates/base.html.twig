@@ -10,14 +10,13 @@
 
         {% block javascripts %}
             {{ encore_entry_script_tags('app') }}
-{% block importmap %}{{ importmap('app') }}{% endblock %}
+            {% block importmap %}{{ importmap('app') }}{% endblock %}
             {{ encore_entry_script_tags('adminEventListner') }}
         {% endblock %}
     </head>
     <body>
     <div class="container-fluid">
         <div class="row flex-nowrap">
-
         {#including navbar #}
     {% include 'attachements/navbar.html.twig' %}
                 <div class="col py-3">
@@ -27,5 +26,6 @@
                 </div>
             </div>
         </div>
+    {% include 'attachements/footer.html.twig' %}
     </body>
 </html>

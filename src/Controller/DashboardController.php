@@ -3,25 +3,36 @@
 namespace App\Controller;
 
 use App\Entity\Order;
+use App\Entity\User;
 use App\Repository\ModelRepository;
 use App\Repository\OrderRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
-use Symfony\UX\Chartjs\Builder\ChartBuilderInterface;
-use Symfony\UX\Chartjs\Model\Chart;
 
 class DashboardController extends AbstractController
 {
     //render admin dashboard
-    #[Route('/admin/dashboard', name: 'admin_dashboard')]
+    #[Route('/user/dashboard', name: 'admin_dashboard')]
     public function adminDashboard(EntityManagerInterface $entityManager,OrderRepository $orderRepository): Response
     {
+        $userRole='ROLE_USER';
+        $roles=$this->getUser()->getRoles();
+        if (in_array('ROLE_ADMIN', $roles, true)) {
+            $userRole='ROLE_ADMIN';
+        }
+        //total users
+        $totalUsers=count($entityManager->getRepository(User::class)->findAll());
+        //total orders
+        $totalOrders=count($entityManager->getRepository(Order::class)->findAll());
         //get the monthly sale for each product
         $sales=$orderRepository->findByGroup();
         return $this->render('admin/dashboard.html.twig',[
-            'sales'=>$sales
+            'sales'=>$sales,
+            'totalUsers'=>$totalUsers,
+            'totalOrders'=>$totalOrders,
+            'userRole'=>$userRole
         ]);
     }
     //render user dashboard

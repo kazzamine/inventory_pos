@@ -43,8 +43,6 @@ class OrderRepository extends ServiceEntityRepository
             GROUP BY  month, productName
             ORDER BY  month'
         ;
-
-
         $entityManager = $this->getEntityManager()->getConnection();
         $query = $entityManager->prepare($sql);
 
@@ -52,6 +50,22 @@ class OrderRepository extends ServiceEntityRepository
         return $result->fetchAllAssociative();
 
     }
+    public function findByProd($prodid)
+    {
+        $sql='
+        SELECT o.quantity as quantity , MONTHNAME(o.oder_date) as month
+        FROM `order` o 
+        WHERE o.prod_id_id= :prodId
+        ';
+        $entityManager = $this->getEntityManager()->getConnection();
+        $query = $entityManager->prepare($sql);
+        $query->bindValue('prodId',$prodid);
+        $result=$query->executeQuery();
+        return $result->fetchAllAssociative();
+
+    }
+    
+
 //    /**
 //     * @return Order[] Returns an array of Order objects
 //     */

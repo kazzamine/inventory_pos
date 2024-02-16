@@ -6,50 +6,67 @@
             <div class="panel panel-primary">
                 <div class="panel-heading">
                     <h3 class="panel-title">
-                        <span class="glyphicon glyphicon-bookmark"></span> Quick Shortcuts</h3>
+                        <span class="glyphicon glyphicon-bookmark"></span> compare sales</h3>
+                </div>
+                <div class="row">
+                    <div class="form-group col-sm-4"><label class="form-label" for="selectedFirstProd">1st Product</label>
+                        <select class="form-select" id="selectedFirstProd" name="selectedFirstProd">
+                            {% for product in products %}
+                                <option value="{{ product.id }}">
+                                    {{ product.prodName }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="form-group col-sm-4"><label class="form-label" for="selectedSecondProd">2nd Product</label>
+                        <select class="form-select" id="selectedSecondProd" name="selectedSecondProd">
+                            {% for product in products %}
+                                <option value="{{ product.id }}">
+                                    {{ product.prodName }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
                 </div>
                 <div class="panel-body">
                     <div class="row">
                         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-                        <canvas id="monthlySalesChart" width="600px" height="500px"></canvas>
+                        <canvas id="line-chart" width="600px" height="500px"></canvas>
                         <script>
                             document.addEventListener('DOMContentLoaded', function () {
-                                var monthlySalesData = {{ sales|json_encode|raw }};
-                                var ctx = document.getElementById('monthlySalesChart').getContext('2d');
+                                var monthlySalesData ='';
+                                var ctx = document.getElementById('line-chart').getContext('2d');
 
-                                var datasets = {};
-                                monthlySalesData.forEach(function (entry) {
-                                    if (!datasets[entry.productName]) {
-                                        datasets[entry.productName] = {
-                                            label: entry.productName,
-                                            data: [],
-                                            backgroundColor: 'rgba(' + Math.floor(Math.random() * 256) + ',' + Math.floor(Math.random() * 256) + ',' + Math.floor(Math.random() * 256) + ',0.5)',
-                                        };
-                                    }
-
-                                    datasets[entry.productName].data.push(entry.totalSales);
-                                });
-
-                                var chartData = {
-                                    labels: monthlySalesData.map(function (entry) {
-                                        return  entry.month;
-                                    }),
-                                    datasets: Object.values(datasets),
-                                };
-                                var chartConfig = {
-                                    type: 'bar',
-                                    data: chartData,
-                                    options: {
-                                        scales: {
-                                            y: {
-                                                beginAtZero: true,
-                                            },
+                                var lineChart = new Chart(ctx, {
+                                type: 'line',
+                                data: {
+                                    labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+                                    datasets: [
+                                        {
+                                            label: "prod1",
+                                            backgroundColor: "white",
+                                            borderWidth: 1,
+                                            borderColor:  'rgba(' + Math.floor(Math.random() * 256) + ',' + Math.floor(Math.random() * 256) + ',' + Math.floor(Math.random() * 256) + ',0.5)',
+                                            fill: false,
+                                            data: [6,10,9,6,14,12,16,13,9,7,6,10]
                                         },
-                                    },
-                                };
+                                        {
+                                            label: "prod2",
+                                            backgroundColor: "white",
+                                            borderWidth: 1,
+                                            borderColor:  'rgba(' + Math.floor(Math.random() * 256) + ',' + Math.floor(Math.random() * 256) + ',' + Math.floor(Math.random() * 256) + ',0.5)',
+                                            fill: false,
+                                            data: [10,8,6,5,12,8,16,17,6,7,6,10]
+                                        }
+                                    ]
+                                },
+                                options: {
+                                    maintainAspectRatio: false,
+                                    scales: {
+                                        yAxes: [{stacked: true}]
+                                    }
+                                }
+                            });
 
-                                var myChart = new Chart(ctx, chartConfig);
                             });
                         </script>
                     </div>

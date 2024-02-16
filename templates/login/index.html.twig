@@ -25,11 +25,12 @@
                                             <label class="form-label" for="password">Password</label>
                                         </div>
                                         <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
-                                        {% if user_role=='ROLE_ADMIN' %}
-                                            <input type="hidden" name="_target_path" value="/admin/dashboard">
-                                        {% elseif user_role=='ROLE_USER' %}
-                                            <input type="hidden" name="_target_path" value="/user/dashboard">
-                                        {% endif %}
+{#                                        {% if user_role=='ROLE_ADMIN' %}#}
+{#                                            <input type="hidden" name="_target_path" value="/admin/dashboard">#}
+{#                                        {% elseif user_role=='ROLE_USER' %}#}
+{#                                            <input type="hidden" name="_target_path" value="/user/dashboard">#}
+{#                                        {% endif %}#}
+                                        <input type="hidden" name="_target_path" value="/user/dashboard">
                                         <button class="btn btn-primary btn-block fa-lg gradient-custom-2 mb-3" id='loginBtn' type="submit">Login</button>
                                         <div class="text-center pt-1 mb-5 pb-1">
 
