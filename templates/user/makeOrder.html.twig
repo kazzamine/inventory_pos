@@ -10,7 +10,7 @@
         <!-- google font -->
         <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
 
-        <form id="signUpForm" action="#!">
+        <form id="signUpForm" action="#">
             <!-- start step indicators -->
             <div class="form-header d-flex mb-4">
                 <span class="stepIndicator">Chose Product</span>
@@ -21,6 +21,16 @@
 
             <!-- step one -->
             <div class="step">
+{#                <p class="text-center mb-4">Chose category you want</p>#}
+{#                <div class="form-group mb-3"><label class="form-label" for="selectedCat">Categories</label>#}
+{#                    <select class="form-select" id="selectedCat" name="selectedCat">#}
+{#                        {% for category in categories %}#}
+{#                            <option value="{{ category.id }}">#}
+{#                                {{ category.catName }}</option>#}
+{#                        {% endfor %}#}
+{#                    </select>#}
+{#                </div>#}
+
                 <p class="text-center mb-4">Chose your product</p>
                 <div class="form-group mb-3"><label class="form-label" for="selectedProd">Products</label>
                     <select class="form-select" id="selectedProd" name="selectedProd">

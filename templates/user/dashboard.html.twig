@@ -2,19 +2,35 @@
 {% block title %}dashboard {% endblock %}
 {% block body %}
     <div class="row">
-        <div class="col-md-6">
+        <div class="align-items-center">
             <div class="panel panel-primary">
                 <div class="panel-heading">
                     <h3 class="panel-title">
-                        <span class="glyphicon glyphicon-bookmark"></span> Quick Shortcuts</h3>
+                        <span class=""></span>Welcome to our <span class="text-capitalize text-primary-emphasis"> inventory</span></h3>
                 </div>
                 <div class="panel-body">
                     <div class="row">
                         <div class="col-xs-6 col-md-6">
-                            <a href="#" class="btn btn-success btn-lg" role="button"><span class="glyphicon glyphicon-user"></span> <br/>Users</a>
-                            <a href="#" class="btn btn-info btn-lg" role="button"><span class="glyphicon glyphicon-file"></span> <br/>Notes</a>
-                            <a href="#" class="btn btn-primary btn-lg" role="button"><span class="glyphicon glyphicon-picture"></span> <br/>Photos</a>
-                            <a href="#" class="btn btn-primary btn-lg" role="button"><span class="glyphicon glyphicon-tag"></span> <br/>Tags</a>
+                            <p>Please order as You wish</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div >
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h3 class="panel-title">
+                        <span class="fa-solid fa-bookmark"></span> Quick Shortcuts</h3>
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-xs-6 col-md-6">
+                            <a href="{{ path('make_order') }}" class="btn btn-outline-secondary btn-lg" role="button"><i class="fa-solid fa-plus"></i> <br/>order</a>
+
+                            <a href="{{ path('app_make_order') }}" class="btn btn-outline-info btn-lg" role="button"><i class="fa-solid fa-user"></i> <br/>change your infos</a>
                         </div>
                     </div>
                 </div>

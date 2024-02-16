@@ -17,9 +17,29 @@ const masterCard=$('#MasterCard')
 const paymentMethod=$('#paymentMethod')
 const quantity=$('#quantity')
 const discount=$('#discount')
+const selectedCat=$('#selectedCat')
+//select category and display it products
+selectedCat.on('click',()=>{
+    let catId=selectedCat.val();
+    price.val('')
+    description.val('')
+    tax.val('')
+    fetch('/user/prodbycat?cat='+catId,
+        {
+            method:'GET',
+            headers:{
+                'content-type':'application/json'
+            }
+        })
+        .then(Response=>{
+            return Response.json();
+        })
+        .then(data=>{
+            console.log(data)
+        })
 
-
-
+})
+//select prod and display data
 selectedProd.on('click',()=>{
     let prodId=selectedProd.val();
     price.val('')

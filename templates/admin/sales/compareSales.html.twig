@@ -1,0 +1,61 @@
+{% extends 'base.html.twig' %}
+{% block title %}compare sales {% endblock %}
+{% block body %}
+    <div class="row">
+        <div class="col-md-6">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h3 class="panel-title">
+                        <span class="glyphicon glyphicon-bookmark"></span> Quick Shortcuts</h3>
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+                        <canvas id="monthlySalesChart" width="600px" height="500px"></canvas>
+                        <script>
+                            document.addEventListener('DOMContentLoaded', function () {
+                                var monthlySalesData = {{ sales|json_encode|raw }};
+                                var ctx = document.getElementById('monthlySalesChart').getContext('2d');
+
+                                var datasets = {};
+                                monthlySalesData.forEach(function (entry) {
+                                    if (!datasets[entry.productName]) {
+                                        datasets[entry.productName] = {
+                                            label: entry.productName,
+                                            data: [],
+                                            backgroundColor: 'rgba(' + Math.floor(Math.random() * 256) + ',' + Math.floor(Math.random() * 256) + ',' + Math.floor(Math.random() * 256) + ',0.5)',
+                                        };
+                                    }
+
+                                    datasets[entry.productName].data.push(entry.totalSales);
+                                });
+
+                                var chartData = {
+                                    labels: monthlySalesData.map(function (entry) {
+                                        return  entry.month;
+                                    }),
+                                    datasets: Object.values(datasets),
+                                };
+                                var chartConfig = {
+                                    type: 'bar',
+                                    data: chartData,
+                                    options: {
+                                        scales: {
+                                            y: {
+                                                beginAtZero: true,
+                                            },
+                                        },
+                                    },
+                                };
+
+                                var myChart = new Chart(ctx, chartConfig);
+                            });
+                        </script>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

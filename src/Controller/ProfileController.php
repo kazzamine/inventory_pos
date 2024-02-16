@@ -11,8 +11,10 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PasswordHasher\Hasher\PasswordHasherFactory;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Csrf\CsrfToken;
 use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
+use function PHPUnit\Framework\throwException;
 
 class ProfileController extends AbstractController
 {
@@ -70,35 +72,41 @@ class ProfileController extends AbstractController
     }
     //change password
     #[Route('/user/profile/changepsd', name: 'change_password')]
-    public function changePassword(EntityManagerInterface $entityManager,Request $request,CsrfTokenManagerInterface $csrfTokenManager): Response
+    public function changePassword(UrlGeneratorInterface $urlGenerator,EntityManagerInterface $entityManager,Request $request,CsrfTokenManagerInterface $csrfTokenManager): Response
     {
-        $jsonData=json_decode($request->getContent(),true);
-        $csrfToken=new CsrfToken('updatePassword',$request->headers->get('X-CSRF-TOKEN'));
+        //generate redirecting route
+        $URL=$urlGenerator->generate('app_changepwd');
+        //check csrf token
+        $csrfToken=new CsrfToken('updatePassword',$request->query->get('_csrf_token_pwd'));
         if (!$csrfTokenManager->isTokenValid($csrfToken)) {
             throw $this->createAccessDeniedException('invalid csrf token');
         }
-        if (!$jsonData) {
-            return $this->json(['error' => 'empty'], 400);
-        }
-        $useID=$jsonData['userId'];
+        //get the user
+        $useID=$request->query->get('userId');
         $user=$entityManager->getRepository(User::class)->find($useID);
+        //hashing password
         $passwordHasherFactory= new PasswordHasherFactory([
             'common' => ['algorithm' => 'bcrypt']
         ]);
         $passwordHasher = $passwordHasherFactory->getPasswordHasher('common');
-        $newPassword=$passwordHasher->hash($jsonData['newPwd']);
+        $newPassword=$passwordHasher->hash($request->query->get('newPassword'));
+        //check if new password is same as the old one
         if($newPassword==$user->getPassword()){
-            return $this->json(['exists'=>'new password can\'t be as the same existing one']);
+            flash()->addFlash('warning', 'exist', 'new password can\'t be same as old password');
+            return $this->redirect($URL);
+
         }
         $user->setPassword($newPassword);
 
         try{
             $entityManager->persist($user);
             $entityManager->flush();
+            flash()->addFlash('success', 'password changed', 'your password has changed , REMEMBER IT!!!');
+
         }catch ( ORMException $exception){
-            $this->json(['exception'=>$exception->getMessage()]);
+           throw new  $exception();
         }
 
-        return $this->json(['success'=>'updated successfully!!']);
+        return $this->redirect($URL);
     }
 }

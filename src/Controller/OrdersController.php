@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Category;
 use App\Entity\Order;
 use App\Entity\OrderDetail;
 use App\Entity\Product;
@@ -80,6 +81,7 @@ class OrdersController extends AbstractController
     #[Route('/user/orders/makeOrder/view', name: 'app_make_order')]
     public function makeOrderView(EntityManagerInterface $entityManager):Response
     {
+        $allCategories=$entityManager->getRepository(Category::class)->findAll();
         $allusers=$entityManager->getRepository(User::class)->findAll();
         $allProducts=$entityManager->getRepository(Product::class)->findAll();
         $providers=$entityManager->getRepository(Provider::class)->findAll();
@@ -90,12 +92,22 @@ class OrdersController extends AbstractController
             $userRole='ROLE_ADMIN';
         }
         return $this->render('user/makeOrder.html.twig',
-        ['products'=>$allProducts,
+        ['categories'=>$allCategories
+            ,'products'=>$allProducts,
             'providers'=>$providers,
             'alluser'=>$allusers,
             'role'=>$userRole
         ]);
     }
+//    //fetch product by category
+//    #[Route('/user/prodbycat',name:'prod_by_cat')]
+//    public function productByCat (Request $request,ProductRepository $productRepository):Response
+//    {
+//        $prod_id=$request->query->get('catId');
+//        $searchedProd=$productRepository->find($prod_id);
+//        $retData=(['price'=>$searchedProd->getPrice(),'desc'=>$searchedProd->getProdDesc(),'tax'=>$searchedProd->getTax()]);
+//        return $this->json($retData);
+//    }
     //fetch product by id
     #[Route('/user/prodbyid',name:'prod_by_id')]
     public function productById (Request $request,ProductRepository $productRepository):Response
@@ -110,12 +122,15 @@ class OrdersController extends AbstractController
     #[Route('user/order/total',name: 'app_order_total')]
     public function calculateTotal(EntityManagerInterface $entityManager,Request $request):Response
     {
+        //decoding ajax data
         $data=json_decode($request->getContent(),true);
+        //searching product by id
         $prod=$entityManager->getRepository(Product::class)->find($data['prodId']);
         $onStorage=$prod->getStorage()->getStorageQuantity();
         $quantityNeeded=$data['quantity'];
-
+        //calculating tax value
         $tax=($prod->getPrice()*$prod->getTax())/100;
+        //check if discount available
         $discountValue=0;
         if($quantityNeeded>=5){
             $discountValue=15;
@@ -125,8 +140,11 @@ class OrdersController extends AbstractController
         if($quantityNeeded>$onStorage){
             $quantityNeeded=$onStorage;
         }
+        //total with tax
         $totalTax=($prod->getPrice()+$tax)*$data['quantity'];
+        //discount value
         $discount=($totalTax*$discountValue)/100;
+        //total with discount
         $total=$totalTax-$discount;
         return $this->json(['quantity'=>$quantityNeeded,'total'=>$total,'discount'=>$discountValue]);
     }

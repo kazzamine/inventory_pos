@@ -23,6 +23,7 @@
                         <th>description</th>
                         <th>price   <a href="{{ path('app_products', { 'sort_by': 'price', 'sort_order': (sort_by == 'price' and sort_order == 'asc') ? 'desc' : 'asc' }) }}"><i class="fa-solid fa-sort"></i> </a></th>
                         <th>tax</th>
+                        <th>quantity</th>
                         <th>category   <a href="{{ path('app_products', { 'sort_by': 'cat_id', 'sort_order': (sort_by == 'cat_id' and sort_order == 'asc') ? 'desc' : 'asc' }) }}"> <i class="fa-solid fa-sort"></i> </a></th>
                         <th>added by</th>
                         <th>update</th>
@@ -38,6 +39,7 @@
                                 <td >{{ product.prodDesc }}</td>
                                 <td >{{ product.price }}</td>
                                 <td >{{ product.tax }}</td>
+                                <td>{{ product.storage.storageQuantity }}</td>
                                 <td >{{ product.catId.catName }}</td>
                                 <td>{{ product.userID.userName }}</td>
                                 <td> <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#updateProd{{ product.id }}">update</button></td>
@@ -71,6 +73,15 @@
                                                         <label  class="col-form-label">product tax :</label>
                                                         <input class="form-control" type="text" name="prodTax" value="{{ product.tax }}" >
                                                     </div>
+                                                    <div class="form-group">
+                                                        <label  class="col-form-label">product Storage :</label>
+                                                        <input class="form-control" type="number" name="currentStorage" readonly value="{{ product.storage.storageQuantity }}" >
+
+                                                        <label  class="col-form-label">add Storage quantity :</label>
+                                                        <input class="form-control" type="number" name="prodStorage" >
+
+                                                    </div>
+                                                    <br>
                                                     <div class="form-group">
                                                         <button type="submit" class="btn btn-warning" >update</button>
                                                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>

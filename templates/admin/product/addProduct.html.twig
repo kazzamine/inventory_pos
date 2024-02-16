@@ -31,6 +31,9 @@
                             <div class="has-feedback form-group mb-3"><label class="form-label" for="tax">product tax</label><input class="form-control" type="number" step="0.01" id="tax" name="tax" placeholder="tax %" required></div>
                         </div>
                         <div class="col-sm-6">
+                            <div class="has-feedback form-group mb-3"><label class="form-label" for="storage">Storage</label><input class="form-control" type="number" id="storage" name="storage" placeholder="storage quantity" required></div>
+                        </div>
+                        <div class="col-sm-6">
                             <div class="form-group mb-3"><label class="form-label" for="category">Categories</label>
                                 <select class="form-select" id="category" name="category">
                                     {% for category in categories %}

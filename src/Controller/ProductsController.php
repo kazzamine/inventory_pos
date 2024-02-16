@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Category;
 use App\Entity\Product;
+use App\Entity\Storage;
 use App\Repository\CategoryRepository;
 use App\Repository\ProductRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -36,7 +37,7 @@ class ProductsController extends AbstractController
         if($searchTerm!=''){
             $paginat = $paginator->paginate($searchedData, $currentPage, 10);
         }
-        return $this->render('admin/listProducts.html.twig',
+        return $this->render('admin/product/listProducts.html.twig',
         ['products'=>$paginat,
             'sort_by' => $sortBy,
             'sort_order' => $sortOrder,
@@ -46,7 +47,7 @@ class ProductsController extends AbstractController
     #[Route('/admin/product/addView',name: 'add_product_view')]
     public function addProductPage(CategoryRepository $categoryRepository):Response{
         $categories=$categoryRepository->findAll();
-        return $this->render('admin/addProduct.html.twig',['categories'=>$categories]);
+        return $this->render('admin/product/addProduct.html.twig',['categories'=>$categories]);
     }
     //handle ajax request to add product
     #[Route('/admin/product/add', name: 'add_product')]
@@ -67,6 +68,7 @@ class ProductsController extends AbstractController
         $prodDesc = $data['desc'];
         $prodPrice = $data['price'];
         $prodTax = $data['tax'];
+        $storageQuantity=$data['storage'];
         //associated category
         $prodCat = $data['category'];
         $category=$entityManager->getRepository(Category::class)->find($prodCat);
@@ -80,6 +82,12 @@ class ProductsController extends AbstractController
         $newProd->setCatId($category);
         $newProd->setUserId($addBy);
         $entityManager->persist($newProd);
+        $entityManager->flush();
+        //adding storage quantity
+        $storage=new Storage();
+        $storage->setStorageQuantity($storageQuantity);
+        $storage->setProdId($newProd);
+        $entityManager->persist($storage);
         $entityManager->flush();
         //success response
         return $this->json(['success' => 'added']);
@@ -120,7 +128,7 @@ class ProductsController extends AbstractController
         $prodDesc = $request->query->get('prodDesc');
         $prodPrice = $request->query->get('prodPrice');
         $prodTax = $request->query->get('prodTax');
-
+        $prodStorage=$request->query->get('prodStorage');
 
         if (!$prodId) {
             flash()->addFlash('error', 'Empty', 'product to be removed not specified');
@@ -128,6 +136,8 @@ class ProductsController extends AbstractController
 
         }
         $productToUpdate = $entityManager->getRepository(Product::class)->find($prodId);
+        //storage of the updated product
+        $storage=$entityManager->getRepository(Storage::class)->findOneBy(['prod_id'=>$prodId]);
         if (!$productToUpdate) {
             flash()->addFlash('error', 'Empty', 'product to be updated not found!!');
         }
@@ -136,6 +146,11 @@ class ProductsController extends AbstractController
         $productToUpdate->setTax($prodTax);
         $productToUpdate->setPrice($prodPrice);
         $entityManager->persist($productToUpdate);
+        $entityManager->flush();
+        //updating storage quantity by new value
+        $newQuantity=$storage->getStorageQuantity()+$prodStorage;
+        $storage->setStorageQuantity($newQuantity);
+        $entityManager->persist($storage);
         $entityManager->flush();
         //success response
         flash()->addFlash('success', 'updated', 'you successfuly updated the product');

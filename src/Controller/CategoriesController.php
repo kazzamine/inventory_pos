@@ -40,7 +40,7 @@ class CategoriesController extends AbstractController
         //update form
 //        $updateForm=$this->createForm(UpdateCategoryForm::class);
 
-        return $this->render('admin/listCategories.html.twig',
+        return $this->render('admin/category/listCategories.html.twig',
             ['categories' => $paginat,
                 'sort_by' => $sortBy,
                 'sort_order' => $sortOrder,
@@ -52,7 +52,7 @@ class CategoriesController extends AbstractController
     public function addCatView(CategoryRepository $categoryRepository): Response
     {
         $allCategories = $categoryRepository->findAll();
-        return $this->render('admin/addCategory.html.twig');
+        return $this->render('admin/category/addCategory.html.twig');
     }
 
     //adding new category from ajax call

@@ -95,7 +95,7 @@ const txtProdPrice=$('#price')
 const txtProdDesc=$('#description')
 const txtProdTax=$('#tax')
 const txtProdCat=$('#category')
-
+const storage=$('#storage')
 const prodCsrfToken=$('#_csrf_token')
 //event of addinf new category
 btnAddProd.on('click',(e)=>{
@@ -106,7 +106,8 @@ btnAddProd.on('click',(e)=>{
             'desc': txtProdDesc.val(),
             'price':txtProdPrice.val(),
             'tax':txtProdTax.val(),
-            'category':txtProdCat.val()
+            'category':txtProdCat.val(),
+            'storage':storage.val()
         }
         addAjax('/admin/product/add', data,prodCsrfToken.val());
     }else{
@@ -221,8 +222,8 @@ const SubModelCsrfToken=$('#_csrf_token_addsubmodel')
 addSubModel.on('click',()=>{
     const data={
         'submodName':txtSubModName.val(),
-        'submodIcon':txtSubModPath.val(),
-        'submodPath':txtSubModIcon.val(),
+        'submodIcon':txtSubModIcon.val(),
+        'submodPath':txtSubModPath.val(),
         'submodid':txtSubModModId.val()
     }
     console.log(data)

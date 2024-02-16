@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Model;
+use App\Entity\Roles;
 use App\Repository\RolesRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Exception\ORMException;
@@ -90,12 +91,13 @@ class ModelController extends AbstractController
         if(!$tokenStorage->isTokenValid($csrfToken)){
             throw $this->createAccessDeniedException();
         }
-
+        $role=$entityManager->getRepository(Roles::class)->find($data['modRole']);
         $newModel=new Model();
         $newModel->setModName($data['modName']);
         $newModel->setIcon($data['modIcon']);
         $newModel->setPath($data['modPath']);
-        $newModel->setRole($data['modRole']);
+        $newModel->setRole($role->getRoleName());
+        $newModel->setRoleId($role);
         try{
             $entityManager->persist($newModel);
             $entityManager->flush();
