@@ -64,7 +64,18 @@ class OrderRepository extends ServiceEntityRepository
         return $result->fetchAllAssociative();
 
     }
-    
+
+    public function findLastOrders()
+    {
+        $sql='SELECT o.id as orderid,o.quantity as quantity,p.prod_name as prodname,o.order_date as orderdate from `order` o 
+                JOIN product p
+                on p.id=o.prod_id_id
+                ORDER BY order_date DESC LIMIT 5;';
+        $entityManager = $this->getEntityManager()->getConnection();
+        $query = $entityManager->prepare($sql);
+        $result=$query->executeQuery();
+        return $result->fetchAllAssociative();
+    }
 
 //    /**
 //     * @return Order[] Returns an array of Order objects

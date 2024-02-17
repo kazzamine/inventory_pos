@@ -1,5 +1,5 @@
 {% extends 'base.html.twig' %}
-{% block title %} {% endblock %}
+{% block title %}Dashboard {% endblock %}
 {% block body %}
     {%if userRole=='ROLE_ADMIN' %}
     <div class="row offset-3">
@@ -54,31 +54,19 @@
                 </div>
                 <div class="panel-body offset-3">
                     <div class="row">
-                        <div class="col-xs-6 col-md-6">
-                            <div class="btn btn-outline-secondary">
-                                <div class="card-title">
-                                    <span class="">total Users</span>
-                                </div>
-                                <div class="">
-                                    <span class="card-text offset-2">{{ totalUsers }}</span>
-                                </div>
-                            </div>
-                            <div class="btn btn-outline-secondary">
-                                <div class="card-title">
-                                    <span class="">total Orders</span>
-                                </div>
-
-                                <div class="">
-                                    <span class="card-text offset-2">{{ totalOrders }}</span>
+                        <div class="row">
+                            <div class="card border-secondary mb-3" style="max-width: 10rem;">
+                                <div class="card-header">Total Users</div>
+                                <div class="card-body text-secondary">
+                                    <h5 class="card-title text-center">{{ totalUsers }}</h5>
+                                    <p class="card-text"></p>
                                 </div>
                             </div>
-                            <div class="btn btn-outline-secondary">
-                                <div class="card-title">
-                                    <span class="">total Users</span>
-                                </div>
-
-                                <div class="">
-                                    <span class="card-text offset-2">{{ totalUsers }}</span>
+                            <div class="card border-secondary mb-3 offset-1" style="max-width: 10rem;">
+                                <div class="card-header">Total Orders</div>
+                                <div class="card-body text-secondary">
+                                    <h5 class="card-title text-center">{{ totalOrders }}</h5>
+                                    <p class="card-text"></p>
                                 </div>
                             </div>
                         </div>
@@ -87,6 +75,44 @@
                 </div>
             </div>
         </div>
+
+
+        <div class="row col-md-10 offset-1">
+            <div class="card shadow">
+                <div class="card-header"> latest orders made</div>
+                <div class="card-body">
+            <table class="table my-0" id="dataTable">
+                <thead>
+                <tr>
+                    <th>order id</th>
+                    <th>product</th>
+                    <th>quantity</th>
+                    <th>date</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% if latestOrders %}
+                    {% for latestOrder in latestOrders %}
+                        <tr>
+                            <td >{{ latestOrder.orderid }}</td>
+                            <td >{{ latestOrder.prodname }}</td>
+                            <td>{{ latestOrder.quantity }}</td>
+                            <td >{{ latestOrder.orderdate|date('d-m-Y') }}</td>
+                        </tr
+                    {% endfor %}
+                {% else %}
+                    <tr>
+                        no data found
+                    </tr>
+                {% endif %}
+                </tbody>
+                <tfoot>
+            </table>
+                </div>
+            </div>
+        </div>
+
+
 
                     {% else %}
                         <div class="row offset-3">

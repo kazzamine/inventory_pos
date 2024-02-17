@@ -13,9 +13,42 @@
         <div class="card-body">
             <form>
                 <div class="row">
-                    <div class="col">
-                        <img src="{{ asset('uploads/images/' ~ userInfo.picture) }}"  width="100">                  </div>
+
+                    <div class="d-flex justify-content-center mb-4">
+                        <div id="pictureContainer">
+                            <img id="selectedPic" src="{{ asset('uploads/images/' ~ userInfo.picture) }}"
+                                 class="rounded-circle" style="width: 200px; height: 200px; object-fit: cover;" alt="no picture found" />
+                        </div>
+                    </div>
+                    <div class="d-flex justify-content-center">
+                        <div class="btn btn-primary btn-rounded">
+                            <label class="form-label text-white m-1" for="pictureInput">Choose file</label>
+                            <input type="file"  class="form-control d-none" id="pictureInput" onchange="displaySelectedPicture()">
+                        </div>
+                    </div>
+
                 </div>
+                    <script>
+                        function displaySelectedPicture() {
+                            var input = document.getElementById('pictureInput');
+                            var container = document.getElementById('pictureContainer');
+
+                            // Check if a file is selected
+                            if (input.files && input.files[0]) {
+                                var reader = new FileReader();
+
+                                // Set up the reader to read the selected file as a data URL
+                                reader.onload = function (e) {
+                                    // Display the selected picture
+                                    container.innerHTML = '<img id="selectedPic" src="' + e.target.result + '" class="rounded-circle" style="width: 200px; height: 200px; object-fit: cover;" alt="" >';
+                                };
+
+                                // Read the selected file
+                                reader.readAsDataURL(input.files[0]);
+                            }
+                        }
+                    </script>
+
                 <div class="row">
                     <div class="col">
                         <div class="mb-3"><label class="form-label" ><strong>Username</strong></label><input class="form-control userInfo"  readonly type="text" id="txtUsername" value="{{ userInfo.username }}" name="txtUsername" ></div>

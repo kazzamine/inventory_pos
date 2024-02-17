@@ -11,5 +11,3 @@ import 'jquery-ui/dist/jquery-ui.min'
 import '../public/pictures/icon.png'
 import chart from 'chart.js'
 import './js/user/mdp'
-
-

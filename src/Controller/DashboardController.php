@@ -28,11 +28,14 @@ class DashboardController extends AbstractController
         $totalOrders=count($entityManager->getRepository(Order::class)->findAll());
         //get the monthly sale for each product
         $sales=$orderRepository->findByGroup();
+        //last added orders
+        $latestOrders=$entityManager->getRepository(Order::class)->findLastOrders();
         return $this->render('admin/dashboard.html.twig',[
             'sales'=>$sales,
             'totalUsers'=>$totalUsers,
             'totalOrders'=>$totalOrders,
-            'userRole'=>$userRole
+            'userRole'=>$userRole,
+            'latestOrders'=>$latestOrders
         ]);
     }
     //render user dashboard

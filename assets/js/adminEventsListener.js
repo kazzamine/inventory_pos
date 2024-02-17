@@ -6,7 +6,6 @@ const $ = require('jquery');
 global.$ = global.jQuery = $;
 import Toastify from "toastify-js";
 
-import {addUser} from "./admin/users";
 import {addAjax} from "./admin/addAjax";
 import {makeReadOnly} from "./common";
 import {toggleDivVisibility} from "./common";
@@ -135,7 +134,6 @@ const userInfo=$('.userInfo')
 updateinfoClick.on('click',()=>{
     // toggleHiddenButton(updateinfoClick);
     Array.from(userInfo).forEach(txtInput=>{
-        console.log(txtInput)
         makeReadOnly(txtInput)
     })
     if(updateinfoClick.text('update'))
@@ -157,6 +155,7 @@ const txtLastName=$('#txtLastName');
 const txtAddress=$('#txtAddress');
 const txtPhone=$('#txtPhone');
 const txtCity=$('#txtCity');
+const profilePic=$('#pictureInput')
 
 const ProfilecsrfToken=$('#_csrf_token_userUpdate')
 saveInfoChanges.on('click',()=>{
@@ -167,9 +166,10 @@ saveInfoChanges.on('click',()=>{
         'lastname':txtLastName.val(),
         'address':txtAddress.val(),
         'phone':txtPhone.val(),
-        'city':txtCity.val()
+        'city':txtCity.val(),
+        'profilePicture':profilePic.file[0]
     }
-
+    console.log(data)
     updateUser('/user/profile/update',data,ProfilecsrfToken.val());
     Array.from(userInfo).forEach(txtInput=>{
         console.log(txtInput)

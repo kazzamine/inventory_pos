@@ -29,7 +29,7 @@ class ProfileController extends AbstractController
             'userInfo' =>$user
         ]);
     }
-    //update informations
+    //update information
     #[Route('/user/profile/update', name: 'update_profile')]
     public function updateProfile(EntityManagerInterface $entityManager,Request $request,CsrfTokenManagerInterface $csrfTokenManager): Response
     {
@@ -49,6 +49,18 @@ class ProfileController extends AbstractController
         $user->setAdress($jsonData['address']);
         $user->setPhone($jsonData['phone']);
         $user->setCity($jsonData['city']);
+        //check if pic is changed
+        $imageFile=$jsonData['profilePicture'];
+
+        if($imageFile){
+            $originalFilename = pathinfo($imageFile->getClientOriginalName(), PATHINFO_FILENAME);
+            $newFilename = $originalFilename . '-' . uniqid() . '.' . $imageFile->guessExtension();
+            $imageFile->move(
+                $this->getParameter('image_directory'),
+                $newFilename
+            );
+            $user->setPicture($newFilename);
+        }
         try{
             $entityManager->persist($user);
             $entityManager->flush();

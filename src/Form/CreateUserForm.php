@@ -16,7 +16,7 @@ class CreateUserForm extends AbstractType{
     {
         $builder
             ->add('picture', FileType::class, [
-                'label' => 'Product Image',
+                'label' => 'profile Picture    ',
                 'mapped' => false,
                 'required' => false,
             ])
