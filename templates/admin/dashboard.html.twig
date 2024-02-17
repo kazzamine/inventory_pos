@@ -1,6 +1,7 @@
 {% extends 'base.html.twig' %}
 {% block title %} {% endblock %}
 {% block body %}
+    {%if userRole=='ROLE_ADMIN' %}
     <div class="row offset-3">
         <div class="align-items-center">
             <div class="panel panel-primary">
@@ -26,7 +27,7 @@
                         <span class="fa-solid fa-bookmark"></span> Quick Shortcuts</h3>
                 </div>
                 <div class="panel-body offset-3">
-                    {%if userRole=='ROLE_ADMIN' %}
+
                     <div class="row">
                         <div class="col-xs-6 col-md-6">
                             <a href="{{ path('make_order') }}" class="btn btn-outline-secondary btn-lg" role="button"><i class="fa-solid fa-plus"></i> <br/>order</a>
@@ -83,19 +84,53 @@
                         </div>
                         </div>
                     </div>
-
                 </div>
             </div>
         </div>
 
                     {% else %}
-                        <div class="row">
-                            <div class="col-xs-6 col-md-6">
-                                <a href="{{ path('make_order') }}" class="btn btn-outline-secondary btn-lg" role="button"><i class="fa-solid fa-plus"></i> <br/>order</a>
-
-                                <a href="{{ path('app_make_order') }}" class="btn btn-outline-info btn-lg" role="button"><i class="fa-solid fa-user"></i> <br/>change your infos</a>
+                        <div class="row offset-3">
+                            <div class="align-items-center">
+                                <div class="panel panel-primary">
+                                    <div class="panel-heading">
+                                        <h3 class="panel-title">
+                                            <span class=""></span>hello Welcome to our <span class="text-capitalize text-primary-emphasis"> inventory</span></h3>
+                                    </div>
+                                    <div class="panel-body offset-3">
+                                        <div class="row">
+                                            <div class="col-xs-6 col-md-6">
+                                                <p>Order as you wish</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
+                        <br>
+                        <br>
+                        <div class="row">
+                            <div >
+                                <div class="panel panel-primary">
+                                    <div class="panel-heading">
+                                        <h3 class="panel-title offset-4">
+                                            <span class="fa-solid fa-bookmark"></span> Quick Shortcuts</h3>
+                                    </div>
+                                    <div class="panel-body offset-4">
+
+                                        <div class="row">
+                                            <div class="col-xs-6 col-md-6">
+                                                <a href="{{ path('make_order') }}" class="btn btn-outline-secondary btn-lg" role="button"><i class="fa-solid fa-plus"></i> <br/>order</a>
+
+                                                <a href="{{ path('app_make_order') }}" class="btn btn-outline-info btn-lg" role="button"><i class="fa-solid fa-user"></i> <br/>change your infos</a>
+
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
                     {% endif %}
 
 {% endblock %}

@@ -2,13 +2,13 @@
 {% block title %}compare sales {% endblock %}
 {% block body %}
     <div class="row">
-        <div class="col-md-6">
-            <div class="panel panel-primary">
-                <div class="panel-heading">
-                    <h3 class="panel-title">
+        <div class="col-md-9">
+            <div class="card shadow">
+                <div class="card-header">
+                    <h3 class="">
                         <span class="glyphicon glyphicon-bookmark"></span> compare sales</h3>
                 </div>
-                <div class="row">
+                <div class="row card-body">
                     <div class="form-group col-sm-4"><label class="form-label" for="selectedFirstProd">1st Product</label>
                         <select class="form-select" id="selectedFirstProd" name="selectedFirstProd">
                             {% for product in products %}
@@ -26,47 +26,78 @@
                         </select>
                     </div>
                 </div>
-                <div class="panel-body">
+                <div class="card-body">
                     <div class="row">
+                        <div >
+                            <canvas id="salesChart" width="400" height="150"></canvas>
+                        </div>
                         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
-                        <canvas id="line-chart" width="600px" height="500px"></canvas>
                         <script>
+
                             document.addEventListener('DOMContentLoaded', function () {
-                                var monthlySalesData ='';
-                                var ctx = document.getElementById('line-chart').getContext('2d');
+                                var productSelect1 = document.getElementById('selectedFirstProd');
+                                var productSelect2 = document.getElementById('selectedSecondProd');
+                                var chart = document.getElementById('salesChart').getContext('2d');
 
-                                var lineChart = new Chart(ctx, {
-                                type: 'line',
-                                data: {
-                                    labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
-                                    datasets: [
-                                        {
-                                            label: "prod1",
-                                            backgroundColor: "white",
-                                            borderWidth: 1,
-                                            borderColor:  'rgba(' + Math.floor(Math.random() * 256) + ',' + Math.floor(Math.random() * 256) + ',' + Math.floor(Math.random() * 256) + ',0.5)',
-                                            fill: false,
-                                            data: [6,10,9,6,14,12,16,13,9,7,6,10]
-                                        },
-                                        {
-                                            label: "prod2",
-                                            backgroundColor: "white",
-                                            borderWidth: 1,
-                                            borderColor:  'rgba(' + Math.floor(Math.random() * 256) + ',' + Math.floor(Math.random() * 256) + ',' + Math.floor(Math.random() * 256) + ',0.5)',
-                                            fill: false,
-                                            data: [10,8,6,5,12,8,16,17,6,7,6,10]
-                                        }
-                                    ]
-                                },
-                                options: {
-                                    maintainAspectRatio: false,
-                                    scales: {
-                                        yAxes: [{stacked: true}]
+                                var existingChart = null;
+
+                                // Event listener for product selection
+                                function updateChart() {
+                                    // Destroy existing chart if it exists
+                                    if (existingChart) {
+                                        existingChart.destroy();
                                     }
-                                }
-                            });
 
+                                    var productId1 = productSelect1.value;
+                                    var productId2 = productSelect2.value;
+
+                                    // Make an AJAX request to get sales data for the selected products
+                                    fetch('/admin/compareSale/getProd?prodId1=' + productId1 + '&prodId2=' + productId2)
+                                        .then(response => response.json())
+                                        .then(data => {
+                                            console.log('Received data:', data); // Log the received data
+
+                                            var months = data.salesData1.map(item => item.month);
+
+                                            var dataset1 = {
+                                                label: productSelect1.options[productSelect1.selectedIndex].text,
+                                                data: data.salesData1.map(item => item.quantity),
+                                                borderColor: 'rgba(255, 99, 132, 1)',
+                                                borderWidth: 1,
+                                                fill: false
+                                            };
+
+                                            var dataset2 = {
+                                                label: productSelect2.options[productSelect2.selectedIndex].text,
+                                                data: data.salesData2.map(item => item.quantity),
+                                                borderColor: 'rgba(54, 162, 235, 1)',
+                                                borderWidth: 1,
+                                                fill: false
+                                            };
+
+                                            var config = {
+                                                type: 'line',
+                                                data: {
+                                                    labels: months,
+                                                    datasets: [dataset1, dataset2]
+                                                }
+                                            };
+
+                                            // Update chart
+                                            existingChart = new Chart(chart, config);
+
+                                        })
+                                        .catch(error => {
+                                            console.error('Error:', error);
+                                            console.log('Error updating chart'); // Log an error message
+                                        });
+                                }
+
+                                // Initial chart rendering
+                                updateChart();
+                                // Event listeners for product selection changes
+                                productSelect1.addEventListener('change', updateChart);
+                                productSelect2.addEventListener('change', updateChart);
                             });
                         </script>
                     </div>

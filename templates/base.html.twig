@@ -19,13 +19,13 @@
         <div class="row flex-nowrap">
         {#including navbar #}
     {% include 'attachements/navbar.html.twig' %}
-                <div class="col py-3">
+                <div class="col py-3" id="content">
                     {% block body %}
 
                     {% endblock %}
                 </div>
             </div>
         </div>
-    {% include 'attachements/footer.html.twig' %}
+{#    {% include 'attachements/footer.html.twig' %}#}
     </body>
 </html>
