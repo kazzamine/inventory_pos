@@ -53,8 +53,7 @@ class ProfileController extends AbstractController
         $imageFile=$jsonData['profilePicture'];
 
         if($imageFile){
-            $originalFilename = pathinfo($imageFile->getClientOriginalName(), PATHINFO_FILENAME);
-            $newFilename = $originalFilename . '-' . uniqid() . '.' . $imageFile->guessExtension();
+            $newFilename = $jsonData['username'] . '-' . uniqid() . '.' . $imageFile->guessExtension();
             $imageFile->move(
                 $this->getParameter('image_directory'),
                 $newFilename

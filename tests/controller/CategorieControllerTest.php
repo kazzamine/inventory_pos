@@ -31,7 +31,7 @@ class CategorieControllerTest extends WebTestCase
         // simulate $testUser being logged in
         $client->loginUser($testUser);
         $client->request('POST','/admin/categories/remove',[
-            'catId'=>1
+            'catId'=>2
         ]);
 
         $this->assertEquals(Response::HTTP_OK, $client->getResponse()->getStatusCode());

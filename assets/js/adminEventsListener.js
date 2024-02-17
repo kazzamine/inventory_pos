@@ -95,6 +95,7 @@ const txtProdDesc=$('#description')
 const txtProdTax=$('#tax')
 const txtProdCat=$('#category')
 const storage=$('#storage')
+const prodImage=$('#prodImage')
 const prodCsrfToken=$('#_csrf_token')
 //event of addinf new category
 btnAddProd.on('click',(e)=>{
@@ -106,9 +107,11 @@ btnAddProd.on('click',(e)=>{
             'price':txtProdPrice.val(),
             'tax':txtProdTax.val(),
             'category':txtProdCat.val(),
-            'storage':storage.val()
+            'storage':storage.val(),
+            'prodImage':prodImage.prop('files')[0]
         }
         addAjax('/admin/product/add', data,prodCsrfToken.val());
+        location.reload(true);
     }else{
         Toastify({
             text: 'fill all fields please',
@@ -119,6 +122,7 @@ btnAddProd.on('click',(e)=>{
             backgroundColor: 'warning',
             stopOnFocus: true,
         }).showToast();
+
     }
 
 })
@@ -156,9 +160,10 @@ const txtAddress=$('#txtAddress');
 const txtPhone=$('#txtPhone');
 const txtCity=$('#txtCity');
 const profilePic=$('#pictureInput')
-
 const ProfilecsrfToken=$('#_csrf_token_userUpdate')
 saveInfoChanges.on('click',()=>{
+    console.log(profilePic.prop('files')[0])
+
     let data={
         'id':saveInfoChanges.data('userId'),
         'username':txtUsername.val(),
@@ -167,12 +172,10 @@ saveInfoChanges.on('click',()=>{
         'address':txtAddress.val(),
         'phone':txtPhone.val(),
         'city':txtCity.val(),
-        'profilePicture':profilePic.file[0]
+        'profilePicture':profilePic.prop('files')[0]
     }
-    console.log(data)
     updateUser('/user/profile/update',data,ProfilecsrfToken.val());
     Array.from(userInfo).forEach(txtInput=>{
-        console.log(txtInput)
         makeReadOnly(txtInput)
     })
     if(updateinfoClick.text('cancel'))
