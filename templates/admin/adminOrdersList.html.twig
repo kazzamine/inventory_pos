@@ -47,7 +47,7 @@
                                                 <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                                                     <span aria-hidden="true">&times;</span>
                                                 </button>
-                                            </div>
+                                             </div>
                                             <div class="modal-body">
                                                 <form>
                                                     <div class="form-group">
@@ -57,12 +57,10 @@
                                                     <div class="form-group">
                                                         <label class="col-form-label">product: {{ order.prodId.prodName }}</label>
                                                         <label  class="offset-2 col-form-label">Date : {{ order.orderDate|date('d-m-Y') }}</label>
-
                                                     </div>
                                                     <div class="form-group">
                                                         <label  class="col-form-label">Quantity: {{ order.quantity }}</label>
                                                         <label class="offset-2 col-form-label">Total : {{ order.orderDetail.total }}</label>
-
                                                     </div>
                                                 </form>
                                             </div>
@@ -84,13 +82,11 @@
                                                     <div class="form-group">
                                                         <a role="button" class="btn btn-danger" href={{ path('remove_order',{'orderId':order.id()}) }} >remove</a>                                                    </div>
                                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-
                                                 </form>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-
                             </tr>
                         {% endfor %}
                     {% else %}
