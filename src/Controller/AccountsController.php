@@ -16,28 +16,29 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 #[Route('/admin')]
 class AccountsController extends AbstractController
-{
+{   #render create and listing user accounts page
+    #handles add user action
     #[Route('/accounts/create', name: 'app_accounts_create')]
     public function index(Request $request,EntityManagerInterface $entityManager,PaginatorInterface $paginator): Response
     {
-        //getting all users
+        #getting all users
         $allUsers=$entityManager->getRepository(User::class)->findAll();
-        //search
+        #search
         $searchTerm = $request->query->get('search', '');
         $searchedData = $entityManager->getRepository(User::class)->findBySearchTerm($searchTerm);
-        //sorting
+        #sorting
         $sortBy = $request->query->get('sort_by', 'username');
         $sortOrder = $request->query->get('sort_order', 'asc');
         $currentPage = !$request->get('page') ? 1 : $request->get('page');
         $allUsers = $entityManager->getRepository(User::class)->findBy([], [$sortBy => $sortOrder]);
-        //paginating
+        #paginating
         $paginat = $paginator->paginate($allUsers, $currentPage, 10);
 
         if($searchTerm!=''){
             $paginat = $paginator->paginate($searchedData, $currentPage, 10);
         }
 
-        //creating user
+        #creating user
         $user =new User();
         $form=$this->createForm(CreateUserForm::class,$user);
         $form->handleRequest($request);
@@ -57,7 +58,7 @@ class AccountsController extends AbstractController
             $user->setRoleId($role);
             $user->setRoles( array('role'=>$role->getRoleName()) );
             $password=$form->get('password')->getData();
-            //crypting password
+            #crypting password
             $passwordHasherFactory= new PasswordHasherFactory([
                 'common' => ['algorithm' => 'bcrypt']
             ]);
@@ -76,10 +77,10 @@ class AccountsController extends AbstractController
         );
     }
 
-
+    #handle remove account request
     #[Route('/accounts/remove','remove_user')]
     public function removeUser(Request $request,EntityManagerInterface $entityManager,UrlGeneratorInterface $urlGenerator):Response
-{
+    {
         $urlGenerate=$urlGenerator->generate('app_accounts_create');
         $userId=$request->query->get('userId');
         if(!$userId){

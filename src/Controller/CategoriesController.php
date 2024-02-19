@@ -59,7 +59,7 @@ class CategoriesController extends AbstractController
 
         $data = json_decode($request->getContent(), true);
         //checking if csrftoken is valid
-        $token = new CsrfToken('makeOrder', $request->headers->get('X-CSRF-TOKEN'));
+        $token = new CsrfToken('addCat', $request->headers->get('X-CSRF-TOKEN'));
         if (!$csrfTokenManager->isTokenValid($token)) {
             throw $this->createAccessDeniedException('invalid csrf token');
         }

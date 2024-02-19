@@ -162,7 +162,7 @@ const txtCity=$('#txtCity');
 const profilePic=$('#pictureInput')
 const ProfilecsrfToken=$('#_csrf_token_userUpdate')
 saveInfoChanges.on('click',()=>{
-    console.log(profilePic.prop('files')[0])
+    console.log(profilePic.prop('files')[0].name)
 
     let data={
         'id':saveInfoChanges.data('userId'),
@@ -172,7 +172,7 @@ saveInfoChanges.on('click',()=>{
         'address':txtAddress.val(),
         'phone':txtPhone.val(),
         'city':txtCity.val(),
-        'profilePicture':profilePic.prop('files')[0]
+        'profilePicture':profilePic.prop('files')[0].name
     }
     updateUser('/user/profile/update',data,ProfilecsrfToken.val());
     Array.from(userInfo).forEach(txtInput=>{

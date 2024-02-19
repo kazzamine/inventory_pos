@@ -26,21 +26,22 @@ use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 
 class OrdersController extends AbstractController
 {
+    #list of all orders
     #[Route('/admin/orders/list', name: 'app_orders')]
     public function orderList(Request $request,OrderRepository $orderRepository,PaginatorInterface $paginator): Response
     {
         $user = $this->getUser();
         $allOrder=$orderRepository->findAll();
 
-        //search
+        #search
         $searchTerm = $request->query->get('search', '');
         $searchedData = $orderRepository->findBySearchTerm($searchTerm);
-        //sorting
+        #sorting
         $sortBy = $request->query->get('sort_by', 'id');
         $sortOrder = $request->query->get('sort_order', 'asc');
         $currentPage = !$request->get('page') ? 1 : $request->get('page');
         $allOrder = $orderRepository->findBy([], [$sortBy => $sortOrder]);
-        //paginating
+        #paginating
         $paginat = $paginator->paginate($allOrder, $currentPage, 10);
         if($searchTerm!=''){
             $paginat = $paginator->paginate($searchedData, $currentPage, 10);
@@ -56,17 +57,17 @@ class OrdersController extends AbstractController
     #[Route('/user/orders',name: 'user_orders')]
     public function userOrders(EntityManagerInterface $entityManager,PaginatorInterface $paginator,Request $request):Response
     {
-        $user=$entityManager->getRepository(User::class)->findOneBy(['username'=>$this->getUser()->getUserIdentifier()]);
+        $user=$entityManager->getRepository(User::class)->findOneBy(['email'=>$this->getUser()->getUserIdentifier()]);
         $userOrders=$entityManager->getRepository(OrderDetail::class)->findOneBy(['user_id'=>$user]);
-        //search
+        #search
         $searchTerm = $request->query->get('search', '');
         $searchedData = $entityManager->getRepository(Order::class)->findBySearchTerm($searchTerm);
-        //sorting
+        #sorting
         $sortBy = $request->query->get('sort_by', 'id');
         $sortOrder = $request->query->get('sort_order', 'asc');
         $currentPage = !$request->get('page') ? 1 : $request->get('page');
         $allOrder = $entityManager->getRepository(Order::class)->findBy(['orderDetail'=>$userOrders], [$sortBy => $sortOrder]);
-        //paginating
+        #paginating
         $paginat = $paginator->paginate($allOrder, $currentPage, 10);
         if($searchTerm!=''){
             $paginat = $paginator->paginate($searchedData, $currentPage, 10);
@@ -77,7 +78,9 @@ class OrdersController extends AbstractController
                 'sort_order' => $sortOrder,
                 'search_term'=>$searchTerm]);
     }
-    //make order view
+
+
+    #render make order view
     #[Route('/user/orders/makeOrder/view', name: 'app_make_order')]
     public function makeOrderView(EntityManagerInterface $entityManager):Response
     {
@@ -122,15 +125,15 @@ class OrdersController extends AbstractController
     #[Route('user/order/total',name: 'app_order_total')]
     public function calculateTotal(EntityManagerInterface $entityManager,Request $request):Response
     {
-        //decoding ajax data
+        #decoding ajax data
         $data=json_decode($request->getContent(),true);
-        //searching product by id
+        #searching product by id
         $prod=$entityManager->getRepository(Product::class)->find($data['prodId']);
         $onStorage=$prod->getStorage()->getStorageQuantity();
         $quantityNeeded=$data['quantity'];
-        //calculating tax value
+        #calculating tax value
         $tax=($prod->getPrice()*$prod->getTax())/100;
-        //check if discount available
+        #check if discount available
         $discountValue=0;
         if($quantityNeeded>=5){
             $discountValue=15;
@@ -140,23 +143,23 @@ class OrdersController extends AbstractController
         if($quantityNeeded>$onStorage){
             $quantityNeeded=$onStorage;
         }
-        //total with tax
+        #total with tax
         $totalTax=($prod->getPrice()+$tax)*$data['quantity'];
-        //discount value
+        #discount value
         $discount=($totalTax*$discountValue)/100;
-        //total with discount
+        #total with discount
         $total=$totalTax-$discount;
         return $this->json(['quantity'=>$quantityNeeded,'total'=>$total,'discount'=>$discountValue]);
     }
 
-    //make order
+    #make order
     #[Route('/user/orders/makeOrder', name: 'make_order')]
     public function makeOrder(EntityManagerInterface $entityManager,Request $request,CsrfTokenManagerInterface $csrfTokenManager,UrlGeneratorInterface $urlGenerator):Response
     {
 
-        //generate redirect route
+        #generate redirect route
         $urlGenerate=$urlGenerator->generate('app_make_order');
-        //recieving data and parsing it
+        #recieving data and parsing it
         $data=json_decode($request->getContent(),true);
         $token = new CsrfToken('makeOrder', $request->headers->get('X-CSRF-TOKEN'));
         if (!$csrfTokenManager->isTokenValid($token)) {
@@ -176,7 +179,7 @@ class OrdersController extends AbstractController
             if ($data['method'] == 'Visa' || $data['method'] == 'MasterCard') {
                 $inputFormat = 'Y-m-d';
 
-                // Create a DateTimeImmutable object from the string
+                # Create a DateTimeImmutable object from the string
                 $expdate = DateTime::createFromFormat('Y-m-d', $data['expDate']);
 
                 $paymentMethodId = $commonService->addToPaymentMethod($entityManager, $data['accNumber'],$expdate, $user, $data['method']);
@@ -201,11 +204,11 @@ class OrdersController extends AbstractController
         return $this->json(['result'=>'success']);
     }
 
-    //remove order
+    #handle remove order request
     #[Route('/admin/orders/remove', name: 'remove_order')]
     public function removeOrder(EntityManagerInterface $entityManager, Request $request,UrlGeneratorInterface $urlGenerator):Response
     {
-        //recieving the id and fetching if available product
+        #recieving the id and fetching if available product
         $ordeId = $request->query->get('orderId');
         if (!$ordeId) {
             flash()->addFlash('error', 'Empty', 'order to be removed not specified');
@@ -217,10 +220,10 @@ class OrdersController extends AbstractController
             flash()->addFlash('error', 'Empty', 'order to be removed not found!!');
         }
 
-        //removing the category
+        #removing the category
         $entityManager->remove($orderToRemove);
         $entityManager->flush();
-        //success response
+        #success response
         flash()->addFlash('success', 'Removed', 'you successfuly removed the order');
         $urlGenerate=$urlGenerator->generate('app_orders');
         return $this->redirect($urlGenerate);

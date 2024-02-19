@@ -16,8 +16,8 @@
 
                                         <div class="form-outline mb-4">
                                             <input type="text" name="_username" id="username" class="form-control"
-                                                   placeholder="username" />
-                                            <label class="form-label" for="username">Username</label>
+                                                   placeholder="Email" value="{{ last_username }}" />
+                                            <label class="form-label" for="username">Email</label>
                                         </div>
 
                                         <div class="form-outline mb-4">
@@ -31,10 +31,10 @@
 {#                                            <input type="hidden" name="_target_path" value="/user/dashboard">#}
 {#                                        {% endif %}#}
                                         <input type="hidden" name="_target_path" value="/user/dashboard">
-                                        <button class="btn btn-primary btn-block fa-lg gradient-custom-2 mb-3" id='loginBtn' type="submit">Login</button>
+                                        <button class="offset-4 btn btn-primary btn-block gradient-custom-2 mb-3" id='loginBtn' type="submit">Login</button>
                                         <div class="text-center pt-1 mb-5 pb-1">
 
-                                            <a class="text-muted" href="#!">Forgot password?</a>
+{#                                            <a class="text-muted" href="#!">Forgot password?</a>#}
                                         </div>
                                     </form>
                                 </div>

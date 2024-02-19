@@ -23,7 +23,7 @@ class ProfileController extends AbstractController
     {
         //getting current user
         $userId=$this->getUser()->getUserIdentifier();
-        $user=$userRepository->findOneBy(['username'=>$userId]);
+        $user=$userRepository->findOneBy(['email'=>$userId]);
 
         return $this->render('user/profile.html.twig',[
             'userInfo' =>$user
@@ -75,7 +75,7 @@ class ProfileController extends AbstractController
     {
         //getting current user
         $userId=$this->getUser()->getUserIdentifier();
-        $user=$userRepository->findOneBy(['username'=>$userId]);
+        $user=$userRepository->findOneBy(['email'=>$userId]);
 
         return $this->render('user/updatePassword.html.twig',[
             'userInfo' =>$user
