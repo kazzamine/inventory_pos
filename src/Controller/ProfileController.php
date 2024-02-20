@@ -50,16 +50,16 @@ class ProfileController extends AbstractController
         $user->setPhone($jsonData['phone']);
         $user->setCity($jsonData['city']);
         //check if pic is changed
-        $imageFile=$jsonData['profilePicture'];
-
-        if($imageFile){
-            $newFilename = $jsonData['username'] . '-' . uniqid() . '.' . $imageFile->guessExtension();
-            $imageFile->move(
-                $this->getParameter('image_directory'),
-                $newFilename
-            );
-            $user->setPicture($newFilename);
-        }
+//        $imageFile=$jsonData['picture'];
+//
+//        if($imageFile){
+//            $newFilename = $jsonData['username'] . '-' . uniqid() . '.' . $imageFile->guessExtension();
+//            $imageFile->move(
+//                $this->getParameter('image_directory'),
+//                $newFilename
+//            );
+//            $user->setPicture($newFilename);
+//        }
         try{
             $entityManager->persist($user);
             $entityManager->flush();

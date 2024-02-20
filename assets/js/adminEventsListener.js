@@ -97,7 +97,7 @@ const txtProdCat=$('#category')
 const storage=$('#storage')
 const prodImage=$('#prodImage')
 const prodCsrfToken=$('#_csrf_token')
-//event of addinf new category
+//event of adding new category
 btnAddProd.on('click',(e)=>{
     e.preventDefault();
     if(txtProdName.val() && txtProdPrice.val() && txtProdTax.val() && txtProdDesc.val() ) {
@@ -159,10 +159,10 @@ const txtLastName=$('#txtLastName');
 const txtAddress=$('#txtAddress');
 const txtPhone=$('#txtPhone');
 const txtCity=$('#txtCity');
-const profilePic=$('#pictureInput')
+const userPic=$('#ProfilePictureInput')
 const ProfilecsrfToken=$('#_csrf_token_userUpdate')
 saveInfoChanges.on('click',()=>{
-    console.log(profilePic.prop('files')[0].name)
+    // console.log(userPic.prop('files')[0])
 
     let data={
         'id':saveInfoChanges.data('userId'),
@@ -172,7 +172,7 @@ saveInfoChanges.on('click',()=>{
         'address':txtAddress.val(),
         'phone':txtPhone.val(),
         'city':txtCity.val(),
-        'profilePicture':profilePic.prop('files')[0].name
+        'picture':userPic.prop('files')[0]
     }
     updateUser('/user/profile/update',data,ProfilecsrfToken.val());
     Array.from(userInfo).forEach(txtInput=>{

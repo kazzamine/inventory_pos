@@ -92,7 +92,7 @@ class AccountsController extends AbstractController
             $entityManager->flush();
 
             //sending confrimation mail
-            $mailServices->sendCreateAcc($mailer,$twig,$user->getEmail(),$password);
+            $mailServices->sendCreateAcc($mailer,$twig,$form->get('email')->getData(),$password);
 
 
             return $this->redirect($request->getUri());
