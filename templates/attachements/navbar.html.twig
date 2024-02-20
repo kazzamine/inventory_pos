@@ -24,8 +24,8 @@
                                         <i title="{{ item.modName }}" class="{{ item.icon }}"></i><span class="ms-1 d-none d-sm-inline">{{ item.modName }}</span> </a>
                                     <ul class="collapse nav flex-column ms-1" id="submenu{{ item.id }}" data-bs-parent="#menu">
                                         {% for subitem in item.subModels %}
-                                        <li class="w-100">
-                                            <a href="{{ path( subitem.path ) }}" class="nav-link px-0"><i title="{{ subitem.subModName }}" class="{{ subitem.icon }}"></i> <span class="d-none d-sm-inline">{{ subitem.subModName }}</span> </a>
+                                        <li class="w-100 offset-2">
+                                            <a href="{{ path( subitem.path ) }}" class="nav-link px-0 text-white-50"><i title="{{ subitem.subModName }}" class="{{ subitem.icon }}"></i> <span class="d-none d-sm-inline">{{ subitem.subModName }}</span> </a>
                                         </li>
                                         {% endfor %}
                                     </ul>

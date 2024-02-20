@@ -67,4 +67,24 @@ class MailServices{
             return $exception;
         }
     }
+
+    //order invoice
+    public function invoiceMail(Environment $twig,MailerInterface $mailer,$sendTo,$order){
+        $subject='Order Invoice';
+
+        $mail = (new Email())
+            ->from('sogorugeto7@gmail.com')
+            ->to($sendTo)
+            ->subject($subject)
+            ->html(
+                $twig->render('mail/sendReceipt.html.twig', [
+                    'order'=>$order,'subject'=>$subject
+                ])
+            );
+        try{
+            $mailer->send($mail);
+        }catch (TransportExceptionInterface $exception){
+            return $exception;
+        }
+    }
 }

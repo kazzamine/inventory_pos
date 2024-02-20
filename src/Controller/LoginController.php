@@ -93,7 +93,7 @@ class LoginController extends AbstractController
 
     #reset password
     #[Route('/resetmdp',name: 'reset_mdp')]
-    public function resetMdp(Request $request,MailerInterface $mailer,MailServices $mailServices,EntityManagerInterface $entityManager){
+    public function resetMdp(UrlGeneratorInterface $urlGenerator,Request $request,MailerInterface $mailer,MailServices $mailServices,EntityManagerInterface $entityManager){
         $form=$this->createForm(newPasswordForm::class);
         $form->handleRequest($request);
         $email=$request->query->get('mail');
@@ -118,6 +118,9 @@ class LoginController extends AbstractController
             $entityManager->flush();
             //alerting mail
             $mailServices->alertMdpChanged($mailer,$email);
+            $urlGenerate=$urlGenerator->generate('app_login');
+            return $this->redirect($urlGenerate);
+
 
         }
         return $this->render('features/resetMdp.html.twig',

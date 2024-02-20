@@ -9,6 +9,7 @@ use App\Entity\Product;
 use App\Entity\Provider;
 use App\Entity\User;
 use App\Repository\OrderRepository;
+use App\Service\MailServices;
 use DateTimeImmutable;
 use DateTime;
 use App\Repository\ProductRepository;
@@ -18,10 +19,12 @@ use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Csrf\CsrfToken;
 use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
+use Twig\Environment;
 
 
 class OrdersController extends AbstractController
@@ -154,7 +157,7 @@ class OrdersController extends AbstractController
 
     #make order
     #[Route('/user/orders/makeOrder', name: 'make_order')]
-    public function makeOrder(EntityManagerInterface $entityManager,Request $request,CsrfTokenManagerInterface $csrfTokenManager,UrlGeneratorInterface $urlGenerator):Response
+    public function makeOrder(MailerInterface $mailer,Environment $twig,MailServices $mailServices,EntityManagerInterface $entityManager,Request $request,CsrfTokenManagerInterface $csrfTokenManager,UrlGeneratorInterface $urlGenerator):Response
     {
 
         #generate redirect route
@@ -165,20 +168,22 @@ class OrdersController extends AbstractController
         if (!$csrfTokenManager->isTokenValid($token)) {
             throw $this->createAccessDeniedException('invalid csrf token');
         }
+        #searching product by id
         $prod=$entityManager->getRepository(Product::class)->find($data['prodId']);
         $user = $this->getUser();
         $roles=$user->getRoles();
+        #if made by an admin he can chose which user want the order
         if (in_array('ROLE_ADMIN', $roles, true)) {
             $user= $entityManager->getRepository(User::class)->find($data['userId']);
         }
         $paymentId=null;
         $commonService=new CommonServices();
+        #start transaction for making the order
         $entityManager->getConnection()->beginTransaction();
         try {
-
+            #adding card infos if payement method is cash
             if ($data['method'] == 'Visa' || $data['method'] == 'MasterCard') {
                 $inputFormat = 'Y-m-d';
-
                 # Create a DateTimeImmutable object from the string
                 $expdate = DateTime::createFromFormat('Y-m-d', $data['expDate']);
 
@@ -188,13 +193,17 @@ class OrdersController extends AbstractController
             } else {
                 $paymentMethodId = $commonService->addToPaymentMethod($entityManager, 0, null, $user, 'cash');
                 $paymentId = $commonService->addPayment($entityManager, $paymentMethodId, $data['toGive'], $data['rest']);
-
             }
             $orderDetId=$commonService->addDetail($entityManager,$user,$data['total']);
             $orderId=$commonService->addOrder($entityManager,$prod,$orderDetId,$paymentId,$data['quantity'],$data['discount']);
             $commonService->updateStorage($entityManager,$prod,$data['quantity']);
             flash()->addFlash('success','order Made','order made succesfully');
+            $mailServices->invoiceMail($twig,$mailer,$orderDetId->getUserId()->getEmail(),$orderId);
             $entityManager->getConnection()->commit();
+
+            #sending mail with reciept invoice
+            //$mailServices->invoiceMail($twig,$mailer,$orderDetId->getUserId()->getEmail(),$orderId);
+
             return $this->json(['orderId'=>$orderId]);
         }catch (\Exception $exception){
             $entityManager->getConnection()->rollBack();

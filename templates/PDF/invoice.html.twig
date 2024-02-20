@@ -86,8 +86,7 @@
                             </address>
                         </div>
 
-{#                    </div>#}
-{#                    <div class="row">#}
+                        <br>
                         <div class="col-xs-6">
                             <address>
                                 <strong>Payment Method:</strong><br>
@@ -97,12 +96,6 @@
                                     cash<br>
                                 {% endif %}
                                 {{ order.orderDetail.userId.email }}<br>
-                            </address>
-                        </div>
-                        <div class="col-xs-6 text-right">
-                            <address>
-                                <strong>Order Date:</strong><br>
-                                {{ order.orderDate|date("d-m-Y-H-i-s") }}
                             </address>
                         </div>
                     </div>
@@ -115,8 +108,11 @@
                                     <td><strong>#</strong></td>
                                     <td class="text-center"><strong>PRODUCT</strong></td>
                                     <td colspan="2"></td>
+                                    <td colspan="2"></td>
                                     <td class="text-center"><strong>QUANTITY</strong></td>
                                     <td colspan="2"></td>
+                                    <td colspan="2"></td>
+
                                     <td class="text-right"><strong>PRICE per 1</strong></td>
                                     <td colspan="2"></td>
                                     <td class="text-right"><strong>SUBTOTAL</strong></td>
@@ -127,8 +123,12 @@
                                     <td>1</td>
                                     <td><strong>{{ order.prodId.prodName }}</strong></td>
                                     <td colspan="2"></td>
+                                    <td colspan="2"></td>
+
                                     <td class="text-center">{{ order.quantity }}</td>
                                     <td colspan="2"></td>
+                                    <td colspan="2"></td>
+
                                     <td class="text-center">{{ order.prodId.price }} $</td>
                                     <td colspan="2"></td>
                                     <td class="text-right">{{ order.prodId.price*order.quantity}}</td>
@@ -139,10 +139,12 @@
                                     <td colspan="3"></td>
                                     <td colspan="3"></td>
                                     <td colspan="3"></td>
+                                    <td colspan="3"></td>
                                     <td class="text-right"><strong>Taxes</strong></td>
                                     <td class="text-right"><strong>{{ order.prodId.tax }} %</strong></td>
                                 </tr>
                                 <tr>
+                                    <td colspan="3"></td>
                                     <td colspan="3"></td>
                                     <td colspan="3"></td>
                                     <td colspan="3"></td>
@@ -152,6 +154,14 @@
                                 </tbody>
                             </table>
                         </div>
+                    </div>
+                    <br>
+                    <br>
+                    <div class="offset-5 col-xs-6">
+                        <address>
+                            <strong>Order Date:</strong><br>
+                            {{ order.orderDate|date("d-m-Y-H-i-s") }}
+                        </address>
                     </div>
                     <div class="row">
                         <div class="col-md-12 text-right identity">
