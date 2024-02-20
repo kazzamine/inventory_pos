@@ -49,6 +49,7 @@ class ProductsController extends AbstractController
         $categories=$categoryRepository->findAll();
         return $this->render('admin/product/addProduct.html.twig',['categories'=>$categories]);
     }
+
     //handle ajax request to add product
     #[Route('/admin/product/add', name: 'add_product')]
     public function addCat(EntityManagerInterface $entityManager, Request $request, CsrfTokenManagerInterface $csrfTokenManager): Response

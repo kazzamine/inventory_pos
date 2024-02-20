@@ -27,7 +27,7 @@ class Product
     #[ORM\Column]
     private ?float $price = null;
 
-    #[ORM\ManyToOne(inversedBy: 'products')]
+    #[ORM\ManyToOne(cascade: ['remove'],inversedBy: 'products')]
     private ?Category $cat_id = null;
 
     #[ORM\ManyToOne(inversedBy: 'products')]

@@ -1,0 +1,70 @@
+{% extends 'base.html.twig' %}
+{% block title %}create accounts {% endblock %}
+
+{% block body %}
+    <div class="container-fluid">
+    <h3 class="text-dark mb-4">users</h3>
+    <div class="card shadow">
+        <div class="card-header py-3">
+            <p class="text-primary m-0 fw-bold">Users information <a id="toggleList" class="offset-11" role="button">  <i class="fa-solid fa-arrow-down" ></i> </a></p>
+        </div>
+        <div class="card-body">
+            <div class="row">
+            </div>
+            <div class="table-responsive table mt-2" id="dataTable" role="grid" aria-describedby="dataTable_info">
+                <form action="{{ path('app_accounts_list') }}" class="col-sm-2 offset-8" method="get" >
+                    <input type="text" class="form-control " name="search" value="{{ search_term }}" placeholder="Search...">
+                    <button hidden type="submit">Search</button>
+                </form>
+                <table class="table my-0" id="dataTable">
+                    <thead>
+                    <tr>
+                        <th>username    <a href="{{ path('app_accounts_list', { 'sort_by': 'username', 'sort_order': (sort_by == 'username' and sort_order == 'asc') ? 'desc' : 'asc' }) }}"><i class="fa-solid fa-sort text-secondary"></i> </a></th>
+                        <th>first name  <a href="{{ path('app_accounts_list', { 'sort_by': 'first_name', 'sort_order': (sort_by == 'first_name' and sort_order == 'asc') ? 'desc' : 'asc' }) }}"><i class="fa-solid fa-sort text-secondary"></i> </a></th>
+                        <th>last name   <a href="{{ path('app_accounts_list', { 'sort_by': 'last_name', 'sort_order': (sort_by == 'last_name' and sort_order == 'asc') ? 'desc' : 'asc' }) }}"><i class="fa-solid fa-sort text-secondary"></i> </a></th>
+                        <th>address</th>
+                        <th>phone number</th>
+                        <th>remove</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for user in allUser %}
+                        <tr>
+                            <td>{{ user.username }}</td>
+                            <td>{{ user.firstName }}</td>
+                            <td>{{ user.lastName }}</td>
+                            <td>{{ user.adress }}</td>
+                            <td>{{ user.phone }}</td>
+
+                            <td> <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#removeUser{{ user.id }}">Remove</button></td>
+                            <div class="modal fade" id="removeUser{{ user.id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" >
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel">Remove Account</h5>
+                                            <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <form>
+                                                <div class="form-group">
+                                                    <a role="button" class="btn btn-danger" href={{ path('remove_user',{'userId':user.id()}) }} >remove</a>                                                    </div>
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                    <tfoot>
+                </table>
+            </div>
+        </div>
+    </div>
+    <br>
+
+{% endblock %}

@@ -43,7 +43,7 @@ class CreateUserForm extends AbstractType{
                 array('attr'=>array('class'=>'form-control'))
             )
             ->add('roleId',ChoiceType::class,
-                array('choices'=>array('ROLE_USER'=>'1','ROLE_ADMIN'=>'2'), 'attr'=>array('class'=>'form-control'))
+                array('choices'=>array('ROLE_USER'=>'3','ROLE_ADMIN'=>'4'), 'attr'=>array('class'=>'form-control'))
             )->add('password',PasswordType::class,
                 array('attr'=>array('class'=>'form-control'))
             )

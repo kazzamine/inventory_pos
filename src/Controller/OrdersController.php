@@ -57,6 +57,7 @@ class OrdersController extends AbstractController
     #[Route('/user/orders',name: 'user_orders')]
     public function userOrders(EntityManagerInterface $entityManager,PaginatorInterface $paginator,Request $request):Response
     {
+
         $user=$entityManager->getRepository(User::class)->findOneBy(['email'=>$this->getUser()->getUserIdentifier()]);
         $userOrders=$entityManager->getRepository(OrderDetail::class)->findOneBy(['user_id'=>$user]);
         #search
@@ -78,7 +79,6 @@ class OrdersController extends AbstractController
                 'sort_order' => $sortOrder,
                 'search_term'=>$searchTerm]);
     }
-
 
     #render make order view
     #[Route('/user/orders/makeOrder/view', name: 'app_make_order')]
