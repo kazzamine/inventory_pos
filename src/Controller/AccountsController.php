@@ -91,7 +91,7 @@ class AccountsController extends AbstractController
             $entityManager->persist($user);
             $entityManager->flush();
 
-            //sending confrimation mail
+            //sending confirmation mail
             $mailServices->sendCreateAcc($mailer,$twig,$form->get('email')->getData(),$password);
 
 
