@@ -87,4 +87,19 @@ class MailServices{
             return $exception;
         }
     }
+
+    #contact us sending message
+    public function contactUsMessage(MailerInterface $mailer,Environment $twig,$sender,$subject,$content){
+
+        $mail = (new Email())
+            ->from($sender)
+            ->to('sogorugeto7@gmail.com')
+            ->subject($subject)
+            ->html($content);
+        try{
+            $mailer->send($mail);
+        }catch (TransportExceptionInterface $exception){
+            return $exception;
+        }
+    }
 }

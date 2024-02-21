@@ -194,15 +194,18 @@ class OrdersController extends AbstractController
                 $paymentMethodId = $commonService->addToPaymentMethod($entityManager, 0, null, $user, 'cash');
                 $paymentId = $commonService->addPayment($entityManager, $paymentMethodId, $data['toGive'], $data['rest']);
             }
+            #inserting order details
             $orderDetId=$commonService->addDetail($entityManager,$user,$data['total']);
             $orderId=$commonService->addOrder($entityManager,$prod,$orderDetId,$paymentId,$data['quantity'],$data['discount']);
+            #updating storage
             $commonService->updateStorage($entityManager,$prod,$data['quantity']);
+            #success message
             flash()->addFlash('success','order Made','order made succesfully');
+            #sending mail with reciept invoice
             $mailServices->invoiceMail($twig,$mailer,$orderDetId->getUserId()->getEmail(),$orderId);
             $entityManager->getConnection()->commit();
 
-            #sending mail with reciept invoice
-            //$mailServices->invoiceMail($twig,$mailer,$orderDetId->getUserId()->getEmail(),$orderId);
+
 
             return $this->json(['orderId'=>$orderId]);
         }catch (\Exception $exception){
