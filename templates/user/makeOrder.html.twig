@@ -17,25 +17,24 @@
                 <span class="stepIndicator">Details</span>
                 <span class="stepIndicator">payment</span>
             </div>
-
             <!-- step one -->
-            <div class="step">
-{#                <p class="text-center mb-4">Chose category you want</p>#}
-{#                <div class="form-group mb-3"><label class="form-label" for="selectedCat">Categories</label>#}
-{#                    <select class="form-select" id="selectedCat" name="selectedCat">#}
-{#                        {% for category in categories %}#}
-{#                            <option value="{{ category.id }}">#}
-{#                                {{ category.catName }}</option>#}
-{#                        {% endfor %}#}
-{#                    </select>#}
-{#                </div>#}
-
+                <div class="step">
+                    {#<p class="text-center mb-4">Chose category you want</p>#}
+                    {#<div class="form-group mb-3"><label class="form-label" for="selectedCat">Categories</label>#}
+                    {#  <select class="form-select" id="selectedCat" name="selectedCat">#}
+                    {#      {% for category in categories %}#}
+                    {#          <option value="{{ category.id }}">#}
+                    {#              {{ category.catName }}</option>#}
+                    {#                  {% endfor %}#}
+                    {#   </select>#}
+                    {#</div>#}
                 <p class="text-center mb-4">Chose your product</p>
                 <div class="form-group mb-3"><label class="form-label" for="selectedProd">Products</label>
                     <select class="form-select" id="selectedProd" name="selectedProd">
                         {% for product in products %}
                             <option value="{{ product.id }}">
-                                {{ product.prodName }}</option>
+                                {{ product.prodName }}
+                            </option>
                         {% endfor %}
                     </select>
                 </div>
@@ -43,22 +42,19 @@
                     <div class="col-sm-6">
                         <div class="has-feedback form-group mb-3"><label class="form-label" for="price">product Price</label><input class="form-control" type="number" step="0.01" id="price" title="price for a single item" readonly name="price" required></div>
                     </div>
-
                     <div class="col-sm-6">
                         <div class="has-feedback form-group mb-3"><label class="form-label" for="description">product description</label><input class="form-control" type="text"   id="description" readonly name="description"  required></div>
                     </div>
                     <div class="col-sm-6">
                         <div class="has-feedback form-group mb-3"><label class="form-label" for="tax">product tax</label><input class="form-control" type="number" step="0.01" id="tax" name="tax" readonly  required></div>
                     </div>
-            </div>
+                </div>
             </div>
             <!-- step two -->
             <div class="step">
                 <p class="text-center mb-4">Order Details</p>
                 <div class="mb-3">
-
                     <input type="number" min="1" placeholder="quantity" required title="chose your quantity" id="quantity" name="quantity">
-
                 </div>
                 <div class="mb-3">
                     <input type="text" placeholder="discount only for over 5 item" value="0" id="discount" title="discounts available for more than 5 products" name="discount" readonly>
@@ -77,19 +73,20 @@
                         <select class="form-select" id="selectUser" name="selectUser">
                             {% for user in alluser %}
                                 <option value="{{ user.id }}">
-                                    {{ user.username }}</option>
+                                    {{ user.username }}
+                                </option>
                             {% endfor %}
                         </select>
                     </div>
                 </div>
                 {% endif %}
                 <div class="row">
-                {% for provider in providers %}
-                <div class="col-sm-4">
-                    <label class="form-label" for="{{ provider.providerName }}">{{ provider.providerName }}</label>
-                    <input type="radio" name="provider" id="{{ provider.providerName }}" value="{{ provider.id }}">
-                </div>
-                {% endfor %}
+                    {% for provider in providers %}
+                    <div class="col-sm-4">
+                        <label class="form-label" for="{{ provider.providerName }}">{{ provider.providerName }}</label>
+                        <input type="radio" name="provider" id="{{ provider.providerName }}" value="{{ provider.id }}">
+                    </div>
+                    {% endfor %}
                 </div>
 
                 <div class="row" id="cashContainer" style="display: none">
@@ -101,23 +98,20 @@
                     </div>
                 </div>
                 <div class="row" id="bankContainer" style="display: none">
-
-                <div class="col-sm-6">
+                    <div class="col-sm-6">
                        <div class="has-feedback form-group mb-3"><label class="form-label" for="accNumber">account number</label><input class="form-control" type="text"  id="accNumber" name="accNumber" required></div>
                     </div>
-                <div class="col-sm-6">
+                    <div class="col-sm-6">
                        <div class="has-feedback form-group mb-3"><label class="form-label" for="expDate">expiration date</label><input class="form-control" type="date"  id="expDate" name="expDate" required></div>
                     </div>
                 </div>
             </div>
             <input type="hidden" name="_csrf_token" id="_csrf_token_make_order" value="{{ csrf_token('makeOrder') }}">
-
-            <!-- start previous / next buttons -->
+            <!--  previous / next  -->
             <div class="form-footer d-flex">
                 <button type="button" id="prevBtn" >Previous</button>
                 <button type="button" id="nextBtn" >Next</button>
                 <button class="btn btn-success" id="makeOrder" type="button">make order</button>
-
             </div>
         </form>
     </div>

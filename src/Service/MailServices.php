@@ -89,7 +89,7 @@ class MailServices{
     }
 
     #contact us sending message
-    public function contactUsMessage(MailerInterface $mailer,Environment $twig,$sender,$subject,$content){
+    public function contactUsMessage(MailerInterface $mailer,$sender,$subject,$content){
 
         $mail = (new Email())
             ->from($sender)
