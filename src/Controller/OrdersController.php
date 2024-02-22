@@ -192,7 +192,6 @@ class OrdersController extends AbstractController
                 $inputFormat = 'Y-m-d';
                 # Create a DateTimeImmutable object from the string
                 $expdate = DateTime::createFromFormat('Y-m-d', $data['expDate']);
-
                 $paymentMethodId = $commonService->addToPaymentMethod($entityManager, $data['accNumber'],$expdate, $user, $data['method']);
                 $paymentId = $commonService->addPayment($entityManager, $paymentMethodId, $data['total'], 0);
 

@@ -174,6 +174,7 @@ saveInfoChanges.on('click',()=>{
         'city':txtCity.val(),
         'picture':userPic.prop('files')[0]
     }
+    console.log(data.picture)
     updateUser('/user/profile/update',data,ProfilecsrfToken.val());
     Array.from(userInfo).forEach(txtInput=>{
         makeReadOnly(txtInput)

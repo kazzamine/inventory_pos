@@ -82,7 +82,7 @@ class SubmodelController extends AbstractController
     public function updateSubModel(EntityManagerInterface $entityManager, Request $request,UrlGeneratorInterface $urlGenerator):Response
     {
         //recieving the id and fetching if available
-        $SubModelID = $request->query->get('modelId');
+        $SubModelID = $request->query->get('SubModelId');
         $SubModelName = $request->query->get('subModelName');
         $SubmodelIcon = $request->query->get('SubModelIcon');
         $SubModelPath = $request->query->get('subModelPath');
@@ -97,7 +97,7 @@ class SubmodelController extends AbstractController
         if ($SubModelToUpdate) {
             flash()->addFlash('error', 'Empty', 'Sub model to be updated not found!!');
         }
-        $SubModelToUpdate->setModName($SubModelName);
+        $SubModelToUpdate->setSubmodName($SubModelName);
         $SubModelToUpdate->setIcon($SubmodelIcon);
         $SubModelToUpdate->setPath($SubModelPath);
         $entityManager->persist($SubModelToUpdate);

@@ -32,28 +32,28 @@
                                 <td class="editable" data-field="path">{{ submodel.path }}</td>
                                 <td class="editable" data-field="icon">{{ submodel.icon }}</td>
                                 <td class="editable" data-field="submodelId">{{ submodel.modelId.modName }}</td>
-                                <td> <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#updateModel{{ model.id }}">update</button></td>
-                                <div class="modal fade" id="updateModel{{ model.id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" >
+                                <td> <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#updateModel{{ submodel.id }}">update</button></td>
+                                <div class="modal fade" id="updateModel{{ submodel.id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" >
                                     <div class="modal-dialog" role="document">
                                         <div class="modal-content">
                                             <div class="modal-header">
-                                                <h5 class="modal-title" id="exampleModalLabel">update Model</h5>
+                                                <h5 class="modal-title" id="exampleModalLabel">update Sub Model</h5>
                                                 <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                                                     <span aria-hidden="true">&times;</span>
                                                 </button>
                                             </div>
                                             <div class="modal-body">
-                                                <form action="{{  path('update_model') }}">
+                                                <form action="{{  path('update_submodel') }}">
                                                     <div class="form-group">
-                                                        <label  class="col-form-label">model name :</label>
+                                                        <label  class="col-form-label">Sub model name :</label>
                                                         <input class="form-control" type="text" name="subModelName" value="{{ submodel.submodName }}" >
                                                     </div>
                                                     <div class="form-group">
-                                                        <label  class="col-form-label">model path :</label>
+                                                        <label  class="col-form-label">Sub model path :</label>
                                                         <input class="form-control" type="text" name="subModelPath" value="{{ submodel.path }}" >
                                                     </div>
                                                     <div class="form-group">
-                                                        <label class="col-form-label">model icon: </label>
+                                                        <label class="col-form-label">Sub model icon: </label>
                                                         <input class="form-control" type="text" name="SubModelIcon" value="{{ submodel.icon }}" >
                                                         <input class="form-control" type="text" hidden name="SubModelId" value="{{ submodel.id }}" >
 
