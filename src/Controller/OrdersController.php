@@ -30,8 +30,8 @@ use Twig\Environment;
 class OrdersController extends AbstractController
 {
     #list of all orders
-    #[Route('/admin/orders/list', name: 'app_orders')]
-    public function orderList(Request $request,OrderRepository $orderRepository,PaginatorInterface $paginator): Response
+    #[Route('/user/orders/list', name: 'app_orders')]
+    public function orderList(UrlGeneratorInterface $urlGenerator,Request $request,OrderRepository $orderRepository,PaginatorInterface $paginator): Response
     {
         $user = $this->getUser();
         $allOrder=$orderRepository->findAll();
@@ -49,11 +49,17 @@ class OrdersController extends AbstractController
         if($searchTerm!=''){
             $paginat = $paginator->paginate($searchedData, $currentPage, 10);
         }
-        return $this->render('admin/adminOrdersList.html.twig',
-            ['orders'=>$paginat,
-                'sort_by' => $sortBy,
-                'sort_order' => $sortOrder,
-                'search_term'=>$searchTerm]);
+        $userRole=$this->getUser()->getRoles();
+        if (in_array('ROLE_ADMIN', $userRole, true)) {
+            return $this->render('admin/adminOrdersList.html.twig',
+                ['orders'=>$paginat,
+                    'sort_by' => $sortBy,
+                    'sort_order' => $sortOrder,
+                    'search_term'=>$searchTerm]);
+        }
+        $url=$urlGenerator->generate('user_orders');
+        return $this->redirect($url);
+
 
     }
 

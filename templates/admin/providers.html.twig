@@ -38,13 +38,14 @@
             </div>
         </div>
     <br>
-    <div class="card shadow" id="addModelContainer" ><div class="card-header py-3">
-            <p class="text-primary m-0 fw-bold">add new provider <a id="toggleAdd" class="offset-11" role="button"> </a></p>
-
+    <div class="card shadow" id="addModelContainer" >
+        <div class="card-header py-3">
+            <p class="text-primary m-0 fw-bold">add new provider</p>
         </div>
+        <div class="card-body">
         {{ form_start(form) }}
             <div class="row" id="addToggle">
-                <div class="col-md-6">
+                <div class="col-md-5">
                     <div id="successfail">
                         {{ form_errors(form) }}
                     </div>
@@ -57,9 +58,9 @@
                             <div class="has-feedback form-group mb-3">{{ form_row(form.providerName) }}</div>
                         </div>
                     </div>
-
                 </div>
             </div>
         {{ form_end(form) }}
+    </div>
     </div>
 {% endblock %}

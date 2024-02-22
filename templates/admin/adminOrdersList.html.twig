@@ -13,7 +13,7 @@
             </div>
             <div class="table-responsive table mt-2" id="dataTable" role="grid" aria-describedby="dataTable_info">
                 <form action="{{ path('app_orders') }}" class="col-sm-2 offset-8" method="get" >
-                    <input type="date" class="form-control " name="search" value="{{ search_term }}" placeholder="Search...">
+                    <input type="text" class="form-control " name="search" value="{{ search_term }}" placeholder="Search...">
                     <button hidden type="submit">Search</button>
                 </form>
                 <table class="table my-0" id="dataTable">
@@ -25,7 +25,6 @@
                         <th>total</th>
                         <th>date</th>
                         <th>Detail</th>
-                        <th>remove</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -37,9 +36,9 @@
                                 <td >{{ order.prodId.prodName }}</td>
                                 <td >{{ order.quantity }}</td>
                                 <td >{{ order.orderDetail.total }}</td>
-                                <td >{{ order.orderDate|date('d-m-Y-H-i-s') }}</td>
-                                <td> <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#orderDetail" data-bs-whatever="{{ order.id }}">order detail</button></td>
-                                <div class="modal fade" id="orderDetail" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" >
+                                <td >{{ order.orderDate|date('d-m-Y') }}</td>
+                                <td> <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#orderDetail{{ order.id }}" data-bs-whatever="{{ order.id }}">order detail</button></td>
+                                <div class="modal fade" id="orderDetail{{ order.id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" >
                                     <div class="modal-dialog" role="document">
                                         <div class="modal-content">
                                             <div class="modal-header">
@@ -62,26 +61,6 @@
                                                         <label  class="col-form-label">Quantity: {{ order.quantity }}</label>
                                                         <label class="offset-2 col-form-label">Total : {{ order.orderDetail.total }}</label>
                                                     </div>
-                                                </form>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <td> <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#removeOrder">Remove</button></td>
-                                <div class="modal fade" id="removeOrder" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" >
-                                    <div class="modal-dialog" role="document">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title" id="exampleModalLabel">Remove Order</h5>
-                                                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
-                                                    <span aria-hidden="true">&times;</span>
-                                                </button>
-                                            </div>
-                                            <div class="modal-body">
-                                                <form>
-                                                    <div class="form-group">
-                                                        <a role="button" class="btn btn-danger" href={{ path('remove_order',{'orderId':order.id()}) }} >remove</a>                                                    </div>
-                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
                                                 </form>
                                             </div>
                                         </div>

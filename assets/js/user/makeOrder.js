@@ -1,9 +1,5 @@
-import {getProds} from "../common";
-
 const $ = require('jquery');
-
 global.$ = global.jQuery = $;
-import Toastify from "toastify-js";
 
 //display product info
 const selectedProd=$('#selectedProd')
