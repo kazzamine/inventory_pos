@@ -7,7 +7,7 @@ inventory that allows users to buy product provided in the inventory with differ
 ## Schema
 Database Schema
 
-![App Screenshot](./Database Schema/)
+![plot](https://github.com/kazzamine/inventory_pos/blob/dev/Database%20Schema/inventory.pdf)
 
 
 ## Used By
@@ -67,7 +67,7 @@ This project is used by the following type of users:
 | php-flasher  | display alerts from controllers  |
      | Other known Dependencies like doctrine,security..|
 
-**Login Exceptions:** are handled using custom classes like accessDeniedHandler
+**Login Exceptions:** are handled using custom classes like accessDeniedHandler,number of login attempts
 
 
 ## Environment Variables
@@ -98,4 +98,10 @@ To run tests, run the following command
   php bin/phpunit
 ```
 cause of empty database Test some tests may fail -- should be filed 1st --
+
+
+## Branchs
+
+- dev : contains latest updates
+- main : contains final functional product
 
