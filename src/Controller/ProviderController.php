@@ -14,12 +14,14 @@ use Symfony\Component\Routing\Attribute\Route;
 
 class ProviderController extends AbstractController
 {
+    # render provider page
     #[Route('/admin/provider', name: 'app_provider_list')]
     public function index(ProviderRepository $providerRepository,Request $request,EntityManagerInterface $entityManager): Response
     {
         $provider=new Provider();
         $form=$this->createForm(AddProviderForm::class,$provider);
         $form->handleRequest($request);
+        # submitting adding new provider
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->persist($provider);
             $entityManager->flush();
@@ -31,10 +33,11 @@ class ProviderController extends AbstractController
             'form'=>$form]);
     }
 
-    //remove provider
+    # remove provider
     #[Route('/admin/provider/update',name: 'app_provider_update')]
     public function removeProvider(Request $request,EntityManagerInterface $entityManager):JsonResponse
     {
+        # decoding received data from ajax
         $data=json_decode($request->getContent(),true);
         if(!$data){
             return $this->json(['error'=>'not specified']);

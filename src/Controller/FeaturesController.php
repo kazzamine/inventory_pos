@@ -26,11 +26,12 @@ class FeaturesController extends AbstractController
     {
         $form=$this->createForm(ContactusForm::class);
         $form->handleRequest($request);
+        # submitting contact us
         if($form->isSubmitted()){
             $subject=$form->get('subject')->getData();
             $content=$form->get('message')->getData();
             $sender=$form->get('email')->getData();
-
+            # sending mail
             $mailServices->contactUsMessage($mailer,$sender,$subject,$content);
             return $this->render('features/contactUs.html.twig',
                 ['form'=>$form]);

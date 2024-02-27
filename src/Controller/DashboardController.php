@@ -13,22 +13,23 @@ use Symfony\Component\Routing\Attribute\Route;
 
 class DashboardController extends AbstractController
 {
-    //render admin dashboard
+    # render admin dashboard
     #[Route('/user/dashboard', name: 'admin_dashboard')]
     public function adminDashboard(EntityManagerInterface $entityManager,OrderRepository $orderRepository): Response
     {
+        # setting current user role for later search
         $userRole='ROLE_USER';
         $roles=$this->getUser()->getRoles();
         if (in_array('ROLE_ADMIN', $roles, true)) {
             $userRole='ROLE_ADMIN';
         }
-        //total users
+        # count total users
         $totalUsers=count($entityManager->getRepository(User::class)->findAll());
-        //total orders
+        # count total orders
         $totalOrders=count($entityManager->getRepository(Order::class)->findAll());
-        //get the monthly sale for each product
+        # get the monthly sale for each product
         $sales=$orderRepository->findByGroup();
-        //last added orders
+        # last added orders
         $latestOrders=$entityManager->getRepository(Order::class)->findLastOrders();
         return $this->render('admin/dashboard.html.twig',[
             'sales'=>$sales,

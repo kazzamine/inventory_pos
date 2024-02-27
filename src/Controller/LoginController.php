@@ -28,9 +28,11 @@ class LoginController extends AbstractController
     #[Route('/', name: 'app_login')]
     public function index(AuthenticationUtils $authenticationUtils,UrlGeneratorInterface $urlGenerator): Response
     {
-
+        # if user is logged
         $user=$this->getUser();
+        # error of authentication if there is any
         $error=$authenticationUtils->getLastAuthenticationError();
+        # last email used
         $last_username=$authenticationUtils->getLastUsername();
         $user_role=null;
         $role='ROLE_USER';

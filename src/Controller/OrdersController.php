@@ -29,26 +29,25 @@ use Twig\Environment;
 
 class OrdersController extends AbstractController
 {
-    #list of all orders
+    # list of all orders
     #[Route('/user/orders/list', name: 'app_orders')]
     public function orderList(UrlGeneratorInterface $urlGenerator,Request $request,OrderRepository $orderRepository,PaginatorInterface $paginator): Response
     {
-        $user = $this->getUser();
-        $allOrder=$orderRepository->findAll();
-
-        #search
+        # datatable search
         $searchTerm = $request->query->get('search', '');
         $searchedData = $orderRepository->findBySearchTerm($searchTerm);
-        #sorting
+        # datatable sorting
         $sortBy = $request->query->get('sort_by', 'id');
         $sortOrder = $request->query->get('sort_order', 'asc');
         $currentPage = !$request->get('page') ? 1 : $request->get('page');
         $allOrder = $orderRepository->findBy([], [$sortBy => $sortOrder]);
-        #paginating
+        # datatable pagination
         $paginat = $paginator->paginate($allOrder, $currentPage, 10);
+        # if no value inserted in search display all records
         if($searchTerm!=''){
             $paginat = $paginator->paginate($searchedData, $currentPage, 10);
         }
+        # if user is admin render all orders
         $userRole=$this->getUser()->getRoles();
         if (in_array('ROLE_ADMIN', $userRole, true)) {
             return $this->render('admin/adminOrdersList.html.twig',
@@ -57,28 +56,29 @@ class OrdersController extends AbstractController
                     'sort_order' => $sortOrder,
                     'search_term'=>$searchTerm]);
         }
+        # if user is role_user render his orders
         $url=$urlGenerator->generate('user_orders');
         return $this->redirect($url);
-
-
     }
 
+    # role_user orders list
     #[Route('/user/orders',name: 'user_orders')]
     public function userOrders(EntityManagerInterface $entityManager,PaginatorInterface $paginator,Request $request):Response
     {
 
         $user=$entityManager->getRepository(User::class)->findOneBy(['email'=>$this->getUser()->getUserIdentifier()]);
         $userOrders=$entityManager->getRepository(OrderDetail::class)->findOneBy(['user_id'=>$user]);
-        #search
+        # datatable search
         $searchTerm = $request->query->get('search', '');
         $searchedData = $entityManager->getRepository(Order::class)->findBySearchTerm($searchTerm);
-        #sorting
+        # datatable sorting
         $sortBy = $request->query->get('sort_by', 'id');
         $sortOrder = $request->query->get('sort_order', 'asc');
         $currentPage = !$request->get('page') ? 1 : $request->get('page');
         $allOrder = $entityManager->getRepository(Order::class)->findBy(['orderDetail'=>$userOrders], [$sortBy => $sortOrder]);
-        #paginating
+        # datatable pagination
         $paginat = $paginator->paginate($allOrder, $currentPage, 10);
+        # if no value inserted in search display all records
         if($searchTerm!=''){
             $paginat = $paginator->paginate($searchedData, $currentPage, 10);
         }
@@ -89,10 +89,11 @@ class OrdersController extends AbstractController
                 'search_term'=>$searchTerm]);
     }
 
-    #render make order view
+    # render make order view
     #[Route('/user/orders/makeOrder/view', name: 'app_make_order')]
     public function makeOrderView(EntityManagerInterface $entityManager):Response
     {
+        # returning all products , payment methods and users ( if admin) to make an order
         $allCategories=$entityManager->getRepository(Category::class)->findAll();
         $allusers=$entityManager->getRepository(User::class)->findAll();
         $allProducts=$entityManager->getRepository(Product::class)->findAll();
@@ -120,7 +121,7 @@ class OrdersController extends AbstractController
 //        $retData=(['price'=>$searchedProd->getPrice(),'desc'=>$searchedProd->getProdDesc(),'tax'=>$searchedProd->getTax()]);
 //        return $this->json($retData);
 //    }
-    //fetch product by id
+    # fetch product by id
     #[Route('/user/prodbyid',name:'prod_by_id')]
     public function productById (Request $request,ProductRepository $productRepository):Response
     {
@@ -130,19 +131,19 @@ class OrdersController extends AbstractController
         return $this->json($retData);
     }
 
-    //calculateTotal
+    # calculateTotal
     #[Route('user/order/total',name: 'app_order_total')]
     public function calculateTotal(EntityManagerInterface $entityManager,Request $request):Response
     {
-        #decoding ajax data
+        # decoding ajax data
         $data=json_decode($request->getContent(),true);
-        #searching product by id
+        # searching product by id
         $prod=$entityManager->getRepository(Product::class)->find($data['prodId']);
         $onStorage=$prod->getStorage()->getStorageQuantity();
         $quantityNeeded=$data['quantity'];
-        #calculating tax value
+        # calculating tax value
         $tax=($prod->getPrice()*$prod->getTax())/100;
-        #check if discount available
+        # check if discount available
         $discountValue=0;
         if($quantityNeeded>=5){
             $discountValue=15;
@@ -152,39 +153,40 @@ class OrdersController extends AbstractController
         if($quantityNeeded>$onStorage){
             $quantityNeeded=$onStorage;
         }
-        #total with tax
+        # total with tax
         $totalTax=($prod->getPrice()+$tax)*$data['quantity'];
-        #discount value
+        # discount value
         $discount=($totalTax*$discountValue)/100;
-        #total with discount
+        # total with discount
         $total=$totalTax-$discount;
         return $this->json(['quantity'=>$quantityNeeded,'total'=>$total,'discount'=>$discountValue]);
     }
 
-    #make order
+    # making order (form submitted throu ajax)
     #[Route('/user/orders/makeOrder', name: 'make_order')]
     public function makeOrder(MailerInterface $mailer,Environment $twig,MailServices $mailServices,EntityManagerInterface $entityManager,Request $request,CsrfTokenManagerInterface $csrfTokenManager,UrlGeneratorInterface $urlGenerator):Response
     {
 
-        #generate redirect route
+        # generate redirect route
         $urlGenerate=$urlGenerator->generate('app_make_order');
-        #recieving data and parsing it
+        # receiving data and parsing it
         $data=json_decode($request->getContent(),true);
+        # checking csrf token
         $token = new CsrfToken('makeOrder', $request->headers->get('X-CSRF-TOKEN'));
         if (!$csrfTokenManager->isTokenValid($token)) {
             throw $this->createAccessDeniedException('invalid csrf token');
         }
-        #searching product by id
+        # searching product by id
         $prod=$entityManager->getRepository(Product::class)->find($data['prodId']);
         $user = $this->getUser();
         $roles=$user->getRoles();
-        #if made by an admin he can chose which user want the order
+        # if made by an admin he can chose which user want the order
         if (in_array('ROLE_ADMIN', $roles, true)) {
             $user= $entityManager->getRepository(User::class)->find($data['userId']);
         }
         $paymentId=null;
         $commonService=new CommonServices();
-        #start transaction for making the order
+        # start transaction for making the order
         $entityManager->getConnection()->beginTransaction();
         try {
             #adding card infos if payement method is cash
@@ -199,18 +201,16 @@ class OrdersController extends AbstractController
                 $paymentMethodId = $commonService->addToPaymentMethod($entityManager, 0, null, $user, 'cash');
                 $paymentId = $commonService->addPayment($entityManager, $paymentMethodId, $data['toGive'], $data['rest']);
             }
-            #inserting order details
+            # inserting order details
             $orderDetId=$commonService->addDetail($entityManager,$user,$data['total']);
             $orderId=$commonService->addOrder($entityManager,$prod,$orderDetId,$paymentId,$data['quantity'],$data['discount']);
-            #updating storage
+            # updating storage
             $commonService->updateStorage($entityManager,$prod,$data['quantity']);
-            #success message
+            # success message
             flash()->addFlash('success','order Made','order made succesfully');
-            #sending mail with reciept invoice
+            # sending mail with reciept invoice
             $mailServices->invoiceMail($twig,$mailer,$orderDetId->getUserId()->getEmail(),$orderId);
             $entityManager->getConnection()->commit();
-
-
 
             return $this->json(['orderId'=>$orderId]);
         }catch (\Exception $exception){
@@ -221,23 +221,22 @@ class OrdersController extends AbstractController
         return $this->json(['result'=>'success']);
     }
 
-    #handle remove order request
+    # not used!!!
+    # handle remove order request
     #[Route('/admin/orders/remove', name: 'remove_order')]
     public function removeOrder(EntityManagerInterface $entityManager, Request $request,UrlGeneratorInterface $urlGenerator):Response
     {
-        #recieving the id and fetching if available product
+        # recieving the id and fetching of selected product
         $ordeId = $request->query->get('orderId');
         if (!$ordeId) {
             flash()->addFlash('error', 'Empty', 'order to be removed not specified');
-
-
         }
         $orderToRemove = $entityManager->getRepository(Order::class)->find($ordeId);
         if (!$orderToRemove) {
             flash()->addFlash('error', 'Empty', 'order to be removed not found!!');
         }
 
-        #removing the category
+        # removing the order
         $entityManager->remove($orderToRemove);
         $entityManager->flush();
         #success response

@@ -13,6 +13,7 @@ use Symfony\Component\Routing\Attribute\Route;
 
 class GeneratePdfController extends AbstractController
 {
+    #generate PDF containing invoice
     #[Route('/user/pdf', name: 'app_generate_pdf')]
     public function index(Request $request,EntityManagerInterface $entityManager): Response
     {

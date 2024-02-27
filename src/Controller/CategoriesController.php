@@ -21,22 +21,19 @@ class CategoriesController extends AbstractController
     public function adminCat(CategoryRepository $categoryRepository,UrlGeneratorInterface $urlGenerator ,PaginatorInterface $paginator, Request $request): Response
     {
         $urlGenerate=$urlGenerator->generate('remove_category');
-        //search
+        # datatable search
         $searchTerm = $request->query->get('search', '');
         $searchedData = $categoryRepository->findBySearchTerm($searchTerm);
-        //sorting
+        # datatable sorting
         $sortBy = $request->query->get('sort_by', 'cat_name');
         $sortOrder = $request->query->get('sort_order', 'asc');
         $currentPage = !$request->get('page') ? 1 : $request->get('page');
         $allCategories = $categoryRepository->findBy([], [$sortBy => $sortOrder]);
-        //paginating
+        # paginating datatable
         $paginat = $paginator->paginate($allCategories, $currentPage, 10);
         if($searchTerm!=''){
             $paginat = $paginator->paginate($searchedData, $currentPage, 10);
         }
-        //update form
-//        $updateForm=$this->createForm(UpdateCategoryForm::class);
-
         return $this->render('admin/category/listCategories.html.twig',
             ['categories' => $paginat,
                 'sort_by' => $sortBy,
@@ -44,7 +41,7 @@ class CategoriesController extends AbstractController
                 'search_term'=>$searchTerm]);
     }
 
-    //render adding category view
+    # render adding category view
     #[Route('/admin/category/addView', name: 'add_category_view')]
     public function addCatView(CategoryRepository $categoryRepository): Response
     {
@@ -52,40 +49,41 @@ class CategoriesController extends AbstractController
         return $this->render('admin/category/addCategory.html.twig');
     }
 
-    //adding new category from ajax call
+    # adding new category from ajax call
     #[Route('/admin/category/add', name: 'add_category')]
     public function addCat(EntityManagerInterface $entityManager, Request $request, CsrfTokenManagerInterface $csrfTokenManager): Response
     {
-
+        # parsing json data sent from js
         $data = json_decode($request->getContent(), true);
-        //checking if csrftoken is valid
+        # checking if csrftoken is valid
         $token = new CsrfToken('addCat', $request->headers->get('X-CSRF-TOKEN'));
         if (!$csrfTokenManager->isTokenValid($token)) {
             throw $this->createAccessDeniedException('invalid csrf token');
         }
+        # check if requested data from js is available
         if (!$data) {
             return $this->json(['error' => 'empty'], 400);
         }
-        //retrieving sent data from ajax
+        # retrieving sent data from ajax
         $catName = $data['catname'];
         $desc = $data['desc'];
         $addby = $this->getUser();
-        //adding
+        # adding new category
         $newCat = new Category();
         $newCat->setCatName($catName);
         $newCat->setCatDesc($desc);
         $newCat->setUserId($addby);
         $entityManager->persist($newCat);
         $entityManager->flush();
-        //success response
+        # success response
         return $this->json(['success' => 'added']);
     }
 
-    //remove category
+    # remove category
     #[Route('/admin/categories/remove', name: 'remove_category')]
     public function removeCat(EntityManagerInterface $entityManager, Request $request,UrlGeneratorInterface $urlGenerator):Response
     {
-        //recieving the id and fetching if available
+        # recieving the id and fetching if available
         $catId = $request->query->get('catId');
         if (!$catId) {
             flash()->addFlash('error', 'Empty', 'category to be removed not specified');
@@ -95,24 +93,24 @@ class CategoriesController extends AbstractController
             flash()->addFlash('error', 'Empty', 'category to be removed not found!!');
         }
 
-        //removing the category
+        # removing the category
         $entityManager->remove($categoryToRemove);
         $entityManager->flush();
-        //success response
+        # success response
         flash()->addFlash('success', 'Removed', 'you successfuly removed the category');
         $urlGenerate=$urlGenerator->generate('app_categories');
         return $this->redirect($urlGenerate);
     }
 
-    //update category
+    # update category
     #[Route('/admin/categories/update', name: 'update_category')]
     public function updateCat(EntityManagerInterface $entityManager, Request $request,UrlGeneratorInterface $urlGenerator):Response
     {
-        //recieving the id and fetching if available
+        # recieving the id and fetching if available
         $catId = $request->query->get('catId');
         $catName = $request->query->get('catName');
         $catDesc = $request->query->get('catDesc');
-
+        # check if category exists
         if (!$catId) {
             flash()->addFlash('error', 'Empty', 'category to be removed not specified');
         }
@@ -120,11 +118,12 @@ class CategoriesController extends AbstractController
         if (!$categoryToUpdate) {
             flash()->addFlash('error', 'Not Found', 'category to be updated not found!!');
         }
+        # updating with the new values
         $categoryToUpdate->setCatName($catName);
         $categoryToUpdate->setCatDesc($catDesc);
         $entityManager->persist($categoryToUpdate);
         $entityManager->flush();
-        //success response
+        # success response
         flash()->addFlash('success', 'updated', 'you successfuly updated the category');
         $urlGenerate=$urlGenerator->generate('app_categories');
         return $this->redirect($urlGenerate);

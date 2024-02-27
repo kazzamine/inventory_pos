@@ -17,10 +17,11 @@ use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 
 class ProfileController extends AbstractController
 {
+    # rendering profile page
     #[Route('/user/profile', name: 'app_profile')]
     public function UserProfile(UserRepository $userRepository): Response
     {
-        //getting current user
+        # getting current user
         $userId=$this->getUser()->getUserIdentifier();
         $user=$userRepository->findOneBy(['email'=>$userId]);
 
@@ -28,11 +29,13 @@ class ProfileController extends AbstractController
             'userInfo' =>$user
         ]);
     }
-    //update information
+    # update user profile information
     #[Route('/user/profile/update', name: 'update_profile')]
     public function updateProfile(EntityManagerInterface $entityManager,Request $request,CsrfTokenManagerInterface $csrfTokenManager): Response
     {
+        # decoding received data from ajax
         $jsonData=json_decode($request->getContent(),true);
+        # checking csrf token
         $csrfToken=new CsrfToken('updateUser',$request->headers->get('X-CSRF-TOKEN'));
         if (!$csrfTokenManager->isTokenValid($csrfToken)) {
             throw $this->createAccessDeniedException('invalid csrf token');
@@ -40,6 +43,7 @@ class ProfileController extends AbstractController
         if (!$jsonData) {
             return $this->json(['error' => 'empty'], 400);
         }
+        # updating data with the new received one
         $useID=$jsonData['id'];
         $user=$entityManager->getRepository(User::class)->find($useID);
         $user->setUsername($jsonData['username']);
@@ -68,11 +72,12 @@ class ProfileController extends AbstractController
 
         return $this->json(['success'=>'updated successfully!!']);
     }
-    //change password view
+
+    # render change password view
     #[Route('/user/profile/changepwd', name: 'app_changepwd')]
     public function changepwd(UserRepository $userRepository): Response
     {
-        //getting current user
+        # getting current user
         $userId=$this->getUser()->getUserIdentifier();
         $user=$userRepository->findOneBy(['email'=>$userId]);
 
@@ -80,32 +85,33 @@ class ProfileController extends AbstractController
             'userInfo' =>$user
         ]);
     }
-    //change password
+
+    # change password action
     #[Route('/user/profile/changepsd', name: 'change_password')]
     public function changePassword(UrlGeneratorInterface $urlGenerator,EntityManagerInterface $entityManager,Request $request,CsrfTokenManagerInterface $csrfTokenManager): Response
     {
-        //generate redirecting route
+        # generate redirecting route
         $URL=$urlGenerator->generate('app_changepwd');
-        //check csrf token
+        # check csrf token
         $csrfToken=new CsrfToken('updatePassword',$request->query->get('_csrf_token_pwd'));
         if (!$csrfTokenManager->isTokenValid($csrfToken)) {
             throw $this->createAccessDeniedException('invalid csrf token');
         }
-        //get the user
+        # get the user
         $useID=$request->query->get('userId');
         $user=$entityManager->getRepository(User::class)->find($useID);
-        //hashing password
+        # hashing password
         $passwordHasherFactory= new PasswordHasherFactory([
             'common' => ['algorithm' => 'bcrypt']
         ]);
         $passwordHasher = $passwordHasherFactory->getPasswordHasher('common');
         $newPassword=$passwordHasher->hash($request->query->get('newPassword'));
-        //check if new password is same as the old one
+        # check if new password is same as the old one
         if($newPassword==$user->getPassword()){
             flash()->addFlash('warning', 'exist', 'new password can\'t be same as old password');
             return $this->redirect($URL);
-
         }
+        # updating password
         $user->setPassword($newPassword);
 
         try{

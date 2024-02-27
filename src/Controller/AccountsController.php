@@ -57,7 +57,9 @@ class AccountsController extends AbstractController
         $user =new User();
         $form=$this->createForm(CreateUserForm::class);
         $form->handleRequest($request);
+        # submitting form
         if ($form->isSubmitted()) {
+            # setting user attrs
             $user->setUsername($form->get('username')->getData());
             $user->setFirstName($form->get('firstname')->getData());
             $user->setLastName($form->get('lastname')->getData());
@@ -65,7 +67,7 @@ class AccountsController extends AbstractController
             $user->setAdress($form->get('adress')->getData());
             $user->setCity($form->get('city')->getData());
             $user->setPhone($form->get('phone')->getData());
-
+            #adding image
             $imageFile = $form->get('picture')->getData();
             if ($imageFile) {
                 $originalFilename = pathinfo($imageFile->getClientOriginalName(), PATHINFO_FILENAME);
@@ -76,7 +78,7 @@ class AccountsController extends AbstractController
                 );
                 $user->setPicture($newFilename);
             }
-
+            # setting user role
             $role=$entityManager->getRepository(Roles::class)->findOneBy(['id'=>$form->get('roleId')->getData()]);
             //dd($role);
             $user->setRoleId($role);
@@ -105,14 +107,16 @@ class AccountsController extends AbstractController
     #handle remove account request
     #[Route('/accounts/remove','remove_user')]
     public function removeUser(Request $request,EntityManagerInterface $entityManager,UrlGeneratorInterface $urlGenerator):Response
-    {
+    {   # generating return url after successful remove
         $urlGenerate=$urlGenerator->generate('app_accounts_create');
         $userId=$request->query->get('userId');
+        # check if user is selected
         if(!$userId){
             flash()->addFlash('error', 'Empty', 'user to be removed not specified');
             return $this->redirect($urlGenerate);
 
         }
+        # searching for selected user
         $userToRemove=$entityManager->getRepository(User::class)->find($userId);
         if(!$userToRemove){
             flash()->addFlash('error','not found','User doesn\'t Exist!!');
