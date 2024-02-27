@@ -13,22 +13,15 @@ class ContactusForm extends AbstractType
     {
         $builder
             ->add('subject', TextType::class,
-                array('attr'=>array('class'=>'form-control'))
+                array('attr'=>array('class'=>'form-control','required'=>true))
             )->add('email', TextType::class,
-                array('attr'=>array('class'=>'form-control'))
+                array('attr'=>array('class'=>'form-control','required'=>true))
             )->add('message', TextareaType::class,
-                array('attr'=>array('class'=>'form-control'))
+                array('attr'=>array('class'=>'form-control','required'=>true))
             )
             ->add('send', SubmitType::class,
                 array('attr'=>array('class'=>'btn btn-primary d-block w-100'))
             )
         ;
     }
-    public function configureOptions(OptionsResolver $resolver)
-    {
-        $resolver->setDefaults([
-            'csrf_protection' => true,
-        ]);
-    }
-
 }

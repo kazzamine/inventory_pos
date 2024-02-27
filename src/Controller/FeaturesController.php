@@ -32,9 +32,11 @@ class FeaturesController extends AbstractController
             $sender=$form->get('email')->getData();
 
             $mailServices->contactUsMessage($mailer,$sender,$subject,$content);
-
+            return $this->render('features/contactUs.html.twig',
+                ['form'=>$form]);
         }
         return $this->render('features/contactUs.html.twig',
         ['form'=>$form]);
     }
+
 }
