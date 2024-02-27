@@ -15,7 +15,7 @@ Database Schema
 This project is used by the following type of users:
 
 -  Normal user
-- Admin
+-  Admin
 
 
 ## Usage
@@ -38,7 +38,7 @@ This project is used by the following type of users:
 ## Features
 
 - Navigation menu render from database
-- if password forgotten ,you can asl for a reset (mail with the reset link is sent)
+- if password forgotten ,you can ask for a reset (mail with the reset link is sent)
 - On making order success an invoice pdf displayed to download , at the same time it sent to users via mail
 - users notified on their mails on account creation
 - users can report problems or contact admins in a simple form (sending mails)

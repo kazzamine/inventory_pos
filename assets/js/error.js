@@ -1,6 +1,8 @@
 import '../styles/error403.scss'
 import '../styles/error404.scss'
+import '../styles/error.sass'
 
+// for error 404 page
 var $copyContainer = $(".copy-container"),
     $replayIcon = $('#cb-replay'),
     $copyWidth = $('.copy-container').find('p').width();
@@ -37,5 +39,8 @@ $('#cb-replay').on('click', function(){
     splitTextTimeline.restart()
     handleTL.restart()
 })
+
+//error
+
 
 
