@@ -15,10 +15,13 @@
     background: linear-gradient(to right, rgba(0, 0, 0, 0.87), #2d2d2d, #858585, #EEEEEE);
 }
 .navItemsColor{
-    color: #48a1de;
+    color: #3c87b9;
+    font-weight: bold;
 }
 .navSubItemColor{
-    color: #a4d1f3;
+    color: #9ad0ef;
+    font-weight: bold;
+
 }
 @media (min-width: 768px) {
     .gradient-form {
