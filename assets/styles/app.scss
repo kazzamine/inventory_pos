@@ -8,3 +8,9 @@
 @import "/assets/styles/multiForm.css";
 @import "datatables.net-dt/css/jquery.dataTables.min.css";
 @import "pdf";
+
+body{
+  background: -webkit-linear-gradient(to right, #EEEEEE, #858585, #2d2d2d, rgba(0, 0, 0, 0.87));
+
+  background: linear-gradient(to right, rgba(0, 0, 0, 0.87), #EEEEEE, #858585, #2d2d2d);
+}

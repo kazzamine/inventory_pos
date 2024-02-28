@@ -2,11 +2,24 @@
     /* fallback for old browsers */
     background: #fccb90;
 
-    background: -webkit-linear-gradient(to right, #68539a, #3c2a69, #2e1a55, #18033d);
+    background: -webkit-linear-gradient(to right, #f5f5f6, #48a1de, #226fa2, #023962);
 
-    background: linear-gradient(to right, #68539a, #3c2a69, #2e1a55, #18033d);
+    background: linear-gradient(to right, #e8e7e7, #48a1de, #226fa2, #023962);
 }
+.gradient-custom-3 {
+    /* fallback for old browsers */
+    background: #fccb90;
 
+    background: -webkit-linear-gradient(to right, rgba(0, 0, 0, 0.87), #2d2d2d, #858585, #EEEEEE);
+
+    background: linear-gradient(to right, rgba(0, 0, 0, 0.87), #2d2d2d, #858585, #EEEEEE);
+}
+.navItemsColor{
+    color: #48a1de;
+}
+.navSubItemColor{
+    color: #a4d1f3;
+}
 @media (min-width: 768px) {
     .gradient-form {
         height: 100vh !important;
@@ -17,4 +30,13 @@
         border-top-right-radius: .3rem;
         border-bottom-right-radius: .3rem;
     }
+    .gradient-custom-3 {
+        border-top-right-radius: .3rem;
+        border-bottom-right-radius: .3rem;
+    }
+}
+body{
+    background: -webkit-linear-gradient(to right, #EEEEEE, #858585, #2d2d2d, rgba(0, 0, 0, 0.87));
+
+    background: linear-gradient(to right, rgba(0, 0, 0, 0.87), #EEEEEE, #858585, #2d2d2d);
 }

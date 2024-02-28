@@ -93,7 +93,7 @@ class SubmodelController extends AbstractController
             flash()->addFlash('error', 'Empty', 'model to be updated not specified');
         }
         $SubModelToUpdate = $entityManager->getRepository(SubModel::class)->find($SubModelID);
-        if ($SubModelToUpdate) {
+        if (!$SubModelToUpdate) {
             flash()->addFlash('error', 'Empty', 'Sub model to be updated not found!!');
         }
         # updating with new values
