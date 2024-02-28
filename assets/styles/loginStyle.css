@@ -2,9 +2,9 @@
     /* fallback for old browsers */
     background: #fccb90;
 
-    background: -webkit-linear-gradient(to right, #9290C3, #535C91, #1B1A55, #070F2B);
+    background: -webkit-linear-gradient(to right, #68539a, #3c2a69, #2e1a55, #18033d);
 
-    background: linear-gradient(to right, #9290C3, #535C91, #1B1A55, #070F2B);
+    background: linear-gradient(to right, #68539a, #3c2a69, #2e1a55, #18033d);
 }
 
 @media (min-width: 768px) {

@@ -9,5 +9,6 @@ import './js/user/makeOrder';
 import './js/multiForm'
 import 'jquery-ui/dist/jquery-ui.min'
 import '../public/pictures/icon.png'
-import chart from 'chart.js'
+import 'chart.js'
 import './js/user/mdp'
+

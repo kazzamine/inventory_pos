@@ -1,5 +1,5 @@
 {% extends 'base.html.twig' %}
-{% block title %}compare sales {% endblock %}
+{% block title %}Compare sales {% endblock %}
 {% block body %}
     <div class="row">
         <div class="col-md-9">
@@ -62,7 +62,7 @@
                                             var dataset1 = {
                                                 label: productSelect1.options[productSelect1.selectedIndex].text,
                                                 data: data.salesData1.map(item => item.quantity),
-                                                borderColor: 'rgba(255, 99, 132, 1)',
+                                                borderColor: 'rgb(229,93,120)',
                                                 borderWidth: 1,
                                                 fill: false
                                             };
@@ -70,7 +70,7 @@
                                             var dataset2 = {
                                                 label: productSelect2.options[productSelect2.selectedIndex].text,
                                                 data: data.salesData2.map(item => item.quantity),
-                                                borderColor: 'rgba(54, 162, 235, 1)',
+                                                borderColor: 'rgb(9,62,238)',
                                                 borderWidth: 1,
                                                 fill: false
                                             };

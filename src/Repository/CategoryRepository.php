@@ -21,6 +21,7 @@ class CategoryRepository extends ServiceEntityRepository
         parent::__construct($registry, Category::class);
     }
 
+    # find category by searched element
     public function findBySearchTerm(string $searchTerm)
     {
         $qb = $this->createQueryBuilder('u')
@@ -29,59 +30,6 @@ class CategoryRepository extends ServiceEntityRepository
             ->getQuery();
 
         return $qb->getResult();
-    }
-    public function getDatatableData($start, $length, $searchValue, $orderColumn, $orderDirection)
-    {
-        // Define the query builder for your entity
-        $qb = $this->createQueryBuilder('e')
-            ->setFirstResult($start)
-            ->setMaxResults($length);
-
-        // Apply search filter if provided
-        if (!empty($searchValue)) {
-            $qb->andWhere('e.cat_name LIKE :search')
-                ->setParameter('search', '%' . $searchValue . '%');
-        }
-
-        // Apply order
-        $orderBy = 'e.' . $this->getFieldNameForOrder($orderColumn);
-        $qb->orderBy($orderBy, $orderDirection);
-
-        return $qb->getQuery()->getResult();
-    }
-
-    public function getTotalRecords()
-    {
-        return $this->createQueryBuilder('e')
-            ->select('COUNT(e.id)')
-            ->getQuery()
-            ->getSingleScalarResult();
-    }
-
-    public function getFilteredRecords($searchValue)
-    {
-        $qb = $this->createQueryBuilder('e')
-            ->select('COUNT(e.id)');
-
-        if (!empty($searchValue)) {
-            $qb->andWhere('e.name LIKE :search')
-                ->setParameter('search', '%' . $searchValue . '%');
-            // Add additional conditions for other fields as needed
-        }
-
-        return $qb->getQuery()->getSingleScalarResult();
-    }
-
-    private function getFieldNameForOrder($orderColumn)
-    {
-        // Map DataTables column index to your entity field
-        $columnMap = [
-            0 => 'id',
-            1 => 'cat_name',
-            // Add more mappings for other columns
-        ];
-
-        return $columnMap[$orderColumn] ?? 'id';
     }
 
 //    /**
