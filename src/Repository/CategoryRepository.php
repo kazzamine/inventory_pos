@@ -32,6 +32,17 @@ class CategoryRepository extends ServiceEntityRepository
         return $qb->getResult();
     }
 
+    public function findLastCategories()
+    {
+        $sql='SELECT c.id as catid,c.cat_name as catName,u.username as username,c.created_at as createdat 
+                from category c 
+                    JOIN user u on u.id=c.user_id_id 
+                    ORDER BY created_at DESC LIMIT 3;';
+        $entityManager = $this->getEntityManager()->getConnection();
+        $query = $entityManager->prepare($sql);
+        $result=$query->executeQuery();
+        return $result->fetchAllAssociative();
+    }
 //    /**
 //     * @return Category[] Returns an array of Category objects
 //     */

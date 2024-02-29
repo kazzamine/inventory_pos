@@ -29,6 +29,18 @@ class ProductRepository extends ServiceEntityRepository
 
         return $qb->getResult();
     }
+
+    public function findLastProducts()
+    {
+        $sql='SELECT p.id as prodid,p.prod_name as prodName,u.username as username,p.created_at as createdat 
+            from product p 
+            JOIN user u on u.id=p.user_id_id 
+            ORDER BY created_at DESC LIMIT 3;';
+        $entityManager = $this->getEntityManager()->getConnection();
+        $query = $entityManager->prepare($sql);
+        $result=$query->executeQuery();
+        return $result->fetchAllAssociative();
+    }
 //    /**
 //     * @return Product[] Returns an array of Product objects
 //     */

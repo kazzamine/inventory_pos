@@ -133,7 +133,6 @@ makeOrder.on('click',()=>{
         'accNumber':accNumber.val(),
         'userId':userid.val()
     }
-    console.log(data)
 
     fetch('/user/orders/makeOrder',
         {

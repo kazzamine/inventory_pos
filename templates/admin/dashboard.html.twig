@@ -13,6 +13,8 @@
                 </div>
             </div>
         </div>
+        <br>
+        <br>
         <div class="row">
             <div >
                 <div class="panel panel-primary">
@@ -24,9 +26,9 @@
                     <div class="panel-body offset-3">
                         <div class="row">
                             <div class="col-xs-8 col-md-8">
-                                <a href="{{ path('app_make_order') }}" class="btn btn-outline-secondary btn-lg" role="button"><i class="fa-solid fa-plus"></i> <br/>order</a>
+                                <a href="{{ path('app_make_order') }}" class="btn btn-outline-primary btn-lg" role="button"><i class="fa-solid fa-plus"></i> <br/>order</a>
                                 <a href="{{ path('app_monthly_sales') }}" class="btn btn-outline-info btn-lg offset-1" role="button"><i class="fa-solid fa-calendar"></i> <br/>Monthly sales</a>
-                                <a href="{{ path('app_accounts_create') }}" class="btn btn-outline-success btn-lg offset-1" role="button"><i class="fa-solid fa-user"></i> <br/>users</a>
+                                <a href="{{ path('app_accounts_list') }}" class="btn btn-outline-success btn-lg offset-1" role="button"><i class="fa-solid fa-user"></i> <br/>users</a>
                             </div>
                         </div>
                     </div>
@@ -43,24 +45,23 @@
                             <i class="fa-solid fa-square-poll-vertical"></i>   statics
                         </h3>
                     </div>
-                    <div class="panel-body offset-3">
+                    <div class="offset-3">
                         <div class="row">
-                            <div class="row">
-                                <div class="card border-secondary mb-3" style="max-width: 10rem;">
-                                    <div class="card-header">Total Users</div>
+                                <div class="card shadow border-dark-subtle mb-3" style="max-width: 10rem;">
+                                    <div class="card-header">
+                                        Total Users
+                                    </div>
                                     <div class="card-body text-secondary">
-                                        <h5 class="card-title text-center">{{ totalUsers }}</h5>
-                                        <p class="card-text"></p>
+                                        <h5 class="card-text text-center">{{ totalUsers }}</h5>
+
                                     </div>
                                 </div>
-                                <div class="card border-secondary mb-3 offset-1" style="max-width: 10rem;">
+                                <div class="card shadow  border-dark-subtle mb-3 offset-1" style="max-width: 10rem;">
                                     <div class="card-header">Total Orders</div>
                                     <div class="card-body text-secondary">
-                                        <h5 class="card-title text-center">{{ totalOrders }}</h5>
-                                        <p class="card-text"></p>
+                                        <h5 class="card-text text-center">{{ totalOrders }}</h5>
                                     </div>
                                 </div>
-                            </div>
                             </div>
                         </div>
                     </div>
@@ -71,7 +72,7 @@
                 <div class="card shadow">
                     <div class="card-header"> latest orders made</div>
                     <div class="card-body">
-                <table class="table my-0" id="dataTable">
+                <table class="table my-0 table-hover table-striped" id="dataTable">
                     <thead>
                     <tr>
                         <th>order id</th>
@@ -101,8 +102,77 @@
                     </div>
                 </div>
             </div>
+            <br>
+        <br>
+            {#        latest products and categories#}
+        <div class="row">
+            <div class="card shadow col-md-5">
+                <div class="card-header"> latest products added</div>
+                <div class="card-body">
+                    <table class="table my-0 table-hover table-striped" id="dataTable">
+                        <thead>
+                        <tr>
+                            <th>product id</th>
+                            <th>product name</th>
+                            <th>added by </th>
+                            <th>created at</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% if latestProducts %}
+                            {% for latestProduct in latestProducts %}
+                                <tr>
+                                    <td>{{ latestProduct.prodid }}</td>
+                                    <td>{{ latestProduct.prodName }}</td>
+                                    <td>{{ latestProduct.username }}</td>
+                                    <td>{{ latestProduct.createdat|date('d-m-Y') }}</td>
+                                </tr>
+                            {% endfor %}
+                        {% else %}
+                            <tr>
+                                no data found
+                            </tr>
+                        {% endif %}
+                        </tbody>
+                        <tfoot>
+                    </table>
+                </div>
+            </div>
+            <div class="card shadow offset-1 col-md-5">
+                <div class="card-header"> latest Categories added</div>
+                <div class="card-body">
+                    <table class="table my-0 table-hover table-striped" id="dataTable">
+                        <thead>
+                        <tr>
+                            <th>category id</th>
+                            <th>category name</th>
+                            <th>added by </th>
+                            <th>created at</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% if latestCats %}
+                            {% for latestCat in latestCats %}
+                                <tr>
+                                    <td>{{ latestCat.catid }}</td>
+                                    <td>{{ latestCat.catName }}</td>
+                                    <td>{{ latestCat.username }}</td>
+                                    <td>{{ latestCat.createdat|date('d-m-Y') }}</td>
+                                </tr>
+                            {% endfor %}
+                        {% else %}
+                            <tr>
+                                no data found
+                            </tr>
+                        {% endif %}
+                        </tbody>
+                        <tfoot>
+                    </table>
+                </div>
+            </div>
+        </div>
 
-        {% else %}
+    {% else %}
                 <div class="row offset-3">
                     <div class="align-items-center">
                         <div class="panel panel-primary">

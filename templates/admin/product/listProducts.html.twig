@@ -16,7 +16,7 @@
                     <input type="text" class="form-control " name="search" value="{{ search_term }}" placeholder="Search...">
                     <button hidden type="submit">Search</button>
                 </form>
-                <table class="table my-0" id="dataTable">
+                <table class="table table-hover table-striped my-0" id="dataTable">
                     <thead>
                     <tr>
                         <th>product name             <a href="{{ path('app_products', { 'sort_by': 'prod_name', 'sort_order': (sort_by == 'prod_name' and sort_order == 'asc') ? 'desc' : 'asc' }) }}"><i class="fa-solid fa-sort text-secondary"></i> </a></th>

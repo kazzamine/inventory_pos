@@ -114,7 +114,36 @@
             <div class="form-footer d-flex">
                 <button type="button" id="prevBtn" >Previous</button>
                 <button type="button" id="nextBtn" >Next</button>
-                <button class="btn btn-success" id="makeOrder" type="button">make order</button>
+                <button class="btn btn-success" id="makeOrder" data-bs-toggle="modal" data-bs-target="#orderload" type="button">make order</button>
+                <div class="modal fade" id="orderload" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" >
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Order is being treated</h5>
+                            </div>
+                            <div class="modal-body">
+                                <p>stay patient please </p>
+                                <div class="offset-4">
+                                    <div class="spinner-grow text-secondary" role="status">
+                                        <span class="sr-only">Loading...</span>
+                                    </div>
+                                    <div class="spinner-grow text-secondary" role="status">
+                                        <span class="sr-only">Loading...</span>
+                                    </div>
+                                    <div class="spinner-grow text-secondary" role="status">
+                                        <span class="sr-only">Loading...</span>
+                                    </div><div class="spinner-grow text-secondary" role="status">
+                                        <span class="sr-only">Loading...</span>
+                                    </div>
+                                    <div class="spinner-grow text-secondary" role="status">
+                                        <span class="sr-only">Loading...</span>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </form>
     </div>

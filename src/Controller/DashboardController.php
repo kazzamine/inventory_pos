@@ -2,7 +2,9 @@
 
 namespace App\Controller;
 
+use App\Entity\Category;
 use App\Entity\Order;
+use App\Entity\Product;
 use App\Entity\User;
 use App\Repository\ModelRepository;
 use App\Repository\OrderRepository;
@@ -31,12 +33,18 @@ class DashboardController extends AbstractController
         $sales=$orderRepository->findByGroup();
         # last added orders
         $latestOrders=$entityManager->getRepository(Order::class)->findLastOrders();
+        # last added products
+        $latestProds=$entityManager->getRepository(Product::class)->findLastProducts();
+        # last added categories
+        $latestCats=$entityManager->getRepository(Category::class)->findLastCategories();
         return $this->render('admin/dashboard.html.twig',[
             'sales'=>$sales,
             'totalUsers'=>$totalUsers,
             'totalOrders'=>$totalOrders,
             'userRole'=>$userRole,
-            'latestOrders'=>$latestOrders
+            'latestOrders'=>$latestOrders,
+            'latestProducts'=>$latestProds,
+            'latestCats'=>$latestCats
         ]);
     }
     //render user dashboard
