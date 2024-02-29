@@ -36,7 +36,7 @@ class OrderRepository extends ServiceEntityRepository
             FROM `order` o
             JOIN product p ON o.prod_id_id = p.id
             GROUP BY  month, productName
-            ORDER BY  month'
+            '
         ;
         $entityManager = $this->getEntityManager()->getConnection();
         $query = $entityManager->prepare($sql);
@@ -48,9 +48,11 @@ class OrderRepository extends ServiceEntityRepository
     public function findByProd($prodid)
     {
         $sql='
-        SELECT o.quantity as quantity , MONTHNAME(o.order_date) as month
+        SELECT o.quantity as quantity , (o.order_date) as orderdate
         FROM `order` o 
         WHERE o.prod_id_id= :prodId
+        GROUP BY quantity,orderdate
+        ORDER BY orderdate
         ';
         $entityManager = $this->getEntityManager()->getConnection();
         $query = $entityManager->prepare($sql);

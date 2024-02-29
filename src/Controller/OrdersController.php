@@ -207,10 +207,10 @@ class OrdersController extends AbstractController
             $commonService->updateStorage($entityManager,$prod,$data['quantity']);
             # success message
             flash()->addFlash('success','order Made','order made succesfully');
+
+            $entityManager->getConnection()->commit();
             # sending mail with reciept invoice
             $mailServices->invoiceMail($twig,$mailer,$orderDetId->getUserId()->getEmail(),$orderId);
-            $entityManager->getConnection()->commit();
-
             return $this->json(['orderId'=>$orderId]);
         }catch (\Exception $exception){
             $entityManager->getConnection()->rollBack();

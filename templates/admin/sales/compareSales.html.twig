@@ -55,10 +55,7 @@
                                     fetch('/admin/compareSale/getProd?prodId1=' + productId1 + '&prodId2=' + productId2)
                                         .then(response => response.json())
                                         .then(data => {
-                                            console.log('Received data:', data); // Log the received data
-
-                                            let months = data.salesData1.map(item => item.month);
-
+                                            let dates = data.salesData1.map(item => item.orderdate);
                                             let dataset1 = {
                                                 label: productSelect1.options[productSelect1.selectedIndex].text,
                                                 data: data.salesData1.map(item => item.quantity),
@@ -78,11 +75,10 @@
                                             let config = {
                                                 type: 'line',
                                                 data: {
-                                                    labels: months,
+                                                    labels: dates,
                                                     datasets: [dataset1, dataset2]
                                                 }
                                             };
-
                                             // Update chart
                                             existingChart = new Chart(chart, config);
 
