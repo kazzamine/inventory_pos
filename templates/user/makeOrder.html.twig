@@ -40,13 +40,13 @@
                 </div>
                 <div class="row">
                     <div class="col-sm-6">
-                        <div class="has-feedback form-group mb-3"><label class="form-label" for="price">product Price</label><input class="form-control" type="number" step="0.01" id="price" title="price for a single item" readonly name="price" required></div>
+                        <div class="has-feedback form-group mb-3"><label class="form-label" for="price">product Price : MAD</label><input class="form-control" type="number" step="0.01" id="price" title="price for a single item" readonly name="price" required></div>
                     </div>
                     <div class="col-sm-6">
                         <div class="has-feedback form-group mb-3"><label class="form-label" for="description">product description</label><input class="form-control" type="text"   id="description" readonly name="description"  required></div>
                     </div>
                     <div class="col-sm-6">
-                        <div class="has-feedback form-group mb-3"><label class="form-label" for="tax">product tax</label><input class="form-control" type="number" step="0.01" id="tax" name="tax" readonly  required></div>
+                        <div class="has-feedback form-group mb-3"><label class="form-label" for="tax">product tax %</label><input class="form-control" type="number" step="0.01" id="tax" name="tax" readonly  required></div>
                     </div>
                 </div>
             </div>
@@ -54,12 +54,15 @@
             <div class="step">
                 <p class="text-center mb-4">Order Details</p>
                 <div class="mb-3">
+                    <label class="form-label" for="description">Quantity</label>
                     <input type="number" min="1" placeholder="quantity" required title="chose your quantity" id="quantity" name="quantity">
                 </div>
                 <div class="mb-3">
+                    <label class="form-label" for="description">Discount % (over 5 products) </label>
                     <input type="text" placeholder="discount only for over 5 item" value="0" id="discount" title="discounts available for more than 5 products" name="discount" readonly>
                 </div>
                 <div class="mb-3">
+                    <label class="form-label" for="description">Total : MAD</label>
                     <input type="number" step="0.01" readonly title="total including tax" placeholder="your total" id="total" name="total">
                 </div>
             </div>
@@ -91,10 +94,10 @@
 
                 <div class="row" id="cashContainer" style="display: none">
                     <div class="col-sm-6">
-                        <div class="has-feedback form-group mb-3"><label class="form-label" for="payed">cash amount</label><input class="form-control" step="0.01" type="number"  id="payed" name="payed" required></div>
+                        <div class="has-feedback form-group mb-3"><label class="form-label" for="payed">cash amount in MAD</label><input class="form-control" step="0.01" type="number"  id="payed" name="payed" required></div>
                     </div>
                     <div class="col-sm-6">
-                        <div class="has-feedback form-group mb-3"><label class="form-label" for="giveBack"> rest</label><input class="form-control" step="0.01" type="number" readonly id="giveBack" name="giveBack"></div>
+                        <div class="has-feedback form-group mb-3"><label class="form-label" for="giveBack"> rest in MAD</label><input class="form-control" step="0.01" type="number" readonly id="giveBack" name="giveBack"></div>
                     </div>
                 </div>
                 <div class="row" id="bankContainer" style="display: none">

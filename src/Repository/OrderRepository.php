@@ -4,12 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Order;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\ORM\Query\ResultSetMapping;
 use Doctrine\Persistence\ManagerRegistry;
-use DoctrineExtensions\Query\Mysql\Month;
-use DoctrineExtensions\Query\Mysql\Year;
-
-
 
 /**
  * @extends ServiceEntityRepository<Order>

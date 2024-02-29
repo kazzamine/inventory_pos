@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 {% block title %}monthly sales {% endblock %}
 {% block body %}
-    <div class="row">
+    <div class="row align-content-center">
         <div class="col-md-9">
             <div class="card shadow">
                 <div class="card-header">
@@ -17,10 +17,10 @@
                         </div>
                         <script>
                             document.addEventListener('DOMContentLoaded', function () {
-                                var monthlySalesData = {{ sales|json_encode|raw }};
-                                var ctx = document.getElementById('monthlySalesChart').getContext('2d');
+                                let monthlySalesData = {{ sales|json_encode|raw }};
+                                let ctx = document.getElementById('monthlySalesChart').getContext('2d');
 
-                                var datasets = {};
+                                let datasets = {};
                                 monthlySalesData.forEach(function (entry) {
                                     if (!datasets[entry.productName]) {
                                         datasets[entry.productName] = {
@@ -33,13 +33,13 @@
                                     datasets[entry.productName].data.push(entry.totalSales);
                                 });
 
-                                var chartData = {
+                                let chartData = {
                                     labels: monthlySalesData.map(function (entry) {
                                         return  entry.month;
                                     }),
                                     datasets: Object.values(datasets),
                                 };
-                                var chartConfig = {
+                                let chartConfig = {
                                     type: 'bar',
                                     data: chartData,
                                     options: {
@@ -51,7 +51,7 @@
                                     },
                                 };
 
-                                var myChart = new Chart(ctx, chartConfig);
+                                let myChart = new Chart(ctx, chartConfig);
                             });
                         </script>
                     </div>

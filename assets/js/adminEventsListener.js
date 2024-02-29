@@ -24,9 +24,7 @@ toggleAdd.on('click',()=>{
     toggleDivVisibility(addToggle)
 
 })
-//toggleAdd
-
-//for category
+// category events section
 
 //detecting clicks
 const btnAddCat=$('#btn_addCat');
@@ -34,7 +32,7 @@ const btnAddCat=$('#btn_addCat');
 const txtCatName=$('#category_name')
 const txtCatDesc=$('#cat_desc')
 const csrfToken=$('#_csrf_token')
-//event of addinf new category
+//event of adding new category
 btnAddCat.on('click',(e)=>{
     e.preventDefault();
     if(txtCatDesc.val() && txtCatName.val() ) {
@@ -56,12 +54,9 @@ btnAddCat.on('click',(e)=>{
             stopOnFocus: true,
         }).showToast();
     }
-
 })
 
-
 //change fields of list to be editable
-
 //for products
 //updateProdBtn
 // const saveUpdatedProd=$('.saveBtn');
@@ -82,9 +77,6 @@ btnAddCat.on('click',(e)=>{
 //         console.log(data)
 //     });
 // });
-
-
-
 
 //add product
 const btnAddProd=$('#btn_addProd');
@@ -122,15 +114,11 @@ btnAddProd.on('click',(e)=>{
             backgroundColor: 'warning',
             stopOnFocus: true,
         }).showToast();
-
     }
-
 })
-
 
 //update user
 import {updateUser} from "./admin/users";
-
 
 const updateinfoClick=$('#updateInfo');
 const saveInfoChanges=$('#saveUpdatedUser');
@@ -162,8 +150,6 @@ const txtCity=$('#txtCity');
 const userPic=$('#ProfilePictureInput')
 const ProfilecsrfToken=$('#_csrf_token_userUpdate')
 saveInfoChanges.on('click',()=>{
-    // console.log(userPic.prop('files')[0])
-
     let data={
         'id':saveInfoChanges.data('userId'),
         'username':txtUsername.val(),
@@ -258,5 +244,3 @@ btnUpdateProvider.on('click',()=>{
 
     updateAjax('/admin/provider/update',data);
 })
-
-//

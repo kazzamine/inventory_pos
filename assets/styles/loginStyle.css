@@ -39,7 +39,7 @@
     }
 }
 body{
-    background: -webkit-linear-gradient(to right, #EEEEEE, #858585, #2d2d2d, rgba(0, 0, 0, 0.87));
+    background: -webkit-linear-gradient(to right, #858585, #858585, #2d2d2d, rgba(0, 0, 0, 0.87));
 
-    background: linear-gradient(to right, rgba(0, 0, 0, 0.87), #EEEEEE, #858585, #2d2d2d);
+    background: linear-gradient(to right, rgba(0, 0, 0, 0.87), #858585, #858585, #2d2d2d);
 }

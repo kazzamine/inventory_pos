@@ -35,11 +35,11 @@
                         <script>
 
                             document.addEventListener('DOMContentLoaded', function () {
-                                var productSelect1 = document.getElementById('selectedFirstProd');
-                                var productSelect2 = document.getElementById('selectedSecondProd');
-                                var chart = document.getElementById('salesChart').getContext('2d');
+                                let productSelect1 = document.getElementById('selectedFirstProd');
+                                let productSelect2 = document.getElementById('selectedSecondProd');
+                                let chart = document.getElementById('salesChart').getContext('2d');
 
-                                var existingChart = null;
+                                let existingChart = null;
 
                                 // Event listener for product selection
                                 function updateChart() {
@@ -48,8 +48,8 @@
                                         existingChart.destroy();
                                     }
 
-                                    var productId1 = productSelect1.value;
-                                    var productId2 = productSelect2.value;
+                                    let productId1 = productSelect1.value;
+                                    let productId2 = productSelect2.value;
 
                                     // Make an AJAX request to get sales data for the selected products
                                     fetch('/admin/compareSale/getProd?prodId1=' + productId1 + '&prodId2=' + productId2)
@@ -57,9 +57,9 @@
                                         .then(data => {
                                             console.log('Received data:', data); // Log the received data
 
-                                            var months = data.salesData1.map(item => item.month);
+                                            let months = data.salesData1.map(item => item.month);
 
-                                            var dataset1 = {
+                                            let dataset1 = {
                                                 label: productSelect1.options[productSelect1.selectedIndex].text,
                                                 data: data.salesData1.map(item => item.quantity),
                                                 borderColor: 'rgb(229,93,120)',
@@ -67,7 +67,7 @@
                                                 fill: false
                                             };
 
-                                            var dataset2 = {
+                                            let dataset2 = {
                                                 label: productSelect2.options[productSelect2.selectedIndex].text,
                                                 data: data.salesData2.map(item => item.quantity),
                                                 borderColor: 'rgb(9,62,238)',
@@ -75,7 +75,7 @@
                                                 fill: false
                                             };
 
-                                            var config = {
+                                            let config = {
                                                 type: 'line',
                                                 data: {
                                                     labels: months,
