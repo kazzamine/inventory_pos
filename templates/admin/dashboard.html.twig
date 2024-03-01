@@ -23,7 +23,7 @@
                             <span class="fa-solid fa-bookmark"></span> Quick Shortcuts
                         </h3>
                     </div>
-                    <div class="panel-body offset-3">
+                    <div class="panel-body offset-3" style="z-index: 999">
                         <div class="row">
                             <div class="col-xs-8 col-md-8">
                                 <a href="{{ path('app_make_order') }}" class="btn btn-outline-primary btn-lg" role="button"><i class="fa-solid fa-plus"></i> <br/>order</a>
@@ -105,8 +105,8 @@
             <br>
         <br>
             {#        latest products and categories#}
-        <div class="row">
-            <div class="card shadow col-md-5">
+        <div class="row col-md-12">
+            <div class="card shadow col-md-5 col-sm-3 offset-1 row">
                 <div class="card-header"> latest products added</div>
                 <div class="card-body">
                     <table class="table my-0 table-hover table-striped" id="dataTable">
@@ -138,7 +138,7 @@
                     </table>
                 </div>
             </div>
-            <div class="card shadow offset-1 col-md-5">
+            <div class="card shadow offset-1 col-md-5 col-sm-3 row">
                 <div class="card-header"> latest Categories added</div>
                 <div class="card-body">
                     <table class="table my-0 table-hover table-striped" id="dataTable">
@@ -205,8 +205,8 @@
 
                                 <div class="row">
                                     <div class="col-xs-6 col-md-6">
-                                        <a href="{{ path('make_order') }}" class="btn btn-outline-secondary btn-lg" role="button"><i class="fa-solid fa-plus"></i> <br/>order</a>
-                                        <a href="{{ path('app_make_order') }}" class="btn btn-outline-info btn-lg" role="button"><i class="fa-solid fa-user"></i> <br/>change your infos</a>
+                                        <a href="{{ path('make_order') }}" class="btn btn-outline-success btn-lg" role="button"><i class="fa-solid fa-plus"></i> <br/>order</a>
+                                        <a href="{{ path('app_profile') }}" class="btn btn-outline-info btn-lg" role="button"><i class="fa-solid fa-user"></i> <br/>change your infos</a>
                                     </div>
                                 </div>
 

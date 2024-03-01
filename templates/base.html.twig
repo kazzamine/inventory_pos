@@ -19,13 +19,14 @@
         <div class="row flex-nowrap">
         {#including navbar #}
                 {% include 'attachements/navbar.html.twig' %}
-                <div class="col py-2 justify-content-center" id="content">
+                <div class="col-auto col-md-10 col-xl-10 justify-content-center" style="z-index: 99" id="content">
                     {% block body %}
 
                     {% endblock %}
+                    {% include 'attachements/footer.html.twig' %}
+
                 </div>
             </div>
         </div>
-    {% include 'attachements/footer.html.twig' %}
     </body>
 </html>

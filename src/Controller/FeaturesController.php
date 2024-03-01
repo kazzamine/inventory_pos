@@ -40,4 +40,11 @@ class FeaturesController extends AbstractController
         ['form'=>$form]);
     }
 
+    #render about FAQ
+    #[Route('/user/faq', name: 'app_faq')]
+    public function faq(): Response
+    {
+        return $this->render('features/faqPage.html.twig');
+    }
+
 }

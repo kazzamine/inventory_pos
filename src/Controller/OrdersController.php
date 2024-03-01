@@ -66,7 +66,7 @@ class OrdersController extends AbstractController
     {
 
         $user=$entityManager->getRepository(User::class)->findOneBy(['email'=>$this->getUser()->getUserIdentifier()]);
-        $userOrders=$entityManager->getRepository(OrderDetail::class)->findOneBy(['user_id'=>$user]);
+        $userOrders=$entityManager->getRepository(OrderDetail::class)->findBy(['user_id'=>$user]);
         # datatable search
         $searchTerm = $request->query->get('search', '');
         $searchedData = $entityManager->getRepository(Order::class)->findBySearchTerm($searchTerm);
@@ -161,7 +161,7 @@ class OrdersController extends AbstractController
         return $this->json(['quantity'=>$quantityNeeded,'total'=>$total,'discount'=>$discountValue]);
     }
 
-    # making order (form submitted throu ajax)
+    # making order (form submitted through ajax)
     #[Route('/user/orders/makeOrder', name: 'make_order')]
     public function makeOrder(MailerInterface $mailer,Environment $twig,MailServices $mailServices,EntityManagerInterface $entityManager,Request $request,CsrfTokenManagerInterface $csrfTokenManager,UrlGeneratorInterface $urlGenerator):Response
     {
@@ -198,7 +198,13 @@ class OrdersController extends AbstractController
 
             } else {
                 $paymentMethodId = $commonService->addToPaymentMethod($entityManager, 0, null, $user, 'cash');
+                # if payment made by user
+                if (in_array('ROLE_USER', $roles, true)) {
+                    $paymentId = $commonService->addPayment($entityManager, $paymentMethodId, $data['total'],0);
+                }else{
+                #if payment made by cash made by an admin
                 $paymentId = $commonService->addPayment($entityManager, $paymentMethodId, $data['toGive'], $data['rest']);
+                }
             }
             # inserting order details
             $orderDetId=$commonService->addDetail($entityManager,$user,$data['total']);
