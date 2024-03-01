@@ -3,11 +3,9 @@
 <head>
     <title>Invoice Receipt</title>
     <link rel="icon" type="image/png" href="{{ asset('/pictures/icon.svg') }}">
-
     <style>
        body{
            background:#eee;
-           margin-top:5px;
        }
        .text-danger strong {
            color: #9f181c;
@@ -104,11 +102,11 @@
             <div class="col-md-5">
                 <div class="receipt-header row">
                     <div class="col-xs-6 col-sm-6 col-md-6">
-                        <div class="receipt-left">
-                            <img class="img-responsive" alt="logo image" src="{{ absolute_url( asset('pictures/icon.svg')) }}" style="width: 71px; border-radius: 43px;">
+                        <div class="receipt-left" style="margin-left: 5%">
+                            <img class="img-responsive" alt="" src="https://play-lh.googleusercontent.com/vCvvSVvN4cEUiGeXxdY152a690jPevvzUNftMU3Vu990Op-LrXbTdSxMq6JlUZmfzA=w240-h480-rw" style="width: 80px; border-radius: 43px;">
                         </div>
                     </div>
-                    <div class="col-xs-6 col-sm-6 col-md-6">
+                    <div class="col-xs-6 col-sm-6 col-md-6" style="margin-left: 70% ;margin-top: -70px">
                         <div class="receipt-right">
                             <h5>INVENTORY.</h5>
                             <p>+1 3649-6589 <i class="fa fa-phone"></i></p>
@@ -129,7 +127,7 @@
                             <p><b>Address :</b> {{ order.orderDetail.userId.adress }} , {{ order.orderDetail.userId.city }}</p>
                         </div>
                     </div>
-                    <div class="col-xs-4 col-sm-4 col-md-4">
+                    <div class="col-xs-4 col-sm-4 col-md-4" style="margin-left: 25%">
                         <div class="receipt-left">
                             <h3>INVOICE # {{ order.id }}</h3>
                         </div>
@@ -137,7 +135,7 @@
                 </div>
             </div>
 
-            <div class="offset-6">
+            <div class="offset-6" style="margin-left: 5%">
                 <table class="table table-bordered">
                     <thead>
                     <tr>

@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Order;
+use Dompdf\Options;
 use Doctrine\ORM\EntityManagerInterface;
 use Dompdf\Dompdf;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -20,7 +21,9 @@ class GeneratePdfController extends AbstractController
         $order=$entityManager->getRepository(Order::class)->find($orderid);
 
         $html =  $this->renderView('PDF/invoice.html.twig',  ['order'=>$order]);
-        $dompdf = new Dompdf();
+        $options=new Options();
+        $options->set('isRemoteEnabled',true);
+        $dompdf = new Dompdf($options);
         $dompdf->loadHtml($html);
         $dompdf->render();
 
