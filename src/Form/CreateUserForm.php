@@ -31,23 +31,23 @@ class CreateUserForm extends AbstractType{
                 'required' => false,
             ])
             ->add('username', TextType::class,
-            array('attr'=>array('class'=>'form-control'))
+            array('attr'=>array('class'=>'form-control'),'required'=>true)
     )
             ->add('firstname', TextType::class,
-                array('attr'=>array('class'=>'form-control'))
+                array('attr'=>array('class'=>'form-control'),'required'=>true)
             )
             ->add('lastname',TextType::class,
-                array('attr'=>array('class'=>'form-control'))
+                array('attr'=>array('class'=>'form-control'),'required'=>true)
             )
             ->add('email',EmailType::class,
-                array('attr'=>array('class'=>'form-control'))
+                array('attr'=>array('class'=>'form-control'),'required'=>true)
 
             )
             ->add('adress',TextType::class,
-                array('attr'=>array('class'=>'form-control'))
+                array('attr'=>array('class'=>'form-control'),'required'=>true)
             )
             ->add('phone',TextType::class,
-                array('attr'=>array('class'=>'form-control'))
+                array('attr'=>array('class'=>'form-control'),'required'=>true)
             )
             ->add('city',ChoiceType::class,
                 array('choices'=>$cities,'attr'=>array('class'=>'form-control'))
@@ -55,7 +55,7 @@ class CreateUserForm extends AbstractType{
             ->add('roleId',ChoiceType::class,
                 array('choices'=>array('ROLE_USER'=>'3','ROLE_ADMIN'=>'4'), 'attr'=>array('class'=>'form-control'))
             )->add('password',PasswordType::class,
-                array('attr'=>array('class'=>'form-control'))
+                array('attr'=>array('class'=>'form-control'),'required'=>true)
             )
             ->add('createuser', SubmitType::class,
                 array('attr'=>array('class'=>'btn btn-primary d-block w-100','data-bs-toggle'=>'modal', 'data-bs-target'=>'#orderload'))

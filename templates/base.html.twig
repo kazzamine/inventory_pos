@@ -20,6 +20,9 @@
         {#including navbar #}
                 {% include 'attachements/navbar.html.twig' %}
                 <div class="col justify-content-center" id="content">
+                    <button class="btn btn-outline-secondary d-lg-none" type="button" data-bs-toggle="collapse" data-bs-target="#sidebar" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                        <i class="fa fa-bars"></i>
+                    </button>
                     {% block body %}
 
                     {% endblock %}
