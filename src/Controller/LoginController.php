@@ -38,21 +38,18 @@ class LoginController extends AbstractController
         $securityContext = $this->container->get('security.authorization_checker');
         if ($securityContext->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
             $urlGenerate=$urlGenerator->generate('admin_dashboard');
-
             return $this->redirect($urlGenerate);
             }
         #check if logged credentials matches existing user
         if($user instanceof UserInterface){
             flash()->addFlash('success','logged in','you successfuly logged in!!');
             $user_role=$user->getRoles();
-
         }
         #check if there is an error
         if ($error) {
             flash()->addFlash('warning', $error->getMessage(), 'retry again');
         }
         if($user_role!=null){
-
             if (in_array('ROLE_ADMIN', $user_role, true)) {
                 $role='ROLE_ADMIN';
             }
@@ -63,7 +60,6 @@ class LoginController extends AbstractController
             'last_username'=>$last_username
         ]);
     }
-
 
     #forget password
     #[Route('/forgetpass',name: 'forget_password')]
@@ -87,9 +83,7 @@ class LoginController extends AbstractController
         [
             'form'=>$form
         ]);
-
     }
-
 
     #reset password
     #[Route('/resetmdp',name: 'reset_mdp')]
@@ -120,8 +114,6 @@ class LoginController extends AbstractController
             $mailServices->alertMdpChanged($mailer,$email);
             $urlGenerate=$urlGenerator->generate('app_login');
             return $this->redirect($urlGenerate);
-
-
         }
         return $this->render('features/resetMdp.html.twig',
             [
