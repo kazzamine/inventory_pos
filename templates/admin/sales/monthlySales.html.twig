@@ -32,11 +32,11 @@
 
                                     datasets[entry.productName].data.push(entry.totalSales);
                                 });
-
+                                //remove the duplication months from the dataset
+                                let months = new Set(monthlySalesData.map(entry => entry.month));
+                                console.log(months)
                                 let chartData = {
-                                    labels: monthlySalesData.map(function (entry) {
-                                        return  entry.month;
-                                    }),
+                                    labels: Array.from(months),
                                     datasets: Object.values(datasets),
                                 };
                                 let chartConfig = {
@@ -46,6 +46,7 @@
                                         scales: {
                                             y: {
                                                 beginAtZero: true,
+
                                             },
                                         },
                                     },

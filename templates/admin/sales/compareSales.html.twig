@@ -55,7 +55,10 @@
                                     fetch('/admin/compareSale/getProd?prodId1=' + productId1 + '&prodId2=' + productId2)
                                         .then(response => response.json())
                                         .then(data => {
-                                            let dates = data.salesData1.map(item => item.orderdate);
+                                            let prod1Dates = data.salesData1.map(item => item.orderdate);
+                                            let prod2Dates = data.salesData2.map(item => item.orderdate);
+                                            let dates=(prod2Dates.length>prod1Dates.length) ? prod2Dates: prod2Dates;
+                                            console.log(prod2Dates.length)
                                             let dataset1 = {
                                                 label: productSelect1.options[productSelect1.selectedIndex].text,
                                                 data: data.salesData1.map(item => item.quantity),
