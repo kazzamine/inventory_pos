@@ -197,7 +197,7 @@ class OrdersController extends AbstractController
                 $paymentId = $commonService->addPayment($entityManager, $paymentMethodId, $data['total'], 0);
 
             } else {
-                $paymentMethodId = $commonService->addToPaymentMethod($entityManager, 0, null, $user, 'cash');
+                $paymentMethodId = $commonService->addToPaymentMethod($entityManager, '0', null, $user, 'cash');
                 # if payment made by user
                 if (in_array('ROLE_USER', $roles, true)) {
                     $paymentId = $commonService->addPayment($entityManager, $paymentMethodId, $data['total'],0);

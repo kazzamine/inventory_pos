@@ -20,7 +20,7 @@ class PaymentMethod
     private ?Provider $provider_id = null;
 
     #[ORM\Column]
-    private ?int $acc_number = null;
+    private ?string $acc_number = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $expire_date = null;
@@ -45,12 +45,12 @@ class PaymentMethod
         return $this;
     }
 
-    public function getAccNumber(): ?int
+    public function getAccNumber(): ?string
     {
         return $this->acc_number;
     }
 
-    public function setAccNumber(int $acc_number): static
+    public function setAccNumber(string $acc_number): static
     {
         $this->acc_number = $acc_number;
 

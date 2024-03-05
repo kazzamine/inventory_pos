@@ -103,7 +103,7 @@
                 <div class="receipt-header row">
                     <div class="col-xs-6 col-sm-6 col-md-6">
                         <div class="receipt-left" style="margin-left: 5%">
-                            <img class="img-responsive" alt="" src="https://play-lh.googleusercontent.com/vCvvSVvN4cEUiGeXxdY152a690jPevvzUNftMU3Vu990Op-LrXbTdSxMq6JlUZmfzA=w240-h480-rw" style="width: 80px; border-radius: 43px;">
+                            <img class="img-responsive" alt="" src="http://inventory.test/pictures/icon.png" style="width: 80px; border-radius: 43px;">
                         </div>
                     </div>
                     <div class="col-xs-6 col-sm-6 col-md-6" style="margin-left: 70% ;margin-top: -70px">
@@ -129,7 +129,7 @@
                     </div>
                     <div class="col-xs-4 col-sm-4 col-md-4" style="margin-left: 25%">
                         <div class="receipt-left">
-                            <h3>INVOICE # {{ order.id }}</h3>
+                            <h3>INVOICE # {{ order.id }}/{{ order.orderDate|date('Y-m')}}</h3>
                         </div>
                     </div>
                 </div>
@@ -212,7 +212,7 @@
     <h1 class="text-secondary offset-2" style="font-size: 12px">All right reserved any illegal activity may result in severe consequences</h1>
 
     <div class="receipt-left" style="margin-left: 60%;margin-top: -20%">
-        <img class="img-responsive" alt="" src="https://clipart-library.com/images_k/paid-stamp-transparent/paid-stamp-transparent-2.png" style="width: 100px; border-radius: 43px;">
+        <img class="img-responsive" alt="" src="http://inventory.test/pictures/stampPaid.png" style="width: 100px; border-radius: 43px;">
     </div>
 </div>
 </body>
