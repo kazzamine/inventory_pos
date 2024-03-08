@@ -23,9 +23,9 @@
                             <span class="fa-solid fa-bookmark"></span> Quick Shortcuts
                         </h3>
                     </div>
-                    <div class="panel-body offset-3" style="z-index: 999">
+                    <div class="panel-body offset-3">
                         <div class="row">
-                            <div class="col-xs-8 col-md-8">
+                            <div class="col-xs-8 col-md-8" style="z-index: 999">
                                 <a href="{{ path('app_make_order') }}" class="btn btn-outline-primary btn-lg" role="button"><i class="fa-solid fa-plus"></i> <br/>order</a>
                                 <a href="{{ path('app_monthly_sales') }}" class="btn btn-outline-info btn-lg offset-1" role="button"><i class="fa-solid fa-calendar"></i> <br/>Monthly sales</a>
                                 <a href="{{ path('app_accounts_list') }}" class="btn btn-outline-success btn-lg offset-1" role="button"><i class="fa-solid fa-user"></i> <br/>users</a>
@@ -141,7 +141,7 @@
             <div class="card shadow offset-1 col-md-5 col-sm-3 row">
                 <div class="card-header"> latest Categories added</div>
                 <div class="card-body">
-                    <table class="table my-0 table-hover table-striped" id="dataTable">
+                    <table class="table table-responsive my-0 table-hover table-striped" id="dataTable">
                         <thead>
                         <tr>
                             <th>category id</th>
@@ -171,48 +171,45 @@
                 </div>
             </div>
         </div>
-
     {% else %}
-                <div class="row offset-3">
-                    <div class="align-items-center">
-                        <div class="panel panel-primary">
-                            <div class="panel-heading">
-                                <h3 class="panel-title">
-                                    <span class=""></span>hello Welcome to our <span class="text-capitalize text-primary-emphasis"> inventory</span>
-                                </h3>
-                            </div>
-                            <div class="panel-body offset-3">
-                                <div class="row">
-                                    <div class="col-xs-6 col-md-6">
-                                        <p>Order as you wish</p>
-                                    </div>
-                                </div>
+        <div class="row offset-3">
+            <div class="align-items-center">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">
+                            <span class=""></span>hello Welcome to our <span class="text-capitalize text-primary-emphasis"> inventory</span>
+                        </h3>
+                    </div>
+                    <div class="panel-body offset-3">
+                        <div class="row">
+                            <div class="col-xs-6 col-md-6">
+                                <p>Order as you wish</p>
                             </div>
                         </div>
                     </div>
                 </div>
-                <br>
-                <br>
-                <div class="row">
-                    <div >
-                        <div class="panel panel-primary">
-                            <div class="panel-heading">
-                                <h3 class="panel-title offset-4">
-                                    <span class="fa-solid fa-bookmark"></span> Quick Shortcuts
-                                </h3>
-                            </div>
-                            <div class="panel-body offset-4">
-
-                                <div class="row">
-                                    <div class="col-xs-6 col-md-6">
-                                        <a href="{{ path('make_order') }}" class="btn btn-outline-success btn-lg" role="button"><i class="fa-solid fa-plus"></i> <br/>order</a>
-                                        <a href="{{ path('app_profile') }}" class="btn btn-outline-info btn-lg" role="button"><i class="fa-solid fa-user"></i> <br/>change your infos</a>
-                                    </div>
-                                </div>
-
+            </div>
+        </div>
+        <br>
+        <br>
+        <div class="row">
+            <div >
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <h3 class="panel-title offset-4">
+                            <span class="fa-solid fa-bookmark"></span> Quick Shortcuts
+                        </h3>
+                    </div>
+                    <div class="panel-body offset-4">
+                        <div class="row">
+                            <div class="col-xs-6 col-md-6" style="z-index: 999">
+                                <a href="{{ path('make_order') }}" class="btn btn-outline-success btn-lg" role="button"><i class="fa-solid fa-plus"></i> <br/>order</a>
+                                <a href="{{ path('app_profile') }}" class="btn btn-outline-info btn-lg" role="button"><i class="fa-solid fa-user"></i> <br/>change your infos</a>
                             </div>
                         </div>
                     </div>
                 </div>
-            {% endif %}
+            </div>
+        </div>
+    {% endif %}
 {% endblock %}

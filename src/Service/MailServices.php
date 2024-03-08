@@ -52,7 +52,7 @@ class MailServices{
 
     //mail to change forgotten password
     public function alertMdpChanged(MailerInterface $mailer,$sendTo){
-        $subject='your password reseted';
+        $subject='your password has been reset';
         $content='your password has been reset REMMEMBERRR IIITT';
 
         $mail = (new Email())

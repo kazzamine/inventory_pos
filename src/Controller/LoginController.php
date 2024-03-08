@@ -46,8 +46,15 @@ class LoginController extends AbstractController
             $user_role=$user->getRoles();
         }
         #check if there is an error
+        $tries=0;
         if ($error) {
+            $tries++;
+            if($tries>=5){
+                flash()->addFlash('warning','logging attempts passed the limits , retry in 10 min', 'retry after 10 min');
+                $tries=0;
+            }
             flash()->addFlash('warning', $error->getMessage(), 'retry again');
+
         }
         if($user_role!=null){
             if (in_array('ROLE_ADMIN', $user_role, true)) {
