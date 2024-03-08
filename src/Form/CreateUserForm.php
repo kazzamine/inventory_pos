@@ -1,6 +1,5 @@
 <?php
 namespace App\Form;
-use http\Message\Body;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
@@ -10,8 +9,8 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\Regex;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
-use Symfony\UX\Dropzone\Form\DropzoneType;
 
 class CreateUserForm extends AbstractType{
     private $httpClient;
@@ -40,14 +39,20 @@ class CreateUserForm extends AbstractType{
                 array('attr'=>array('class'=>'form-control'),'required'=>true)
             )
             ->add('email',EmailType::class,
-                array('attr'=>array('class'=>'form-control'),'required'=>true)
+                array('attr'=>array('class'=>'form-control','placeholder'=>'email@email.com'),'required'=>true)
 
             )
             ->add('adress',TextType::class,
                 array('attr'=>array('class'=>'form-control'),'required'=>true)
             )
             ->add('phone',TextType::class,
-                array('attr'=>array('class'=>'form-control'),'required'=>true)
+                array('attr'=>array('class'=>'form-control','placeholder'=>'+212(0)x123356'),'required'=>true,
+                    'constraints'=>[
+                    new Regex([
+                        'pattern'=>'/^((\+212)?\(0\))?[0-9]+$/',
+                        'message'=>'phone number must start with 212 or 0x'
+                    ])]
+                )
             )
             ->add('city',ChoiceType::class,
                 array('choices'=>$cities,'attr'=>array('class'=>'form-control'))

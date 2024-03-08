@@ -7,12 +7,17 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\UX\Turbo\Attribute\Broadcast;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[Broadcast]
+#[UniqueEntity(
+    fields: 'email',message: 'email already exists'
+)]
 class User implements UserInterface,PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
@@ -36,6 +41,9 @@ class User implements UserInterface,PasswordAuthenticatedUserInterface
     private array $roles = [];
 
     #[ORM\Column]
+    #[Assert\Regex(
+        pattern: '/^((\+212)?\(0\))?[0-9]+$/',message: 'phone number must start with 212 or 0x'
+    )]
     private ?string $phone = null;
 
     #[ORM\Column(length: 200)]
@@ -59,7 +67,7 @@ class User implements UserInterface,PasswordAuthenticatedUserInterface
     #[ORM\ManyToOne(inversedBy: 'users')]
     private ?Roles $role_id = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255,unique: true)]
     private ?string $email = null;
 
     #[ORM\Column(type: Types::STRING, nullable: true)]

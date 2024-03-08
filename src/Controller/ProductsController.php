@@ -75,6 +75,7 @@ class ProductsController extends AbstractController
         $prodCat = $data['category'];
         $category=$entityManager->getRepository(Category::class)->find($prodCat);
         $addBy = $this->getUser();
+        try{
         # adding new product values
         $newProd = new Product();
         $newProd->setProdName($prodName);
@@ -101,6 +102,9 @@ class ProductsController extends AbstractController
         $storage->setProdId($newProd);
         $entityManager->persist($storage);
         $entityManager->flush();
+        }catch (\Exception $ex){
+            return $this->json(['error' => $ex]);
+        }
         # success response
         return $this->json(['success' => 'added']);
     }
@@ -118,12 +122,15 @@ class ProductsController extends AbstractController
         if (!$productToRemove) {
             flash()->addFlash('error', 'Empty', 'product to be removed not found!!');
         }
-
-        # removing the product
-        $entityManager->remove($productToRemove);
-        $entityManager->flush();
-        # success response
-        flash()->addFlash('success', 'Removed', 'you successfuly removed the category');
+        try {
+            # removing the product
+            $entityManager->remove($productToRemove);
+            $entityManager->flush();
+            # success response
+            flash()->addFlash('success', 'Removed', 'you successfuly removed the category');
+        }catch (\Exception $ex){
+                flash()->addFlash('error',$ex->getCode(),$ex->getMessage());
+        }
         $urlGenerate=$urlGenerator->generate('app_products');
         return $this->redirect($urlGenerate);
     }
@@ -150,21 +157,25 @@ class ProductsController extends AbstractController
         if (!$productToUpdate) {
             flash()->addFlash('error', 'Empty', 'product to be updated not found!!');
         }
-        # updating with new values
-        $productToUpdate->setProdName($prodName);
-        $productToUpdate->setProdDesc($prodDesc);
-        $productToUpdate->setTax($prodTax);
-        $productToUpdate->setPrice($prodPrice);
+        try {
+            # updating with new values
+            $productToUpdate->setProdName($prodName);
+            $productToUpdate->setProdDesc($prodDesc);
+            $productToUpdate->setTax($prodTax);
+            $productToUpdate->setPrice($prodPrice);
 
-        $entityManager->persist($productToUpdate);
-        $entityManager->flush();
-        # updating storage quantity by new value
-        $newQuantity=$storage->getStorageQuantity()+$prodStorage;
-        $storage->setStorageQuantity($newQuantity);
-        $entityManager->persist($storage);
-        $entityManager->flush();
-        # success response
-        flash()->addFlash('success', 'updated', 'you successfuly updated the product');
+            $entityManager->persist($productToUpdate);
+            $entityManager->flush();
+            # updating storage quantity by new value
+            $newQuantity = $storage->getStorageQuantity() + $prodStorage;
+            $storage->setStorageQuantity($newQuantity);
+            $entityManager->persist($storage);
+            $entityManager->flush();
+            # success response
+            flash()->addFlash('success', 'updated', 'you successfuly updated the product');
+        }catch (\Exception $ex){
+            flash()->addFlash('error',$ex->getCode(),$ex->getMessage());
+        }
         $urlGenerate=$urlGenerator->generate('app_products');
         return $this->redirect($urlGenerate);
     }

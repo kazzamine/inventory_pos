@@ -109,11 +109,13 @@ class LoginController extends AbstractController
                         'form'=>$form
                     ]);
             }
+            try{
             #crypting password
             $passwordHasherFactory= new PasswordHasherFactory([
                 'common' => ['algorithm' => 'bcrypt']
             ]);
             $passwordHasher = $passwordHasherFactory->getPasswordHasher('common');
+
             $user->setPassword($passwordHasher->hash( $form->get('password')->getData()));
             $entityManager->persist($user);
             $entityManager->flush();
@@ -121,6 +123,9 @@ class LoginController extends AbstractController
             $mailServices->alertMdpChanged($mailer,$email);
             $urlGenerate=$urlGenerator->generate('app_login');
             return $this->redirect($urlGenerate);
+            }catch (\Exception $ex){
+                flash()->addFlash('error',$ex->getCode(),$ex->getMessage());
+            }
         }
         return $this->render('features/resetMdp.html.twig',
             [

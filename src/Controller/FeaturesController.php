@@ -27,6 +27,7 @@ class FeaturesController extends AbstractController
         $form=$this->createForm(ContactusForm::class);
         $form->handleRequest($request);
         # submitting contact us
+        try {
         if($form->isSubmitted()){
             $subject=$form->get('subject')->getData();
             $content=$form->get('message')->getData();
@@ -35,6 +36,10 @@ class FeaturesController extends AbstractController
             $mailServices->contactUsMessage($mailer,$sender,$subject,$content);
             return $this->render('features/contactUs.html.twig',
                 ['form'=>$form]);
+        }
+        }catch (\Exception $ex){
+            flash()->addFlash('error',$ex->getCode(),$ex->getMessage());
+
         }
         return $this->render('features/contactUs.html.twig',
         ['form'=>$form]);

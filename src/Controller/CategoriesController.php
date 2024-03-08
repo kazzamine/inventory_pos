@@ -68,13 +68,19 @@ class CategoriesController extends AbstractController
         $catName = $data['catname'];
         $desc = $data['desc'];
         $addby = $this->getUser();
+        try{
         # adding new category
         $newCat = new Category();
         $newCat->setCatName($catName);
         $newCat->setCatDesc($desc);
         $newCat->setUserId($addby);
+
         $entityManager->persist($newCat);
         $entityManager->flush();
+        }catch (\Exception $ex){
+            flash()->addFlash('error',$ex->getCode(),$ex->getMessage());
+
+        }
         # success response
         return $this->json(['success' => 'added']);
     }
@@ -92,10 +98,13 @@ class CategoriesController extends AbstractController
         if (!$categoryToRemove) {
             flash()->addFlash('error', 'Empty', 'category to be removed not found!!');
         }
-
+        try{
         # removing the category
         $entityManager->remove($categoryToRemove);
         $entityManager->flush();
+        }catch (\Exception $ex){
+            flash()->addFlash('error',$ex->getCode(),$ex->getMessage());
+        }
         # success response
         flash()->addFlash('success', 'Removed', 'you successfuly removed the category');
         $urlGenerate=$urlGenerator->generate('app_categories');
@@ -118,11 +127,16 @@ class CategoriesController extends AbstractController
         if (!$categoryToUpdate) {
             flash()->addFlash('error', 'Not Found', 'category to be updated not found!!');
         }
+        try{
         # updating with the new values
         $categoryToUpdate->setCatName($catName);
         $categoryToUpdate->setCatDesc($catDesc);
         $entityManager->persist($categoryToUpdate);
         $entityManager->flush();
+        }catch (\Exception $ex){
+            flash()->addFlash('error',$ex->getCode(),$ex->getMessage());
+
+        }
         # success response
         flash()->addFlash('success', 'updated', 'you successfuly updated the category');
         $urlGenerate=$urlGenerator->generate('app_categories');

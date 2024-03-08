@@ -64,7 +64,6 @@ class OrdersController extends AbstractController
     #[Route('/user/orders',name: 'user_orders')]
     public function userOrders(EntityManagerInterface $entityManager,PaginatorInterface $paginator,Request $request):Response
     {
-
         $user=$entityManager->getRepository(User::class)->findOneBy(['email'=>$this->getUser()->getUserIdentifier()]);
         $userOrders=$entityManager->getRepository(OrderDetail::class)->findBy(['user_id'=>$user]);
         # datatable search
@@ -240,10 +239,13 @@ class OrdersController extends AbstractController
         if (!$orderToRemove) {
             flash()->addFlash('error', 'Empty', 'order to be removed not found!!');
         }
-
+        try{
         # removing the order
         $entityManager->remove($orderToRemove);
         $entityManager->flush();
+        }catch (\Exception $ex){
+            flash()->addFlash('error',$ex->getCode(),$ex->getMessage());
+        }
         #success response
         flash()->addFlash('success', 'Removed', 'you successfuly removed the order');
         $urlGenerate=$urlGenerator->generate('app_orders');

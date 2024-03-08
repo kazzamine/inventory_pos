@@ -15,6 +15,7 @@ use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\PasswordHasher\Hasher\PasswordHasherFactory;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Twig\Environment;
 
 #[Route('/admin')]
@@ -58,46 +59,51 @@ class AccountsController extends AbstractController
         $form=$this->createForm(CreateUserForm::class);
         $form->handleRequest($request);
         # submitting form
-        if ($form->isSubmitted()) {
-            # setting user attrs
-            $user->setUsername($form->get('username')->getData());
-            $user->setFirstName($form->get('firstname')->getData());
-            $user->setLastName($form->get('lastname')->getData());
-            $user->setEmail($form->get('email')->getData());
-            $user->setAdress($form->get('adress')->getData());
-            $user->setCity($form->get('city')->getData());
-            $user->setPhone($form->get('phone')->getData());
-            #adding image
-            $imageFile = $form->get('picture')->getData();
-            if ($imageFile) {
-                $originalFilename = pathinfo($imageFile->getClientOriginalName(), PATHINFO_FILENAME);
-                $newFilename = $originalFilename . '-' . uniqid() . '.' . $imageFile->guessExtension();
-                $imageFile->move(
-                    $this->getParameter('image_directory'),
-                    $newFilename
-                );
-                $user->setPicture($newFilename);
+        try {
+            if ($form->isSubmitted() && $form->isValid()) {
+                # setting user attrs
+                $user->setUsername($form->get('username')->getData());
+                $user->setFirstName($form->get('firstname')->getData());
+                $user->setLastName($form->get('lastname')->getData());
+                $user->setEmail($form->get('email')->getData());
+                $user->setAdress($form->get('adress')->getData());
+                $user->setCity($form->get('city')->getData());
+                $user->setPhone($form->get('phone')->getData());
+                #adding image
+                $imageFile = $form->get('picture')->getData();
+                if ($imageFile) {
+                    $originalFilename = pathinfo($imageFile->getClientOriginalName(), PATHINFO_FILENAME);
+                    $newFilename = $originalFilename . '-' . uniqid() . '.' . $imageFile->guessExtension();
+                    $imageFile->move(
+                        $this->getParameter('image_directory'),
+                        $newFilename
+                    );
+                    $user->setPicture($newFilename);
+                }
+                # setting user role
+                $role = $entityManager->getRepository(Roles::class)->findOneBy(['id' => $form->get('roleId')->getData()]);
+                //dd($role);
+                $user->setRoleId($role);
+                $user->setRoles(array('role' => $role->getRoleName()));
+                $password = $form->get('password')->getData();
+                #crypting password
+                $passwordHasherFactory = new PasswordHasherFactory([
+                    'common' => ['algorithm' => 'bcrypt']
+                ]);
+                $passwordHasher = $passwordHasherFactory->getPasswordHasher('common');
+                $user->setPassword($passwordHasher->hash($form->get('password')->getData()));
+                $entityManager->persist($user);
+                $entityManager->flush();
+
+                //sending confirmation mail
+                $mailServices->sendCreateAcc($mailer, $twig, $form->get('email')->getData(), $password);
+
+
+                return $this->redirect($request->getUri());
             }
-            # setting user role
-            $role=$entityManager->getRepository(Roles::class)->findOneBy(['id'=>$form->get('roleId')->getData()]);
-            //dd($role);
-            $user->setRoleId($role);
-            $user->setRoles( array('role'=>$role->getRoleName()) );
-            $password=$form->get('password')->getData();
-            #crypting password
-            $passwordHasherFactory= new PasswordHasherFactory([
-                'common' => ['algorithm' => 'bcrypt']
-            ]);
-            $passwordHasher = $passwordHasherFactory->getPasswordHasher('common');
-            $user->setPassword($passwordHasher->hash( $form->get('password')->getData()));
-            $entityManager->persist($user);
-            $entityManager->flush();
+        }catch (\Exception $ex){
+            flash()->addFlash('error',$ex->getCode(),$ex->getMessage());
 
-            //sending confirmation mail
-            $mailServices->sendCreateAcc($mailer,$twig,$form->get('email')->getData(),$password);
-
-
-            return $this->redirect($request->getUri());
         }
         return $this->render('admin/users/createAccounts.html.twig',
         ['form'=>$form]
@@ -123,10 +129,14 @@ class AccountsController extends AbstractController
             return $this->redirect($urlGenerate);
 
         }
+        try{
         $entityManager->remove($userToRemove);
         $entityManager->flush();
         flash()->addFlash('success','user Removed','User removed succesfully');
+        }catch (\Exception $ex){
+            flash()->addFlash('error',$ex->getCode(),$ex->getMessage());
 
+        }
     return $this->redirect($urlGenerate);
     }
 
