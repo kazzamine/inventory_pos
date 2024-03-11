@@ -21,8 +21,25 @@
                                         </div>
 
                                         <div class="form-outline mb-4">
-                                            <input type="password" id="password" name="_password" class="form-control" />
-                                            <label class="form-label" for="password">Password</label>
+                                            <div class="form-group form-outline mb-4">
+                                                <div class="">
+                                                    <input id="password" type="password" class="form-control" name="_password">
+                                                    <span type="button" onclick="showPassword('password')" id="toggle-password" style="float: right;margin-left: -20px;margin-top: -25px;position: relative;z-index: 2;" data-bs-toggle="#password" class="fa fa-fw fa-eye field-icon toggle-password"></span>
+                                                </div>
+                                                <label class="col-md-4 control-label" for="password">Password</label>
+                                            </div>
+                                            <script>
+                                                function showPassword(targetID) {
+                                                    let x = document.getElementById(targetID);
+
+                                                    if (x.type === "password") {
+                                                        x.type = "text";
+                                                    } else {
+                                                        x.type = "password";
+                                                    }
+
+                                                }
+                                            </script>
                                         </div>
                                         <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
                                         {# {% if user_role=='ROLE_ADMIN' %}#}

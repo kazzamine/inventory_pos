@@ -12,7 +12,7 @@ import '../public/pictures/icon.png'
 import 'chart.js'
 import './js/user/mdp'
 
-var fullHeight = function() {
+let fullHeight = function() {
 
     $('.js-fullheight').css('height', $(window).height());
     $(window).resize(function(){
@@ -25,4 +25,5 @@ fullHeight();
 $('#sidebarCollapse').on('click', function () {
     $('#sidebar').toggleClass('active');
 });
+
 
