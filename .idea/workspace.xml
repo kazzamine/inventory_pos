@@ -6,8 +6,26 @@
   <component name="ChangeListManager">
     <list default="true" id="9f00799e-a2f4-4745-b31f-91cebe650d6e" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/app.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/AccountsController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/AccountsController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/DashboardController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/DashboardController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/FeaturesController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/FeaturesController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/GeneratePdfController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/GeneratePdfController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/LoginController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/LoginController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/ModelController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/ModelController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/OrdersController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/OrdersController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/ProfileController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/ProfileController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/ProviderController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/ProviderController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/SalesController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/SalesController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/SubmodelController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/SubmodelController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Form/CreateUserForm.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Form/CreateUserForm.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Form/UpdateCategoryForm.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Form/UpdateCategoryForm.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Form/newPasswordForm.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Form/newPasswordForm.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Service/CommonServices.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Service/CommonServices.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/PDF/invoice.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/PDF/invoice.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/features/forgetPwd.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/features/forgetPwd.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/features/resetMdp.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/features/resetMdp.html.twig" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/login/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/login/index.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/user/profile.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/user/profile.html.twig" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

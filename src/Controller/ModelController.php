@@ -38,8 +38,6 @@ class ModelController extends AbstractController
         # checking if model exists
         if (!$modelID) {
             flash()->addFlash('error', 'Empty', 'model to be updated not specified');
-
-
         }
         $modelToUpdate = $entityManager->getRepository(Model::class)->find($modelID);
         if (!$modelToUpdate) {
@@ -63,7 +61,6 @@ class ModelController extends AbstractController
     {
         # generate url for redirect
         $urlGenerate = $urlGenerator->generate('app_model');
-
         $modId = $request->query->get('modId');
         # checking if model exists
         if (!$modId) {
@@ -74,7 +71,6 @@ class ModelController extends AbstractController
         if (!$modelToRemove) {
             flash()->addFlash('error', 'Empty', 'model to be removed not found!!');
             return $this->redirect($urlGenerate);
-
         }
 
         # removing the model
@@ -103,14 +99,13 @@ class ModelController extends AbstractController
         $newModel->setPath($data['modPath']);
         $newModel->setRole($role->getRoleName());
         $newModel->setRoleId($role);
-        # add new model return exception if there a problem
+        # add new model return exception if there's a problem
         try{
             $entityManager->persist($newModel);
             $entityManager->flush();
         }catch (ORMException $exception){
             throw new \Exception( $exception->getMessage());
         }
-
         return $this->json(['success'=>'added successfully']);
     }
 

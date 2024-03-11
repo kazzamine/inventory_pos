@@ -50,8 +50,6 @@ class SubmodelController extends AbstractController
         }catch (ORMException $exception){
             throw new \Exception( $exception->getMessage());
         }
-
-
         return $this->json(['success'=>'added successfully']);
     }
     # remove sub model
@@ -68,7 +66,6 @@ class SubmodelController extends AbstractController
         if (!$subModelToRemove) {
             flash()->addFlash('error', 'Empty', 'Sub model to be removed not found!!');
         }
-
         # removing the sub model
         $entityManager->remove($subModelToRemove);
         $entityManager->flush();
@@ -107,5 +104,4 @@ class SubmodelController extends AbstractController
         $urlGenerate=$urlGenerator->generate('app_submodel');
         return $this->redirect($urlGenerate);
     }
-
 }

@@ -26,7 +26,6 @@ class ProviderController extends AbstractController
             $entityManager->persist($provider);
             $entityManager->flush();
         }
-
         $providers=$providerRepository->findAll();
         return $this->render('admin/providers.html.twig',
         ['providers'=>$providers,

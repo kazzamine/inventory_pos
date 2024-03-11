@@ -1,6 +1,5 @@
 {% extends 'base.html.twig' %}
 {% block title %}Profile {% endblock %}
-
 {% block body %}
     <div class="col-lg-8">
     <div class="row">
@@ -9,13 +8,10 @@
         <div class="card-header py-3">
             <p class="text-primary m-0 fw-bold">information</p>
         </div>
-
         <div class="card-body">
             <form>
                 <div class="row">
-
                     <div class="d-flex justify-content-center mb-4">
-
                         <div id="pictureContainer">
                             <img id="selectedPic" src="{{ asset('uploads/images/' ~ userInfo.picture) }}"
                                  class="rounded-circle" style="width: 200px; height: 200px; object-fit: cover;" alt="no picture found" />
@@ -27,16 +23,15 @@
                             <input type="file"  class="form-control d-none" id="ProfilePictureInput" onchange="displaySelectedPicture()">
                         </div>
                     </div>
-
                 </div>
                     <script>
                         function displaySelectedPicture() {
-                            var input = document.getElementById('ProfilePictureInput');
-                            var container = document.getElementById('pictureContainer');
+                            let input = document.getElementById('ProfilePictureInput');
+                            let container = document.getElementById('pictureContainer');
 
                             // Check if a file is selected
                             if (input.files && input.files[0]) {
-                                var reader = new FileReader();
+                                let reader = new FileReader();
 
                                 // Set up the reader to read the selected file as a data URL
                                 reader.onload = function (e) {
@@ -49,7 +44,6 @@
                             }
                         }
                     </script>
-
                 <div class="row">
                     <div class="col">
                         <div class="mb-3"><label class="form-label" ><strong>Username</strong></label><input class="form-control userInfo"  readonly type="text" id="txtUsername" value="{{ userInfo.username }}" name="txtUsername" ></div>

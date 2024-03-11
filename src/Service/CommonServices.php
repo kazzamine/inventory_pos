@@ -37,7 +37,6 @@ class CommonServices
         $entityManager->persist($addPayment);
         $entityManager->flush();
         return $addPayment;
-
     }
     //add order details
     public function addDetail(EntityManagerInterface $entityManager,$user,$total)
@@ -48,7 +47,6 @@ class CommonServices
         $entityManager->persist($orderDet);
         $entityManager->flush();
         return $orderDet;
-
     }
     //add Order
     public function addOrder(EntityManagerInterface $entityManager,$prodId,$orderDetail,$payment,$quantity,$discount)

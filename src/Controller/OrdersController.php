@@ -25,7 +25,6 @@ use Symfony\Component\Security\Csrf\CsrfToken;
 use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 use Twig\Environment;
 
-
 class OrdersController extends AbstractController
 {
     # list of all orders
@@ -164,7 +163,6 @@ class OrdersController extends AbstractController
     #[Route('/user/orders/makeOrder', name: 'make_order')]
     public function makeOrder(MailerInterface $mailer,Environment $twig,MailServices $mailServices,EntityManagerInterface $entityManager,Request $request,CsrfTokenManagerInterface $csrfTokenManager,UrlGeneratorInterface $urlGenerator):Response
     {
-
         # generate redirect route
         $urlGenerate=$urlGenerator->generate('app_make_order');
         # receiving data and parsing it
@@ -194,7 +192,6 @@ class OrdersController extends AbstractController
                 $expdate = DateTime::createFromFormat('Y-m-d', $data['expDate']);
                 $paymentMethodId = $commonService->addToPaymentMethod($entityManager, $data['accNumber'],$expdate, $user, $data['method']);
                 $paymentId = $commonService->addPayment($entityManager, $paymentMethodId, $data['total'], 0);
-
             } else {
                 $paymentMethodId = $commonService->addToPaymentMethod($entityManager, '0', null, $user, 'cash');
                 # if payment made by user
@@ -212,7 +209,6 @@ class OrdersController extends AbstractController
             $commonService->updateStorage($entityManager,$prod,$data['quantity']);
             # success message
             flash()->addFlash('success','order Made','order made succesfully');
-
             $entityManager->getConnection()->commit();
             # sending mail with reciept invoice
             $mailServices->invoiceMail($twig,$mailer,$orderDetId->getUserId()->getEmail(),$orderId);
@@ -220,7 +216,6 @@ class OrdersController extends AbstractController
         }catch (\Exception $exception){
             $entityManager->getConnection()->rollBack();
             throw $exception;
-
         }
         return $this->json(['result'=>'success']);
     }

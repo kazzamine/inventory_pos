@@ -19,14 +19,12 @@ class GeneratePdfController extends AbstractController
     {
         $orderid=$request->query->get('orderId');
         $order=$entityManager->getRepository(Order::class)->find($orderid);
-
         $html =  $this->renderView('PDF/invoice.html.twig',  ['order'=>$order]);
         $options=new Options();
         $options->set('isRemoteEnabled',true);
         $dompdf = new Dompdf($options);
         $dompdf->loadHtml($html);
         $dompdf->render();
-
         return new Response (
             $dompdf->stream('Order'.$orderid, ["Attachment" => false]),
             Response::HTTP_OK,

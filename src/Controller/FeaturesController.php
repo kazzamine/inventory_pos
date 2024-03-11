@@ -21,7 +21,6 @@ class FeaturesController extends AbstractController
 
     #render contact us page
     #[Route('/user/contactUs', name: 'app_contactus')]
-
     public function contactUs(MailServices $mailServices,Request $request,MailerInterface $mailer):Response
     {
         $form=$this->createForm(ContactusForm::class);

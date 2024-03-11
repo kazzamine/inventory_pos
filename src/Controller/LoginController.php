@@ -18,7 +18,6 @@ use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use Twig\Environment;
 
-
 class LoginController extends AbstractController
 {
     #render alogin page
@@ -54,7 +53,6 @@ class LoginController extends AbstractController
                 $tries=0;
             }
             flash()->addFlash('warning', $error->getMessage(), 'retry again');
-
         }
         if($user_role!=null){
             if (in_array('ROLE_ADMIN', $user_role, true)) {
@@ -84,7 +82,6 @@ class LoginController extends AbstractController
                     ]);
             }
             $mailServices->resetPassword($mailer,$twig,$form->get('email')->getData());
-
         }
         return $this->render('features/forgetPwd.html.twig',
         [
@@ -99,7 +96,6 @@ class LoginController extends AbstractController
         $form->handleRequest($request);
         $email=$request->query->get('mail');
         if ($form->isSubmitted()) {
-
             #searching for the user by mail
             $user=$entityManager->getRepository(User::class)->findOneBy(['email'=>$email]);
             if(!$user){
@@ -115,7 +111,6 @@ class LoginController extends AbstractController
                 'common' => ['algorithm' => 'bcrypt']
             ]);
             $passwordHasher = $passwordHasherFactory->getPasswordHasher('common');
-
             $user->setPassword($passwordHasher->hash( $form->get('password')->getData()));
             $entityManager->persist($user);
             $entityManager->flush();
@@ -131,6 +126,5 @@ class LoginController extends AbstractController
             [
                 'form'=>$form
             ]);
-
     }
 }

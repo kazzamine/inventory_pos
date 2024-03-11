@@ -85,7 +85,6 @@ class CreateUserForm extends AbstractType{
         foreach ($data['data'] as $city) {
             $choices[$city] = $city;
         }
-
         return $choices;
     }
 }

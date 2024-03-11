@@ -113,7 +113,6 @@ class ProfileController extends AbstractController
         }
         # updating password
         $user->setPassword($newPassword);
-
         try{
             $entityManager->persist($user);
             $entityManager->flush();
@@ -122,7 +121,6 @@ class ProfileController extends AbstractController
         }catch ( ORMException $exception){
            throw new  $exception();
         }
-
         return $this->redirect($URL);
     }
 }
