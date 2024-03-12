@@ -69,14 +69,15 @@ class ExcelDataController extends AbstractController
         $currentWorkSheet->getColumnDimension('F')->setAutoSize(true);
         #save file
         $saveFile = new Xlsx($spreadsheet);
-
         $response =  new StreamedResponse(
             function () use ($saveFile) {
                 $saveFile->save('php://output');
             }
         );
+        # date of the day when Excel is generated
+        $date = date('m/d/Y h:i:s a', time());
         $response->headers->set('Content-Type','application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-        $response->headers->set('Content-Disposition', 'attachment;filename="orders.xlsx"');
+        $response->headers->set('Content-Disposition', 'attachment;filename="orders'.$date.'.xlsx"');
         $response->headers->set('Cache-Control','max-age=0');
         return $response;
     }
@@ -143,14 +144,15 @@ class ExcelDataController extends AbstractController
 
         #save file
         $saveFile = new Xlsx($UsersSpreadsheet);
-
         $response =  new StreamedResponse(
             function () use ($saveFile) {
                 $saveFile->save('php://output');
             }
         );
+        # date of the day when Excel is generated
+        $date = date('m/d/Y h:i:s a', time());
         $response->headers->set('Content-Type','application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-        $response->headers->set('Content-Disposition', 'attachment;filename="users.xlsx"');
+        $response->headers->set('Content-Disposition', 'attachment;filename="users-'.$date.'.xlsx"');
         $response->headers->set('Cache-Control','max-age=0');
         return $response;
     }
