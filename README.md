@@ -40,6 +40,8 @@ This project is used by the following type of users:
 - Navigation menu render from database
 - if password forgotten ,you can ask for a reset (mail with the reset link is sent)
 - On making order success an invoice pdf displayed to download , at the same time it sent to users via mail
+- Admins can generate excel files
+- Admins can see chart data of sales (monthly or compare products)
 - users notified on their mails on account creation
 - users can report problems or contact admins in a simple form (sending mails)
 
@@ -47,6 +49,7 @@ This project is used by the following type of users:
 ## Tech Stack
 
 **Client:** HTML, CSS, SCSS,Bootstrap,Javascript,Jquery,AJAX,NPM
+
 **NPM Packages**
 | package  | Uses |
 | ------------- | ------------- |
@@ -63,6 +66,7 @@ This project is used by the following type of users:
 | Dependency  | Uses |
 | ------------- | ------------- |
 |  DomPDF  |  Generating pdf  |
+|  phpspreadsheet  |  Generating excel files  |
 | google-mailer  | sending mails with gmail smtp  |
 | php-flasher  | display alerts from controllers  |
      | Other known Dependencies like doctrine,security..|
