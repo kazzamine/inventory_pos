@@ -15,6 +15,7 @@
         "knplabs/knp-paginator-bundle": "^6.3",
         "php-flasher/flasher-symfony": "^1.15",
         "phpdocumentor/reflection-docblock": "^5.3",
+        "phpoffice/phpspreadsheet": "^2.0",
         "phpstan/phpdoc-parser": "^1.25",
         "symfony/asset": "7.0.*",
         "symfony/asset-mapper": "7.0.*",
