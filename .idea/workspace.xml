@@ -5,14 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="9f00799e-a2f4-4745-b31f-91cebe650d6e" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/inventory_pos.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inventory_pos.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/phpspec.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/phpspec.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/composer.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/composer.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/admin/adminOrdersList.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/admin/adminOrdersList.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/admin/users/listUsers.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/admin/users/listUsers.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/LoginController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/LoginController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/login/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/login/index.html.twig" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -236,7 +231,7 @@
       <option name="presentableId" value="Default" />
       <updated>1707319601843</updated>
       <workItem from="1707319602872" duration="600000" />
-      <workItem from="1710237107688" duration="6676000" />
+      <workItem from="1710237107688" duration="7893000" />
     </task>
     <servers />
   </component>

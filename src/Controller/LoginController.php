@@ -23,7 +23,7 @@ class LoginController extends AbstractController
     #render alogin page
     #handles login action
     #[Route('/', name: 'app_login')]
-    public function index(AuthenticationUtils $authenticationUtils,UrlGeneratorInterface $urlGenerator): Response
+    public function index(AuthenticationUtils $authenticationUtils,UrlGeneratorInterface $urlGenerator,Request $request): Response
     {
         # if user is logged
         $user=$this->getUser();
@@ -62,7 +62,8 @@ class LoginController extends AbstractController
         return $this->render('login/index.html.twig', [
             'messageerr' => $error,
             'user_role'=>$role,
-            'last_username'=>$last_username
+            'last_username'=>$last_username,
+             'lastPage' => $request->headers->get('referer')
         ]);
     }
 
