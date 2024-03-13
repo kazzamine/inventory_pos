@@ -8,13 +8,12 @@ use Doctrine\ORM\EntityManagerInterface;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 use Symfony\Component\Routing\Attribute\Route;
 
 class ExcelDataController extends AbstractController
 {
-    # orders in excel
+    # orders in Excel
     #[Route('/admin/excel/orders', name: 'app_excel_orders')]
     public function index(EntityManagerInterface $entityManager):StreamedResponse
     {

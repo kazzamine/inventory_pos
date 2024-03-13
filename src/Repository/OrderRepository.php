@@ -24,7 +24,7 @@ class OrderRepository extends ServiceEntityRepository
     public function findBySearchTerm(string $searchTerm)
     {
         $qb = $this->createQueryBuilder('u')
-            ->andWhere('u.order_date LIKE :searchTerm')
+            ->andWhere('u.order_date LIKE :searchTerm OR u.quantity LIKE :searchTerm')
             ->setParameter('searchTerm', '%' . $searchTerm . '%')
             ->getQuery();
 

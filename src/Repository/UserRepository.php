@@ -24,7 +24,7 @@ class UserRepository extends ServiceEntityRepository
     public function findBySearchTerm(string $searchTerm)
     {
         $qb = $this->createQueryBuilder('u')
-            ->andWhere('u.username LIKE :searchTerm')
+            ->andWhere('u.username LIKE :searchTerm OR u.first_name LIKE :searchTerm OR u.last_name LIKE :searchTerm OR u.city LIKE :searchTerm')
             ->setParameter('searchTerm', '%' . $searchTerm . '%')
             ->getQuery();
 

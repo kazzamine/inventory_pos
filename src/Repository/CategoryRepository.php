@@ -25,7 +25,7 @@ class CategoryRepository extends ServiceEntityRepository
     public function findBySearchTerm(string $searchTerm)
     {
         $qb = $this->createQueryBuilder('u')
-            ->andWhere('u.cat_name LIKE :searchTerm')
+            ->andWhere('u.cat_name LIKE :searchTerm OR u.created_at LIKE :searchTerm')
             ->setParameter('searchTerm', '%' . $searchTerm . '%')
             ->getQuery();
 

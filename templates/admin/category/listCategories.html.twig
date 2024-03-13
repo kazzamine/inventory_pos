@@ -16,6 +16,8 @@
             <div class="table-responsive table mt-2" id="dataTable" role="grid" aria-describedby="dataTable_info">
                 <form action="{{ path('app_categories') }}" class="col-sm-2 offset-8" method="get" >
                     <input type="text" class="form-control " name="search" value="{{ search_term }}" placeholder="Search...">
+                    <button type="reset" onsubmit="" class="btn" style="float: right;margin-right: 5%;margin-top: -35px;position: relative;z-index: 2;">x</button>
+
                     <button hidden type="submit">Search</button>
                 </form>
                 <table class="table table-hover table-striped my-0" id="category_datatable">

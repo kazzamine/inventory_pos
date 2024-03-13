@@ -106,11 +106,17 @@ class ProfileController extends AbstractController
         ]);
         $passwordHasher = $passwordHasherFactory->getPasswordHasher('common');
         $newPassword=$passwordHasher->hash($request->query->get('newPassword'));
+        # check if password fields matches
+        if($request->query->get('newPassword')!=$request->query->get('confirmPassword')){
+            flash()->addFlash('warning', 'password fields don\'t match', 'confirm password should be the same as the new password');
+            return $this->redirect($URL);
+        }
         # check if new password is same as the old one
-        if($newPassword==$user->getPassword()){
+        if($request->query->get('newPassword')==$user->getPassword()){
             flash()->addFlash('warning', 'exist', 'new password can\'t be same as old password');
             return $this->redirect($URL);
         }
+
         # updating password
         $user->setPassword($newPassword);
         try{

@@ -23,7 +23,7 @@ class ProductRepository extends ServiceEntityRepository
     public function findBySearchTerm(string $searchTerm)
     {
         $qb = $this->createQueryBuilder('u')
-            ->andWhere('u.prod_name LIKE :searchTerm')
+            ->andWhere('u.prod_name LIKE :searchTerm OR u.price LIKE :searchTerm')
             ->setParameter('searchTerm', '%' . $searchTerm . '%')
             ->getQuery();
 
