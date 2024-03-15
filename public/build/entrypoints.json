@@ -1,0 +1,39 @@
+{
+  "entrypoints": {
+    "app": {
+      "js": [
+        "/build/runtime.js",
+        "/build/app.js"
+      ],
+      "css": [
+        "/build/app.css"
+      ]
+    },
+    "datatable": {
+      "js": [
+        "/build/runtime.js",
+        "/build/datatable.js"
+      ]
+    },
+    "appstyle": {
+      "js": [
+        "/build/runtime.js"
+      ]
+    },
+    "loginStyle": {
+      "js": [
+        "/build/runtime.js"
+      ]
+    },
+    "adminEventListner": {
+      "js": [
+        "/build/runtime.js"
+      ]
+    },
+    "error": {
+      "js": [
+        "/build/runtime.js"
+      ]
+    }
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "build/app.js": "/build/app.js",
+  "build/datatable.js": "/build/datatable.js",
+  "build/appstyle.css": "/build/appstyle.css",
+  "build/appstyle.js": "/build/appstyle.js",
+  "build/loginStyle.css": "/build/loginStyle.css",
+  "build/loginStyle.js": "/build/loginStyle.js",
+  "build/adminEventListner.js": "/build/adminEventListner.js",
+  "build/error.css": "/build/error.css",
+  "build/error.js": "/build/error.js",
+  "build/runtime.js": "/build/runtime.js",
+  "build/vendors-node_modules_jquery_dist_jquery_js.js": "/build/vendors-node_modules_jquery_dist_jquery_js.js",
+  "build/vendors-node_modules_core-js_internals_array-iteration_js-node_modules_core-js_internals_expo-4a97ab.js": "/build/vendors-node_modules_core-js_internals_array-iteration_js-node_modules_core-js_internals_expo-4a97ab.js",
+  "build/vendors-node_modules_toastify-js_src_toastify_js-node_modules_core-js_modules_es_array_for-ea-81b809.js": "/build/vendors-node_modules_toastify-js_src_toastify_js-node_modules_core-js_modules_es_array_for-ea-81b809.js",
+  "build/vendors-node_modules_core-js_internals_add-to-unscopables_js-node_modules_core-js_internals_a-e86909.js": "/build/vendors-node_modules_core-js_internals_add-to-unscopables_js-node_modules_core-js_internals_a-e86909.js",
+  "build/vendors-node_modules_bootstrap_dist_js_bootstrap_esm_js-node_modules_jquery-ui_dist_jquery-ui-a31bcc.js": "/build/vendors-node_modules_bootstrap_dist_js_bootstrap_esm_js-node_modules_jquery-ui_dist_jquery-ui-a31bcc.js",
+  "build/vendors-node_modules_datatables_net-dt_css_jquery_dataTables_min_css-node_modules_toastify-js-d01f2a.css": "/build/vendors-node_modules_datatables_net-dt_css_jquery_dataTables_min_css-node_modules_toastify-js-d01f2a.css",
+  "build/fonts/fa-solid-900.ttf": "/build/fonts/fa-solid-900.56f95854.ttf",
+  "build/fonts/fa-solid-900.woff2": "/build/fonts/fa-solid-900.a66b80c8.woff2",
+  "build/images/icon.png": "/build/images/icon.8522c877.png",
+  "build/vendors-node_modules_bootstrap_dist_js_bootstrap_esm_js-node_modules_jquery-ui_dist_jquery-ui-bb0479.js": "/build/vendors-node_modules_bootstrap_dist_js_bootstrap_esm_js-node_modules_jquery-ui_dist_jquery-ui-bb0479.js",
+  "build/app.css": "/build/app.css"
+}
