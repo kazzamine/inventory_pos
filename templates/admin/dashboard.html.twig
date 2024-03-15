@@ -94,14 +94,13 @@
             <br>
         <br>
             {#        latest products and categories#}
-        <div class="row col-md-12">
-            <div class="card shadow col-md-5 col-sm-3 offset-1 row">
+        <div class="row col-md-11">
+            <div class="card shadow col-md-5 col-sm-3 offset-1">
                 <div class="card-header"> latest products added</div>
                 <div class="card-body">
                     <table class="table my-0 table-hover table-striped" id="dataTable">
                         <thead>
                         <tr>
-                            <th>product id</th>
                             <th>product name</th>
                             <th>added by </th>
                             <th>created at</th>
@@ -111,7 +110,6 @@
                         {% if latestProducts %}
                             {% for latestProduct in latestProducts %}
                                 <tr>
-                                    <td>{{ latestProduct.prodid }}</td>
                                     <td>{{ latestProduct.prodName }}</td>
                                     <td>{{ latestProduct.username }}</td>
                                     <td>{{ latestProduct.createdat|date('d-m-Y') }}</td>
@@ -127,13 +125,12 @@
                     </table>
                 </div>
             </div>
-            <div class="card shadow offset-1 col-md-5 col-sm-3 row">
+            <div class="card shadow offset-1 col-md-5 col-sm-2">
                 <div class="card-header"> latest Categories added</div>
                 <div class="card-body">
-                    <table class="table table-responsive my-0 table-hover table-striped" id="dataTable">
+                    <table class="table table-responsive table-hover table-striped" id="dataTable">
                         <thead>
                         <tr>
-                            <th>category id</th>
                             <th>category name</th>
                             <th>added by </th>
                             <th>created at</th>
@@ -143,7 +140,6 @@
                         {% if latestCats %}
                             {% for latestCat in latestCats %}
                                 <tr>
-                                    <td>{{ latestCat.catid }}</td>
                                     <td>{{ latestCat.catName }}</td>
                                     <td>{{ latestCat.username }}</td>
                                     <td>{{ latestCat.createdat|date('d-m-Y') }}</td>
