@@ -161,7 +161,7 @@ class OrdersController extends AbstractController
 
     # making order (form submitted through ajax)
     #[Route('/user/orders/makeOrder', name: 'make_order')]
-    public function makeOrder(MailerInterface $mailer,Environment $twig,MailServices $mailServices,EntityManagerInterface $entityManager,Request $request,CsrfTokenManagerInterface $csrfTokenManager,UrlGeneratorInterface $urlGenerator):Response
+    public function makeOrder(OrderRepository $orderRepo,MailerInterface $mailer,Environment $twig,MailServices $mailServices,EntityManagerInterface $entityManager,Request $request,CsrfTokenManagerInterface $csrfTokenManager,UrlGeneratorInterface $urlGenerator):Response
     {
         # generate redirect route
         $urlGenerate=$urlGenerator->generate('app_make_order');
@@ -205,13 +205,14 @@ class OrdersController extends AbstractController
             # inserting order details
             $orderDetId=$commonService->addDetail($entityManager,$user,$data['total']);
             $orderId=$commonService->addOrder($entityManager,$prod,$orderDetId,$paymentId,$data['quantity'],$data['discount']);
+
             # updating storage
             $commonService->updateStorage($entityManager,$prod,$data['quantity']);
             # success message
             flash()->addFlash('success','order Made','order made succesfully');
             $entityManager->getConnection()->commit();
             # sending mail with reciept invoice
-            $mailServices->invoiceMail($twig,$mailer,$orderDetId->getUserId()->getEmail(),$orderId);
+            $mailServices->invoiceMail($orderRepo,$twig,$mailer,$orderDetId->getUserId()->getEmail(),$orderId);
             return $this->json(['orderId'=>$orderId]);
         }catch (\Exception $exception){
             $entityManager->getConnection()->rollBack();

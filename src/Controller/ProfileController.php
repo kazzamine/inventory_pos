@@ -19,12 +19,12 @@ class ProfileController extends AbstractController
 {
     # rendering profile page
     #[Route('/user/profile', name: 'app_profile')]
+
     public function UserProfile(UserRepository $userRepository): Response
     {
         # getting current user
         $userId=$this->getUser()->getUserIdentifier();
         $user=$userRepository->findOneBy(['email'=>$userId]);
-
         return $this->render('user/profile.html.twig',[
             'userInfo' =>$user
         ]);
@@ -52,24 +52,12 @@ class ProfileController extends AbstractController
         $user->setAdress($jsonData['address']);
         $user->setPhone($jsonData['phone']);
         $user->setCity($jsonData['city']);
-        //check if pic is changed
-//        $imageFile=$jsonData['picture'];
-//
-//        if($imageFile){
-//            $newFilename = $jsonData['username'] . '-' . uniqid() . '.' . $imageFile->guessExtension();
-//            $imageFile->move(
-//                $this->getParameter('image_directory'),
-//                $newFilename
-//            );
-//            $user->setPicture($newFilename);
-//        }
         try{
             $entityManager->persist($user);
             $entityManager->flush();
         }catch ( ORMException $exception){
             $this->json(['exception'=>$exception->getMessage()]);
         }
-
         return $this->json(['success'=>'updated successfully!!']);
     }
 
@@ -80,7 +68,6 @@ class ProfileController extends AbstractController
         # getting current user
         $userId=$this->getUser()->getUserIdentifier();
         $user=$userRepository->findOneBy(['email'=>$userId]);
-
         return $this->render('user/updatePassword.html.twig',[
             'userInfo' =>$user
         ]);
@@ -99,6 +86,8 @@ class ProfileController extends AbstractController
         }
         # get the user
         $useID=$request->query->get('userId');
+        $passwordInput=$request->query->get('newPassword');
+        $confirmPasswordInput=$request->query->get('confirmPassword');
         $user=$entityManager->getRepository(User::class)->find($useID);
         # hashing password
         $passwordHasherFactory= new PasswordHasherFactory([
@@ -106,8 +95,12 @@ class ProfileController extends AbstractController
         ]);
         $passwordHasher = $passwordHasherFactory->getPasswordHasher('common');
         $newPassword=$passwordHasher->hash($request->query->get('newPassword'));
+        # check if fields empty
+        if ($passwordInput=='' || $confirmPasswordInput==''){
+            flash()->addFlash('warning', 'all fields must be filled', 'fill both fields');
+        }
         # check if password fields matches
-        if($request->query->get('newPassword')!=$request->query->get('confirmPassword')){
+        if($passwordInput!=$confirmPasswordInput ){
             flash()->addFlash('warning', 'password fields don\'t match', 'confirm password should be the same as the new password');
             return $this->redirect($URL);
         }
@@ -116,14 +109,12 @@ class ProfileController extends AbstractController
             flash()->addFlash('warning', 'exist', 'new password can\'t be same as old password');
             return $this->redirect($URL);
         }
-
         # updating password
         $user->setPassword($newPassword);
         try{
             $entityManager->persist($user);
             $entityManager->flush();
             flash()->addFlash('success', 'password changed', 'your password has changed , REMEMBER IT!!!');
-
         }catch ( ORMException $exception){
            throw new  $exception();
         }

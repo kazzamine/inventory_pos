@@ -6,14 +6,13 @@
   <component name="ChangeListManager">
     <list default="true" id="9f00799e-a2f4-4745-b31f-91cebe650d6e" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/ExcelDataController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/ExcelDataController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/OrdersController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/OrdersController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Controller/ProfileController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/ProfileController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Repository/CategoryRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/CategoryRepository.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Repository/OrderRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/OrderRepository.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Repository/ProductRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/ProductRepository.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Repository/UserRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/UserRepository.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/admin/category/listCategories.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/admin/category/listCategories.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Service/MailServices.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Service/MailServices.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/base.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/base.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/mail/sendReceipt.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/mail/sendReceipt.html.twig" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/user/updatePassword.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/user/updatePassword.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/controller/CategorieControllerTest.php" beforeDir="false" afterPath="$PROJECT_DIR$/tests/controller/CategorieControllerTest.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -203,8 +202,10 @@
   </component>
   <component name="PropertiesComponent">{
   &quot;keyToString&quot;: {
+    &quot;PHPUnit.CategorieControllerTest.testAddCat.executor&quot;: &quot;Run&quot;,
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;com.jetbrains.php.phpunit.codeGeneration.PhpNewTestDialog.defaultLibrary&quot;: &quot;PHPUnit&quot;,
     &quot;git-widget-placeholder&quot;: &quot;dev&quot;,
     &quot;last_opened_file_path&quot;: &quot;/mnt/76AA8B2AAA8AE649/Projects/inventory_pos/inventory_pos&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
@@ -215,11 +216,20 @@
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
-  <component name="RunManager">
+  <component name="RunManager" selected="PHPUnit.CategorieControllerTest.testAddCat">
+    <configuration name="CategorieControllerTest.testAddCat" type="PHPUnitRunConfigurationType" factoryName="PHPUnit" temporary="true">
+      <TestRunner class="CategorieControllerTest" configuration_file="$PROJECT_DIR$/phpunit.xml.dist" file="$PROJECT_DIR$/tests/controller/CategorieControllerTest.php" method="testAddCat" scope="Method" />
+      <method v="2" />
+    </configuration>
     <configuration name="Main" type="PHPUnitRunConfigurationType" factoryName="PHPUnit">
       <TestRunner configuration_file="$PROJECT_DIR$/phpunit.xml.dist" scope="XML" use_alternative_configuration_file="true" />
       <method v="2" />
     </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="PHPUnit.CategorieControllerTest.testAddCat" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SharedIndexes">
     <attachedChunks>
@@ -238,7 +248,9 @@
       <updated>1707319601843</updated>
       <workItem from="1707319602872" duration="600000" />
       <workItem from="1710237107688" duration="14351000" />
-      <workItem from="1710323288377" duration="3203000" />
+      <workItem from="1710323288377" duration="13787000" />
+      <workItem from="1710412180207" duration="7407000" />
+      <workItem from="1710497684788" duration="3479000" />
     </task>
     <servers />
   </component>

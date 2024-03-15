@@ -2,6 +2,8 @@
 namespace App\Service;
 
 
+use App\Repository\OrderRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 use Symfony\Component\Mime\Email;
 use Symfony\Component\Mailer\MailerInterface;
@@ -69,16 +71,16 @@ class MailServices{
     }
 
     //order invoice
-    public function invoiceMail(Environment $twig,MailerInterface $mailer,$sendTo,$order){
+    public function invoiceMail(OrderRepository $orderRepo,Environment $twig,MailerInterface $mailer,$sendTo,$order){
         $subject='Order Invoice';
-
+        $orderMadeDet=$orderRepo->find($order);
         $mail = (new Email())
             ->from('sogorugeto7@gmail.com')
             ->to($sendTo)
             ->subject($subject)
             ->html(
                 $twig->render('mail/sendReceipt.html.twig', [
-                    'order'=>$order,'subject'=>$subject
+                    'order'=>$order,'subject'=>$subject,'orderMade'=>$orderMadeDet
                 ])
             );
         try{

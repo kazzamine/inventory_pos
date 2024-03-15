@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
     <head>
         <meta charset="UTF-8">
         <title>  {% block title %}{% endblock %}</title>
@@ -15,23 +15,20 @@
         {% endblock %}
     </head>
     <body>
-    <div class="container-fluid contentColor">
-        <div class="row flex-nowrap">
-        {#including navbar #}
+        <div class="container-fluid contentColor">
+            <div class="row flex-nowrap">
+            {#including navbar #}
                 {% include 'attachements/navbar.html.twig' %}
                 <div class="col justify-content-center"  id="content">
-                    <button class="btn btn-outline-secondary"  type="button" data-bs-toggle="collapse" data-bs-target="#sidebar" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <button class="btn btn-outline-secondary d-lg-none"  type="button" data-bs-toggle="collapse" data-bs-target="#sidebar" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                         <i class="fa fa-bars" style="z-index: 99"></i>
                     </button>
                     {% block body %}
 
                     {% endblock %}
                     {% include 'attachements/footer.html.twig' %}
-
                 </div>
-
+            </div>
         </div>
-
-    </div>
     </body>
 </html>
