@@ -6,13 +6,10 @@
   <component name="ChangeListManager">
     <list default="true" id="9f00799e-a2f4-4745-b31f-91cebe650d6e" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/OrdersController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/OrdersController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/ProfileController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/ProfileController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Service/MailServices.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Service/MailServices.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/base.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/base.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/mail/sendReceipt.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/mail/sendReceipt.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/user/updatePassword.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/user/updatePassword.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/controller/CategorieControllerTest.php" beforeDir="false" afterPath="$PROJECT_DIR$/tests/controller/CategorieControllerTest.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/ExcelDataController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/ExcelDataController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/ProductsController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/ProductsController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/admin/product/addProduct.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/admin/product/addProduct.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/mail/resetPassword.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/mail/resetPassword.html.twig" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -250,7 +247,7 @@
       <workItem from="1710237107688" duration="14351000" />
       <workItem from="1710323288377" duration="13787000" />
       <workItem from="1710412180207" duration="7407000" />
-      <workItem from="1710497684788" duration="3479000" />
+      <workItem from="1710497684788" duration="7695000" />
     </task>
     <servers />
   </component>

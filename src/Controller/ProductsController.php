@@ -91,7 +91,6 @@ class ProductsController extends AbstractController
                 $this->getParameter('image_product'),
                 $newFilename
             );
-
             $newProd->setPicture($newFilename);
         }
         $entityManager->persist($newProd);
@@ -113,7 +112,7 @@ class ProductsController extends AbstractController
     #[Route('/admin/product/remove', name: 'remove_product')]
     public function removeCat(EntityManagerInterface $entityManager, Request $request,UrlGeneratorInterface $urlGenerator):Response
     {
-        # recieving the id and fetching if available product
+        # receiving the id and fetching if available product
         $prodId = $request->query->get('prodId');
         if (!$prodId) {
             flash()->addFlash('error', 'Empty', 'Product to be removed not specified');

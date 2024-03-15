@@ -41,13 +41,11 @@
                             // Check if a file is selected
                             if (input.files && input.files[0]) {
                                 var reader = new FileReader();
-
                                 // Set up the reader to read the selected file as a data URL
                                 reader.onload = function (e) {
                                     // Display the selected picture
                                     container.innerHTML = '<img id="selectedPic" src="' + e.target.result + '" class="rounded-circle" style="width: 200px; height: 200px; object-fit: cover;" alt="" >';
                                 };
-
                                 // Read the selected file
                                 reader.readAsDataURL(input.files[0]);
                             }

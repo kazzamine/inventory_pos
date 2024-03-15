@@ -59,6 +59,10 @@ class ExcelDataController extends AbstractController
             $currentWorkSheet->setCellValue('F'.$index,$orderData->getOrderDate());
             $index++;
         }
+        # Total amount gained from sales
+        $cellsRange='E2:E'.$index-1;
+        $currentWorkSheet->setCellValue('D'.$index,'Total');
+        $currentWorkSheet->setCellValue('E'.$index,'=SUM('.$cellsRange.')');
         # resizing columns based on text
         $currentWorkSheet->getColumnDimension('A')->setAutoSize(true);
         $currentWorkSheet->getColumnDimension('B')->setAutoSize(true);
