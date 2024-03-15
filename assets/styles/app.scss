@@ -1,0 +1,17 @@
+@import "bootstrap/scss/bootstrap";
+@import "@fortawesome/fontawesome-free/scss/fontawesome";
+@import "@fortawesome/fontawesome-free/scss/solid";
+@import "/assets/styles/loginStyle.css";
+@import "/assets/styles/aos.min.scss";
+@import "/assets/styles/navbar.scss";
+@import 'toastify-js/src/toastify.css';
+@import "/assets/styles/multiForm.css";
+@import "datatables.net-dt/css/jquery.dataTables.min.css";
+@import "pdf";
+@import "faqPage";
+
+body{
+  background: -webkit-linear-gradient(to right, #858585, #858585, #2d2d2d, rgba(0, 0, 0, 0.87));
+
+  background: linear-gradient(to right, rgba(0, 0, 0, 0.87), #858585, #858585, #2d2d2d);
+}

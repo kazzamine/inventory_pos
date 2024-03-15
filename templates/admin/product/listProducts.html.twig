@@ -1,0 +1,134 @@
+{% extends 'base.html.twig' %}
+{% block title %}products list {% endblock %}
+
+{% block body %}
+    <div class="container container-fluid">
+    <h3 class="text-dark mb-4">Products</h3>
+    <div class="card shadow">
+        <div class="card-header py-3">
+            <p class="text-primary m-0 fw-bold">List of Products</p>
+        </div>
+        <div class="card-body">
+            <div class="row">
+            </div>
+            <div class="table-responsive table mt-2" id="dataTable" role="grid" aria-describedby="dataTable_info">
+                <form action="{{ path('app_products') }}" class="col-sm-2 offset-8" method="get" >
+                    <input type="text" class="form-control " name="search" value="{{ search_term }}" placeholder="Search...">
+                    <button hidden type="submit">Search</button>
+                </form>
+                <table class="table table-hover table-striped my-0" id="dataTable">
+                    <thead>
+                    <tr>
+                        <th>product name             <a href="{{ path('app_products', { 'sort_by': 'prod_name', 'sort_order': (sort_by == 'prod_name' and sort_order == 'asc') ? 'desc' : 'asc' }) }}"><i class="fa-solid fa-sort text-secondary"></i> </a></th>
+                        <th>description</th>
+                        <th>price   <a href="{{ path('app_products', { 'sort_by': 'price', 'sort_order': (sort_by == 'price' and sort_order == 'asc') ? 'desc' : 'asc' }) }}"><i class="fa-solid fa-sort text-secondary"></i> </a></th>
+                        <th>tax</th>
+                        <th>quantity</th>
+                        <th>category   <a href="{{ path('app_products', { 'sort_by': 'cat_id', 'sort_order': (sort_by == 'cat_id' and sort_order == 'asc') ? 'desc' : 'asc' }) }}"> <i class="fa-solid fa-sort text-secondary"></i> </a></th>
+                        <th>added by</th>
+                        <th>update</th>
+                        <th>remove</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {# loop through products #}
+                     {% if products %}
+                         {% for product in products %}
+                            <tr>
+                                <td >{{ product.prodName }}</td>
+                                <td >{{ product.prodDesc }}</td>
+                                <td >{{ product.price }}</td>
+                                <td >{{ product.tax }}</td>
+                                <td>{{ product.storage.storageQuantity }}</td>
+                                <td >{{ product.catId.catName }}</td>
+                                <td>{{ product.userID.userName }}</td>
+                                <td> <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#updateProd{{ product.id }}">update</button></td>
+                                <div class="modal fade" id="updateProd{{ product.id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" >
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="exampleModalLabel">update Product</h5>
+                                                <button type="button" class="btn close" data-bs-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <form id="form{{ product.id }}" action="{{  path('update_product') }}">
+                                                    <div class="form-group">
+                                                        <label  class="col-form-label">product name :</label>
+                                                        <input class="form-control" type="text" name="prodName" value="{{ product.prodName }}" >
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="col-form-label">Description: </label>
+                                                        <input class="form-control" type="text" name="prodDesc" value="{{ product.prodDesc }}" >
+
+                                                        <input class="form-control" type="text" hidden name="prodId" value="{{ product.id }}" >
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label  class="col-form-label">product price :</label>
+                                                        <input class="form-control" type="text" name="prodPrice" value="{{ product.price }}" >
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <label  class="col-form-label">product tax :</label>
+                                                        <input class="form-control" type="text" name="prodTax" value="{{ product.tax }}" >
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label  class="col-form-label">product Storage :</label>
+                                                        <input class="form-control" type="number" name="currentStorage" readonly value="{{ product.storage.storageQuantity }}" >
+
+                                                        <label  class="col-form-label">add Storage quantity :</label>
+                                                        <input class="form-control" type="number" name="prodStorage" value="0">
+
+                                                    </div>
+                                                    <br>
+                                                    <div class="form-group">
+                                                        <button type="submit" class="btn btn-warning" >update</button>
+                                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <td> <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#removeProd{{ product.id }}">Remove</button></td>
+                                <div class="modal fade" id="removeProd{{ product.id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" >
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="exampleModalLabel">Remove Product</h5>
+                                                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+
+                                                    <div class="form-group">
+                                                        <a role="button" class="btn btn-danger" href={{ path('remove_product',{'prodId':product.id()}) }} >remove</a>
+                                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+
+                                                    </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </tr>
+                         {% endfor %}
+                         {% else %}
+                         <tr>
+                             no data found
+                         </tr>
+                    {% endif %}
+                    </tbody>
+                    <tfoot>
+                </table>
+                <div class="navigation">
+                    {{ knp_pagination_render(products) }}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

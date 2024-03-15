@@ -1,0 +1,58 @@
+
+    <div id="sidebar" class="col-auto col-md-2 col-xl-2 px-sm-2 px-0" style="margin-top: -2em">
+        <div class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white">
+            <div class="position-fixed">
+                <a  class="d-flex align-items-center pb-2 mb-md-0 me-md-auto text-white text-decoration-none">
+                    <span class="fs-5 d-none d-sm-inline"> <img class="col-sm-1 img-fluid" src="{{ asset('/pictures/icon.svg') }}" alt="logo"> Inventory</span>
+                </a>
+                <ul class="nav nav-pills navbar-expand flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start" id="menu">
+                    {% if get_model_items() %}
+                        {% for item in get_model_items() %}
+                            {% if item.subModels|length == 0 %}
+                                <li class="nav-item">
+                                    <a {% if item.path=='#' %}
+                                    {% else %}
+                                            href="{{ path(item.path ) }}"
+                                    {% endif %}
+                                            class="nav-link align-middle px-0">
+                                        <i class="{{ item.icon }} navItemsColor"></i><span class="ms-1 d-none d-sm-inline navItemsColor">{{ item.modName }}</span>
+                                    </a>
+                                </li>
+                            {% else%}
+                                <li>
+                                    <a href="#submenu{{ item.id }}" data-bs-toggle="collapse" class="nav-link px-0 align-middle">
+                                        <i title="{{ item.modName }}" class="{{ item.icon }} navItemsColor"></i><span class="ms-1 d-none d-sm-inline navItemsColor">{{ item.modName }}</span> </a>
+                                    <ul class="collapse nav flex-column ms-1" id="submenu{{ item.id }}" data-bs-parent="#menu">
+                                        {% for subitem in item.subModels %}
+                                        <li class="w-100 offset-2">
+                                            <a href="{{ path( subitem.path ) }}" class="nav-link px-0"><i title="{{ subitem.subModName }}" class="{{ subitem.icon }} navSubItemColor"></i>
+                                                <span class="d-none d-sm-inline navSubItemColor">{{ subitem.subModName }}</span> </a>
+                                        </li>
+                                        {% endfor %}
+                                    </ul>
+                                </li>
+                            {% endif %}
+                        {% endfor %}
+                    {% endif %}
+                </ul>
+                <hr class="col-2">
+                <div class="dropdown pb-4">
+                    <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="fa-solid fa-gear navItemsColor"></i>
+                        <span class="d-none d-sm-inline mx-1 navSubItemColor">settings</span>
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser1" style="z-index: 99">
+                        <li><a class="dropdown-item" href="{{ path('app_profile') }}">Profile</a></li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li><a class="dropdown-item" href="{{ path('app_changepwd') }}">change password</a></li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li><a class="dropdown-item" href="{{ path('_logout_main') }}">Sign out</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>

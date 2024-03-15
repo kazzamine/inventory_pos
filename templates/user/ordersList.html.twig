@@ -1,0 +1,89 @@
+{% extends 'base.html.twig' %}
+{% block title %}orders list {% endblock %}
+
+{% block body %}
+    <div class="container container-fluid">
+    <h3 class="text-dark mb-4">Orders</h3>
+    <div class="card shadow">
+        <div class="card-header py-3">
+            <p class="text-primary m-0 fw-bold">List of all orders</p>
+        </div>
+        <div class="card-body">
+            <div class="row">
+            </div>
+            <div class="table-responsive table mt-2" id="dataTable" role="grid" aria-describedby="dataTable_info">
+                <form action="{{ path('app_orders') }}" class="col-sm-2 offset-8" method="get" >
+                    <input type="text" class="form-control " name="search" value="{{ search_term }}" placeholder="Search...">
+                    <button hidden type="submit">Search</button>
+                </form>
+                <table class="table my-0" id="dataTable">
+                    <thead>
+                    <tr>
+                        <th>order id     <a href="{{ path('app_orders', { 'sort_by': 'id', 'sort_order': (sort_by == 'id' and sort_order == 'asc') ? 'desc' : 'asc' }) }}"><i class="fa-solid fa-sort text-secondary"></i> </a></th>
+                        <th>product</th>
+                        <th>quantity     <a href="{{ path('app_orders', { 'sort_by': 'quantity', 'sort_order': (sort_by == 'quantity' and sort_order == 'asc') ? 'desc' : 'asc' }) }}"><i class="fa-solid fa-sort text-secondary"></i> </a></th>
+                        <th>total</th>
+                        <th>date</th>
+                        <th>detail</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {# loop through products #}
+                    {% if orders %}
+                        {% for order in orders %}
+                            <tr>
+                                <td >{{ order.id }}</td>
+                                <td >{{ order.prodId.prodName }}</td>
+                                <td >{{ order.quantity }}</td>
+                                <td >{{ order.orderDetail.total }} MAD</td>
+                                <td >{{ order.orderDate|date('d-m-Y') }}</td>
+                                <td> <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#orderDetail{{ order.id }}" data-bs-whatever="{{ order.id }}">order detail</button></td>
+                                <div class="modal fade" id="orderDetail{{ order.id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" >
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="exampleModalLabel">Order Detail</h5>
+                                                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <form>
+                                                    <div class="form-group">
+                                                        <label  class="col-form-label">Order : {{ order.id }}</label>
+                                                        <label class="offset-4 col-form-label">For : {{ order.orderDetail.userId.username }}</label>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="col-form-label">product: {{ order.prodId.prodName }}</label>
+                                                        <label  class="offset-2 col-form-label">Date : {{ order.orderDate|date('d-m-Y') }}</label>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label  class="col-form-label">Quantity: {{ order.quantity }}</label>
+                                                        <label class="offset-2 col-form-label">Total : {{ order.orderDetail.total }} MAD</label>
+
+                                                    </div>
+                                                </form>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </tr
+                        {% endfor %}
+                    {% else %}
+                        <tr>
+                            no data found
+                        </tr>
+                    {% endif %}
+                    </tbody>
+                    <tfoot>
+                </table>
+                <div class="navigation">
+                    {{ knp_pagination_render(orders) }}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,99 @@
+
+{% extends 'base.html.twig' %}
+{% block title %}FAQ{% endblock %}
+{% block body %}
+<div class="container">
+    <div class="row">
+        <div class="col-lx-12">
+            <div class="card bg-body-secondary">
+                <div class="card-body">
+                    <div class="row justify-content-center mt-4">
+                        <div class="col-xl-5 col-lg-8">
+                            <div class="text-center">
+                                <h3>Frequently Asked Questions?</h3>
+                                <p class="text-muted">If you question doesn't have an answer please feel free to email us </p>
+                                <div>
+                                     <a class="btn btn-primary me-2" href="{{ path('app_contactus') }}"> Email Us </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row justify-content-center mt-5">
+                        <div class="col-9">
+                            <ul class="nav nav-tabs  nav-tabs-custom nav-justified justify-content-center faq-tab-box" id="pills-tab" role="tablist">
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link active" id="pills-genarel-tab" data-bs-toggle="pill" data-bs-target="#pills-genarel" type="button" role="tab" aria-controls="pills-genarel" aria-selected="true">
+                                        <span class="font-size-16">General Questions</span>
+                                    </button>
+                                </li>
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link" id="pills-privacy_policy-tab" data-bs-toggle="pill" data-bs-target="#pills-privacy_policy" type="button" role="tab" aria-controls="pills-privacy_policy" aria-selected="false">
+                                        <span class="font-size-16">Privacy Policy</span>
+                                    </button>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="col-lg-9">
+                            <div class="tab-content pt-3" id="pills-tabContent">
+                                <div class="tab-pane fade active show" id="pills-genarel" role="tabpanel" aria-labelledby="pills-genarel-tab">
+                                    <div class="row g-4 mt-2">
+                                        <div class="col-lg-6">
+                                            <h5>What is the purpose of this website ?</h5>
+                                            <p class="text-muted">This not an online e-commerce website. This is an online  local inventory ,it lets the
+                                            users of the inventory related to the company to order what the company provides for it personals , with an easy way.
+                                            </p>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <h5>Why do we use it ?</h5>
+                                            <p class="text-muted">speed up the ordering process , to not waste time going back and forth to the inventory shop.</p>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <h5>How to pay</h5>
+                                            <p>Several payment methods are available , either by card or cash when it arrives to you.
+                                                you can also talk with the owner of the inventory to order for you and it will be delivered to you as soon as possible.
+                                            </p>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <h5>Your account is related to the company account</h5>
+                                            <p >as long as you work here your account is active. </p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="tab-pane fade" id="pills-privacy_policy" role="tabpanel" aria-labelledby="pills-privacy_policy-tab">
+                                    <div class="row g-4 mt-2">
+                                        <div class="col-lg-6">
+                                            <h5>Where can I get some ?</h5>
+                                            <p class="lg-base">If several languages coalesce, the grammar of the resulting language is more simple
+                                                and regular than that of the individual languages. The new common language will be more
+                                                simple and regular than the existing</p>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <h5>Where does it come from ?</h5>
+                                            <p class="lg-base">If several languages coalesce, the grammar of the resulting language is more simple
+                                                and regular than that of the individual languages. The new common language will be more
+                                                simple and regular than the existing</p>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <h5>Why do we use it ?</h5>
+                                            <p class="lg-base">If several languages coalesce, the grammar of the resulting language is more simple
+                                                and regular than that of the individual languages. The new common language will be more
+                                                simple and regular than the existing</p>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <h5>What is Genius privacy policy</h5>
+                                            <p class="lg-base">If several languages coalesce, the grammar of the resulting language is more simple
+                                                and regular than that of the individual languages. The new common language will be more
+                                                simple and regular than the existing</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,153 @@
+{% extends 'base.html.twig' %}
+{% block title %}Models {% endblock %}
+
+{% block body %}
+    <div class="container container-fluid">
+    <h3 class="text-dark mb-4">Models</h3>
+    <div class="card shadow">
+        <div class="card-header py-3">
+            <p class="text-primary m-0 fw-bold">List of Models</p>
+              <a> </a>
+        </div>
+        <div class="card-body" id="listModelContainer" >
+            <div class="row">
+            </div>
+            <div class="table-responsive table mt-2" id="dataTable" role="grid" aria-describedby="dataTable_info">
+                <table class="table my-0" id="dataTable">
+                    <thead>
+                    <tr>
+                        <th>model name</th>
+                        <th>path</th>
+                        <th>icon</th>
+                        <th>for</th>
+                        <th>update</th>
+                       <th>remove</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {# loop through products #}
+                    {% if get_model_items() %}
+                        {% for model in get_model_items() %}
+                            <tr>
+                                <td class="editable" data-field="modName">{{ model.modName }}</td>
+                                <td class="editable" data-field="modPath">{{ model.path }}</td>
+                                <td class="editable" data-field="modIcon">{{ model.icon }}</td>
+                                <td class="editable" data-field="modRole">{{ model.roleId.roleName }}</td>
+                                <td> <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#updateModel{{ model.id }}">update</button></td>
+                                <div class="modal fade" id="updateModel{{ model.id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" >
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="exampleModalLabel">update Model</h5>
+                                                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <form action="{{  path('update_model') }}">
+                                                    <div class="form-group">
+                                                        <label  class="col-form-label">model name :</label>
+                                                        <input class="form-control" type="text" name="modelName" value="{{ model.modName }}" >
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label  class="col-form-label">model path :</label>
+                                                        <input class="form-control" type="text" name="modelPath" value="{{ model.path }}" >
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="col-form-label">model icon: </label>
+                                                        <input class="form-control" type="text" name="modelIcon" value="{{ model.icon }}" >
+                                                        <input class="form-control" type="text" hidden name="modelId" value="{{ model.id }}" >
+
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <button type="submit" class="btn btn-warning" >update</button>
+                                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <td> <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#removemodel{{ model.id }}">Remove</button></td>
+                                <div class="modal fade" id="removemodel{{ model.id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" >
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="exampleModalLabel">Remove Product</h5>
+                                                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <form>
+                                                    <div class="form-group">
+                                                        <a role="button" class="btn btn-danger"  href={{ path('app_model_remove',{'modId':model.id()}) }} >remove</a>
+                                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </tr>
+                        {% endfor %}
+                    {% else %}
+                        <tr>
+                            no data found
+                        </tr>
+                    {% endif %}
+                    </tbody>
+                    <tfoot>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <br>
+    <div class="card shadow" id="addModelContainer" ><div class="card-header py-3">
+            <p class="text-primary m-0 fw-bold">add new model</p>
+            <a>  </a>
+        </div>
+    <form id="contactForm-2" method="post" class="card-body">
+        <div class="row">
+            <div class="col-md-6">
+                <div id="successfail"></div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6 col-lg-12" id="message">
+                <fieldset></fieldset>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="has-feedback form-group mb-3"><label class="form-label" for="model_name">Model name</label><input class="form-control" type="text" id="model_name" name="model_name" placeholder="model name" required></div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="has-feedback form-group mb-3"><label class="form-label" for="model_path">Model path</label><input class="form-control" type="text" id="model_path" name="model_path" placeholder="model path" required></div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="has-feedback form-group mb-3"><label class="form-label" for="model_icon">Model icon</label><input class="form-control" type="text" id="model_icon" name="model_icon" placeholder="model icon" required></div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="has-feedback form-group mb-3"><label class="form-label" for="model_role">Model Role</label>
+                            <select class="form-select" id="model_role" name="model_role">
+                                {% for role in roles %}
+                                    <option value="{{ role.id }}">{{ role.roleName }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <input type="hidden" name="_csrf_token" id="_csrf_token_addmodel" value="{{ csrf_token('addModel') }}">
+
+                <hr>
+                <div class="form-group mb-3"><button class="btn btn-primary d-block w-100" id="btn_addModel" type="button">add</button></div>
+            </div>
+        </div>
+    </form>
+    </div>
+{% endblock %}

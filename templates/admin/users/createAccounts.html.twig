@@ -1,0 +1,97 @@
+{% extends 'base.html.twig' %}
+{% block title %}create accounts {% endblock %}
+
+{% block body %}
+    <div class="container-fluid">
+        <h3 class="text-dark mb-4">Create user</h3>
+    <br>
+    <div class="card shadow">
+        <div class="card-header py-3">
+            <p class="text-primary m-0 fw-bold">add new user <a id="toggleAdd" class="offset-11" role="button">  </a></p>
+        </div>
+        <div class="card-body">
+        {{ form_start(form) }}
+        <form id="contactForm-2" method="post">
+            <div class="row">
+                <div class="col-md-6">
+                    <div id="successfail">
+                        {{ form_errors(form) }}
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 col-lg-12" id="message">
+                    <fieldset></fieldset>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="has-feedback form-group mb-3">{{ form_row(form.picture) }}</div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="has-feedback form-group mb-3">{{ form_row(form.username) }}</div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="has-feedback form-group mb-3">{{ form_row(form.firstname) }}</div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="has-feedback form-group mb-3">{{ form_row(form.lastname) }}</div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="has-feedback form-group mb-3">{{ form_row(form.email) }}</div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="has-feedback form-group mb-3">{{ form_row(form.adress) }}</div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="has-feedback form-group mb-3">{{ form_row(form.city) }}</div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="has-feedback form-group mb-3">{{ form_row(form.phone) }}</div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="has-feedback form-group mb-3">{{ form_row(form.roleId) }}</div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="has-feedback form-group mb-3">{{ form_row(form.password) }}</div>
+                        </div>
+                        {{ form_widget(form._token) }}
+                    </div>
+                    <hr>
+                    <div class="form-group mb-3">{{ form_row(form.createuser) }}</div>
+                    <div class="modal fade" id="orderload" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" >
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">account is being created</h5>
+                                </div>
+                                <div class="modal-body">
+                                    <p>stay patient please </p>
+                                    <div class="offset-4">
+                                        <div class="spinner-grow text-secondary" role="status">
+                                            <span class="sr-only">Loading...</span>
+                                        </div>
+                                        <div class="spinner-grow text-secondary" role="status">
+                                            <span class="sr-only">Loading...</span>
+                                        </div>
+                                        <div class="spinner-grow text-secondary" role="status">
+                                            <span class="sr-only">Loading...</span>
+                                        </div><div class="spinner-grow text-secondary" role="status">
+                                            <span class="sr-only">Loading...</span>
+                                        </div>
+                                        <div class="spinner-grow text-secondary" role="status">
+                                            <span class="sr-only">Loading...</span>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <hr>
+                </div>
+            </div>
+        </form>
+            {{ form_end(form) }}
+        </div>
+    </div>
+
+{% endblock %}

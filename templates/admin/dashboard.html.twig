@@ -1,0 +1,200 @@
+{% extends 'base.html.twig' %}
+{% block title %}Dashboard {% endblock %}
+{% block body %}
+    {%if userRole=='ROLE_ADMIN' %}
+        <br>
+        <br>
+        <div class="row">
+            <div >
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <h3 class="panel-title offset-4">
+                            <span class="fa-solid fa-bookmark"></span> Quick Shortcuts
+                        </h3>
+                    </div>
+                    <div class="panel-body offset-3">
+                        <div class="row">
+                            <div class="col-xs-8 col-md-8" style="z-index: 98">
+                                <a href="{{ path('app_make_order') }}" class="btn btn-outline-primary btn-lg" role="button"><i class="fa-solid fa-plus"></i> <br/>order</a>
+                                <a href="{{ path('app_monthly_sales') }}" class="btn btn-outline-info btn-lg offset-1" role="button"><i class="fa-solid fa-calendar"></i> <br/>Monthly sales</a>
+                                <a href="{{ path('app_accounts_list') }}" class="btn btn-outline-success btn-lg offset-1" role="button"><i class="fa-solid fa-user"></i> <br/>users</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br>
+        <br>
+        <div class="row">
+            <div >
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <h3 class="panel-title offset-4">
+                            <i class="fa-solid fa-square-poll-vertical"></i>   statics
+                        </h3>
+                    </div>
+                    <div class="offset-3">
+                        <div class="row">
+                                <div class="card shadow border-dark-subtle mb-3" style="max-width: 10rem;">
+                                    <div class="card-header">
+                                        Total Users
+                                    </div>
+                                    <div class="card-body text-secondary">
+                                        <h5 class="card-text text-center">{{ totalUsers }}</h5>
+
+                                    </div>
+                                </div>
+                                <div class="card shadow  border-dark-subtle mb-3 offset-1" style="max-width: 10rem;">
+                                    <div class="card-header">Total Orders</div>
+                                    <div class="card-body text-secondary">
+                                        <h5 class="card-text text-center">{{ totalOrders }}</h5>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row col-md-10 offset-1">
+                <div class="card shadow">
+                    <div class="card-header"> latest orders made</div>
+                    <div class="card-body">
+                <table class="table my-0 table-hover table-striped" id="dataTable">
+                    <thead>
+                    <tr>
+                        <th>order id</th>
+                        <th>product</th>
+                        <th>quantity</th>
+                        <th>date</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% if latestOrders %}
+                        {% for latestOrder in latestOrders %}
+                            <tr>
+                                <td>{{ latestOrder.orderid }}</td>
+                                <td>{{ latestOrder.prodname }}</td>
+                                <td>{{ latestOrder.quantity }}</td>
+                                <td>{{ latestOrder.orderdate|date('d-m-Y') }}</td>
+                            </tr>
+                        {% endfor %}
+                    {% else %}
+                        <tr>
+                            no data found
+                        </tr>
+                    {% endif %}
+                    </tbody>
+                    <tfoot>
+                </table>
+                    </div>
+                </div>
+            </div>
+            <br>
+        <br>
+            {#        latest products and categories#}
+        <div class="row col-md-11">
+            <div class="card shadow col-md-5 col-sm-3 offset-1">
+                <div class="card-header"> latest products added</div>
+                <div class="card-body">
+                    <table class="table my-0 table-hover table-striped" id="dataTable">
+                        <thead>
+                        <tr>
+                            <th>product name</th>
+                            <th>added by </th>
+                            <th>created at</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% if latestProducts %}
+                            {% for latestProduct in latestProducts %}
+                                <tr>
+                                    <td>{{ latestProduct.prodName }}</td>
+                                    <td>{{ latestProduct.username }}</td>
+                                    <td>{{ latestProduct.createdat|date('d-m-Y') }}</td>
+                                </tr>
+                            {% endfor %}
+                        {% else %}
+                            <tr>
+                                no data found
+                            </tr>
+                        {% endif %}
+                        </tbody>
+                        <tfoot>
+                    </table>
+                </div>
+            </div>
+            <div class="card shadow offset-1 col-md-5 col-sm-2">
+                <div class="card-header"> latest Categories added</div>
+                <div class="card-body">
+                    <table class="table table-responsive table-hover table-striped" id="dataTable">
+                        <thead>
+                        <tr>
+                            <th>category name</th>
+                            <th>added by </th>
+                            <th>created at</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% if latestCats %}
+                            {% for latestCat in latestCats %}
+                                <tr>
+                                    <td>{{ latestCat.catName }}</td>
+                                    <td>{{ latestCat.username }}</td>
+                                    <td>{{ latestCat.createdat|date('d-m-Y') }}</td>
+                                </tr>
+                            {% endfor %}
+                        {% else %}
+                            <tr>
+                                no data found
+                            </tr>
+                        {% endif %}
+                        </tbody>
+                        <tfoot>
+                    </table>
+                </div>
+            </div>
+        </div>
+    {% else %}
+        <div class="row offset-3">
+            <div class="align-items-center">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">
+                            <span class=""></span>hello Welcome to our <span class="text-capitalize text-primary-emphasis"> inventory</span>
+                        </h3>
+                    </div>
+                    <div class="panel-body offset-3">
+                        <div class="row">
+                            <div class="col-xs-6 col-md-6">
+                                <p>Order as you wish</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br>
+        <br>
+        <div class="row">
+            <div >
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <h3 class="panel-title offset-4">
+                            <span class="fa-solid fa-bookmark"></span> Quick Shortcuts
+                        </h3>
+                    </div>
+                    <div class="panel-body offset-4">
+                        <div class="row">
+                            <div class="col-xs-6 col-md-6" style="z-index: 999">
+                                <a href="{{ path('make_order') }}" class="btn btn-outline-success btn-lg" role="button"><i class="fa-solid fa-plus"></i> <br/>order</a>
+                                <a href="{{ path('app_profile') }}" class="btn btn-outline-info btn-lg" role="button"><i class="fa-solid fa-user"></i> <br/>change your infos</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+{% endblock %}

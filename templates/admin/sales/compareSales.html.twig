@@ -1,0 +1,108 @@
+{% extends 'base.html.twig' %}
+{% block title %}Compare sales {% endblock %}
+{% block body %}
+    <div class="row">
+        <div class="col-md-9">
+            <div class="card shadow">
+                <div class="card-header">
+                    <h3 class="">
+                        <span class="glyphicon glyphicon-bookmark"></span> compare sales</h3>
+                </div>
+                <div class="row card-body">
+                    <div class="form-group col-sm-4"><label class="form-label" for="selectedFirstProd">1st Product</label>
+                        <select class="form-select" id="selectedFirstProd" name="selectedFirstProd">
+                            {% for product in products %}
+                                <option value="{{ product.id }}">
+                                    {{ product.prodName }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="form-group col-sm-4"><label class="form-label" for="selectedSecondProd">2nd Product</label>
+                        <select class="form-select" id="selectedSecondProd" name="selectedSecondProd">
+                            {% for product in products %}
+                                <option value="{{ product.id }}">
+                                    {{ product.prodName }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div >
+                            <canvas id="salesChart" width="400" height="150"></canvas>
+                        </div>
+                        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+                        <script>
+
+                            document.addEventListener('DOMContentLoaded', function () {
+                                let productSelect1 = document.getElementById('selectedFirstProd');
+                                let productSelect2 = document.getElementById('selectedSecondProd');
+                                let chart = document.getElementById('salesChart').getContext('2d');
+
+                                let existingChart = null;
+
+                                // Event listener for product selection
+                                function updateChart() {
+                                    // Destroy existing chart if it exists
+                                    if (existingChart) {
+                                        existingChart.destroy();
+                                    }
+
+                                    let productId1 = productSelect1.value;
+                                    let productId2 = productSelect2.value;
+
+                                    // Make an AJAX request to get sales data for the selected products
+                                    fetch('/admin/compareSale/getProd?prodId1=' + productId1 + '&prodId2=' + productId2)
+                                        .then(response => response.json())
+                                        .then(data => {
+                                            let prod1Dates = data.salesData1.map(item => item.orderdate);
+                                            let prod2Dates = data.salesData2.map(item => item.orderdate);
+                                            let dates=(prod2Dates.length>prod1Dates.length) ? prod2Dates: prod2Dates;
+                                            console.log(prod2Dates.length)
+                                            let dataset1 = {
+                                                label: productSelect1.options[productSelect1.selectedIndex].text,
+                                                data: data.salesData1.map(item => item.quantity),
+                                                borderColor: 'rgb(229,93,120)',
+                                                borderWidth: 1,
+                                                fill: false
+                                            };
+
+                                            let dataset2 = {
+                                                label: productSelect2.options[productSelect2.selectedIndex].text,
+                                                data: data.salesData2.map(item => item.quantity),
+                                                borderColor: 'rgb(9,62,238)',
+                                                borderWidth: 1,
+                                                fill: false
+                                            };
+
+                                            let config = {
+                                                type: 'line',
+                                                data: {
+                                                    labels: dates,
+                                                    datasets: [dataset1, dataset2]
+                                                }
+                                            };
+                                            // Update chart
+                                            existingChart = new Chart(chart, config);
+
+                                        })
+                                        .catch(error => {
+                                            console.error('Error:', error);
+                                            console.log('Error updating chart'); // Log an error message
+                                        });
+                                }
+
+                                // Initial chart rendering
+                                updateChart();
+                                // Event listeners for product selection changes
+                                productSelect1.addEventListener('change', updateChart);
+                                productSelect2.addEventListener('change', updateChart);
+                            });
+                        </script>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

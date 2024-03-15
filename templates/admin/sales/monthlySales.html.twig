@@ -1,0 +1,64 @@
+{% extends 'base.html.twig' %}
+{% block title %}monthly sales {% endblock %}
+{% block body %}
+    <div class="row align-content-center">
+        <div class="col-md-9">
+            <div class="card shadow">
+                <div class="card-header">
+                    <h3 class="card-title">
+                        <span class="offset-4"></span> monthly sales</h3>
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+                        <div>
+                            <canvas id="monthlySalesChart" width="600px" height="300px"></canvas>
+
+                        </div>
+                        <script>
+                            document.addEventListener('DOMContentLoaded', function () {
+                                let monthlySalesData = {{ sales|json_encode|raw }};
+                                let ctx = document.getElementById('monthlySalesChart').getContext('2d');
+
+                                let datasets = {};
+                                monthlySalesData.forEach(function (entry) {
+                                    if (!datasets[entry.productName]) {
+                                        datasets[entry.productName] = {
+                                            label: entry.productName,
+                                            data: [],
+                                            backgroundColor: 'rgba(' + Math.floor(Math.random() * 256) + ',' + Math.floor(Math.random() * 256) + ',' + Math.floor(Math.random() * 256) + ',0.5)',
+                                        };
+                                    }
+
+                                    datasets[entry.productName].data.push(entry.totalSales);
+                                });
+                                //remove the duplication months from the dataset
+                                let months = new Set(monthlySalesData.map(entry => entry.month));
+                                console.log(months)
+                                let chartData = {
+                                    labels: Array.from(months),
+                                    datasets: Object.values(datasets),
+                                };
+                                let chartConfig = {
+                                    type: 'bar',
+                                    data: chartData,
+                                    options: {
+                                        scales: {
+                                            y: {
+                                                beginAtZero: true,
+
+                                            },
+                                        },
+                                    },
+                                };
+
+                                let myChart = new Chart(ctx, chartConfig);
+                            });
+                        </script>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

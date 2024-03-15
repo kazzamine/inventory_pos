@@ -1,0 +1,89 @@
+{% extends 'base.html.twig' %}
+{% block title %}Add product {% endblock %}
+
+{% block body %}
+    <div class="container">
+        <h3 class="text-dark mb-4">Products</h3>
+        <div class="card shadow">
+            <div class="card-header py-3">
+                <p class="text-primary m-0 fw-bold">add new product</p>
+            </div>
+        <form id="contactForm-2" method="post" class="card-body">
+            <div class="row">
+                <div class="col-md-6">
+                    <div id="successfail"></div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 col-lg-12" id="message">
+                    <fieldset></fieldset>
+                    <div class="row">
+
+                        <div class="d-flex justify-content-center mb-4">
+                            <div id="pictureContainer">
+                                <img id="selectedPic" src=""
+                                     class="rounded-circle" style="width: 200px; height: 200px; object-fit: cover;" alt="no picture found" />
+                            </div>
+                        </div>
+                        <div class="d-flex justify-content-center">
+                            <div class="btn btn-primary btn-rounded">
+                                <label class="form-label text-white m-1" for="prodImage">Choose file</label>
+                                <input type="file"  class="form-control d-none" id="prodImage" onchange="displaySelectedPicture()">
+                            </div>
+                        </div>
+
+                    </div>
+                    <script>
+                        function displaySelectedPicture() {
+                            var input = document.getElementById('prodImage');
+                            var container = document.getElementById('pictureContainer');
+
+                            // Check if a file is selected
+                            if (input.files && input.files[0]) {
+                                var reader = new FileReader();
+                                // Set up the reader to read the selected file as a data URL
+                                reader.onload = function (e) {
+                                    // Display the selected picture
+                                    container.innerHTML = '<img id="selectedPic" src="' + e.target.result + '" class="rounded-circle" style="width: 200px; height: 200px; object-fit: cover;" alt="" >';
+                                };
+                                // Read the selected file
+                                reader.readAsDataURL(input.files[0]);
+                            }
+                        }
+                    </script>
+
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="has-feedback form-group mb-3"><label class="form-label" for="product_name">Product name</label><input class="form-control" type="text" id="product_name" title="please fill this field" name="product_name" placeholder="product_name" required></div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="has-feedback form-group mb-3"><label class="form-label" for="price">product Price</label><input class="form-control" type="number" step="0.01" id="price"  title="please fill this field" name="price" placeholder="price" required></div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="has-feedback form-group mb-3"><label class="form-label" for="description">product description</label><input class="form-control" type="text"  id="description" title="please fill this field" name="description" placeholder="description" required></div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="has-feedback form-group mb-3"><label class="form-label" for="tax">product tax</label><input class="form-control" type="number" step="0.01" id="tax" name="tax" title="please fill this field" placeholder="tax %" required></div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="has-feedback form-group mb-3"><label class="form-label" for="storage">Storage</label><input class="form-control" type="number" min="1" max="1000" title="please fill this field" id="storage" name="storage" placeholder="storage quantity" required></div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group mb-3"><label class="form-label" for="category">Categories</label>
+                                <select class="form-select" id="category" name="category">
+                                    {% for category in categories %}
+                                        <option value="{{ category.id }}">
+                                            {{ category.catName }}</option>
+                                    {% endfor %}
+                                </select></div>
+                        </div>
+                        <input type="hidden" name="_csrf_token" id="_csrf_token" value="{{ csrf_token('addProd') }}">
+                    </div>
+                    <hr>
+                    <div class="form-group mb-3"><button class="btn btn-primary d-block w-100" id="btn_addProd" type="button">add</button></div>
+                    <hr>
+                </div>
+            </div>
+        </form>
+    </div>
+{% endblock %}

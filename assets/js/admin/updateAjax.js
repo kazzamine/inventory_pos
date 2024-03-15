@@ -1,0 +1,41 @@
+//function for ajax request for updating
+
+import Toastify from "toastify-js";
+
+export const updateAjax=(url,data)=>{
+    fetch(url,{
+            method:'POST',
+            headers:{
+                'content-type':'application/json',
+            },
+            body:JSON.stringify(data)
+        }
+    )
+        .then((response)=>{
+            return response.json()
+        })
+        .then((data)=>{
+
+                Toastify({
+                    text: 'successful update',
+                    title:'Success' ,
+                    duration: 3000,
+                    gravity: 'center',
+                    position: 'top',
+                    backgroundColor: 'green',
+                    stopOnFocus: true,
+                }).showToast();
+
+        })
+        .catch(error=>{
+            Toastify({
+                text: error,
+                title:'error' ,
+                duration: 3000,
+                gravity: 'center',
+                position: 'top',
+                backgroundColor: 'red',
+                stopOnFocus: true,
+            }).showToast();
+        })
+}
