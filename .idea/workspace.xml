@@ -5,7 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="9f00799e-a2f4-4745-b31f-91cebe650d6e" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/node_modules/.package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/.package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/js/multiForm.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/multiForm.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/styles/multiForm.css" beforeDir="false" afterPath="$PROJECT_DIR$/assets/styles/multiForm.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/ProfileController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/ProfileController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/user/makeOrder.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/user/makeOrder.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/user/ordersList.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/user/ordersList.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/user/profile.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/user/profile.html.twig" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -245,6 +251,9 @@
       <workItem from="1710412180207" duration="7407000" />
       <workItem from="1710497684788" duration="9215000" />
       <workItem from="1710515116604" duration="482000" />
+      <workItem from="1710757285279" duration="7589000" />
+      <workItem from="1710841879386" duration="9113000" />
+      <workItem from="1710854518936" duration="2727000" />
     </task>
     <servers />
   </component>

@@ -19,7 +19,7 @@ class ProfileController extends AbstractController
 {
     # rendering profile page
     #[Route('/user/profile', name: 'app_profile')]
-
+ 
     public function UserProfile(UserRepository $userRepository): Response
     {
         # getting current user

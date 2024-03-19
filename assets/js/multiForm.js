@@ -39,7 +39,7 @@ function nextPrev(n) {
     // if you have reached the end of the form...
     if (currentTab >= x.length) {
         // ... the form gets submitted:
-        document.getElementById("signUpForm").submit();
+        document.getElementById("makeOrderForm").submit();
         return false;
     }
     // Otherwise, display the correct tab:
