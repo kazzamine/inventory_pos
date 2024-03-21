@@ -17,7 +17,5 @@
   "build/vendors-node_modules_datatables_net-dt_css_jquery_dataTables_min_css-node_modules_toastify-js-d01f2a.css": "/build/vendors-node_modules_datatables_net-dt_css_jquery_dataTables_min_css-node_modules_toastify-js-d01f2a.css",
   "build/fonts/fa-solid-900.ttf": "/build/fonts/fa-solid-900.56f95854.ttf",
   "build/fonts/fa-solid-900.woff2": "/build/fonts/fa-solid-900.a66b80c8.woff2",
-  "build/images/icon.png": "/build/images/icon.8522c877.png",
-  "build/vendors-node_modules_bootstrap_dist_js_bootstrap_esm_js-node_modules_jquery-ui_dist_jquery-ui-bb0479.js": "/build/vendors-node_modules_bootstrap_dist_js_bootstrap_esm_js-node_modules_jquery-ui_dist_jquery-ui-bb0479.js",
-  "build/app.css": "/build/app.css"
+  "build/images/icon.png": "/build/images/icon.8522c877.png"
 }

@@ -5,7 +5,7 @@ namespace App\Repository;
 use App\Entity\Order;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
-
+use App\Entity\Product;
 /**
  * @extends ServiceEntityRepository<Order>
  *
@@ -24,7 +24,8 @@ class OrderRepository extends ServiceEntityRepository
     public function findBySearchTerm(string $searchTerm)
     {
         $qb = $this->createQueryBuilder('u')
-            ->andWhere('u.order_date LIKE :searchTerm OR u.quantity LIKE :searchTerm')
+            ->join('u.prod_id','p')
+            ->andWhere('u.order_date LIKE :searchTerm OR u.quantity LIKE :searchTerm OR p.prod_name LIKE :searchTerm')
             ->setParameter('searchTerm', '%' . $searchTerm . '%')
             ->getQuery();
 

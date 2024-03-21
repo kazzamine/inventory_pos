@@ -9,8 +9,7 @@
             </div>
         <!-- google font -->
         <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
-
-        <form id="signUpForm" action="#">
+        <form id="makeOrderForm" action="#">
             <!-- start step indicators -->
             <div class="form-header d-flex mb-4">
                 <span class="stepIndicator">Chose Product</span>
@@ -66,7 +65,6 @@
                     <input type="number" step="0.01" readonly title="total including tax" placeholder="your total" id="total" name="total">
                 </div>
             </div>
-
             <!-- step three -->
             <div class="step">
                 <p class="text-center mb-4">payment</p>
@@ -103,7 +101,7 @@
                 </div>
                 {% else %}
                     <div class="row" id="cashContainer" style="display: none">
-                        <div class="col-sm-8">
+                        <div class="col-sm-12">
                             <div class="has-feedback">
                                 <h1>Cash on delivery</h1>
                                 <p>You pay when you receive the product.</p>
@@ -112,20 +110,20 @@
                     </div>
                 {% endif %}
                 <div class="row" id="bankContainer" style="display: none">
-                    <div class="col-sm-6">
-                       <div class="has-feedback form-group mb-3"><label class="form-label" for="accNumber">account number</label><input class="form-control" type="text"  id="accNumber" name="accNumber" required></div>
+                    <div class="col-sm-12">
+                       <div class="has-feedback form-group "><label class="form-label" for="accNumber">account number</label><input class="form-control" type="text"  id="accNumber" name="accNumber" required></div>
                     </div>
-                    <div class="col-sm-6">
-                       <div class="has-feedback form-group mb-3"><label class="form-label" for="expDate">expiration date</label><input class="form-control" type="date"  id="expDate" name="expDate" required></div>
+                    <div class="col-sm-12">
+                       <div class="has-feedback form-group "><label class="form-label" for="expDate">expiration date</label><input class="form-control" type="date" min="{{ 'now'|date('m-d-Y')}}"  id="expDate" name="expDate" required></div>
                     </div>
                 </div>
             </div>
             <input type="hidden" name="_csrf_token" id="_csrf_token_make_order" value="{{ csrf_token('makeOrder') }}">
-            <!--  previous / next  -->
+            <!--  previous / next / confirm order -->
             <div class="form-footer d-flex">
                 <button type="button" id="prevBtn" >Previous</button>
                 <button type="button" id="nextBtn" >Next</button>
-                <button class="btn btn-success" id="makeOrder" data-bs-toggle="modal" data-bs-target="#orderload" type="button">make order</button>
+                <button class="btn btn-success" id="makeOrder" data-bs-toggle="modal" data-bs-backdrop="static" data-bs-keyboard="false" data-bs-target="#orderload" type="button">Confirm order</button>
                 <div class="modal fade" id="orderload" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" >
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">
@@ -135,22 +133,22 @@
                             <div class="modal-body">
                                 <p>stay patient please </p>
                                 <div class="offset-4">
-                                    <div class="spinner-grow text-secondary" role="status">
+                                    <div class="spinner-grow text-info" role="status">
                                         <span class="sr-only">Loading...</span>
                                     </div>
-                                    <div class="spinner-grow text-secondary" role="status">
+                                    <div class="spinner-grow text-info" role="status">
                                         <span class="sr-only">Loading...</span>
                                     </div>
-                                    <div class="spinner-grow text-secondary" role="status">
-                                        <span class="sr-only">Loading...</span>
-                                    </div><div class="spinner-grow text-secondary" role="status">
+                                    <div class="spinner-grow text-info" role="status">
                                         <span class="sr-only">Loading...</span>
                                     </div>
-                                    <div class="spinner-grow text-secondary" role="status">
+                                        <div class="spinner-grow text-info" role="status">
+                                        <span class="sr-only">Loading...</span>
+                                    </div>
+                                    <div class="spinner-grow text-info" role="status">
                                         <span class="sr-only">Loading...</span>
                                     </div>
                                 </div>
-
                             </div>
                         </div>
                     </div>
