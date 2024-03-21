@@ -34,7 +34,7 @@
                                     <td >{{ order.prodId.prodName }}</td>
                                     <td >{{ order.quantity }}</td>
                                     <td >{{ order.orderDetail.total }} MAD</td>
-                                    <td >{{ order.orderDate|date('d-m-Y') }}</td>
+                                    <td >{{ order.orderDate|date('d F Y') }}</td>
                                     <td> <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#orderDetail{{ order.id }}" data-bs-whatever="{{ order.id }}">order detail</button></td>
                                     <div class="modal fade" id="orderDetail{{ order.id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" >
                                         <div class="modal-dialog" role="document">
