@@ -35,7 +35,7 @@ class SalesController extends AbstractController
         ]);
     }
 
-     # handle ajax request for comparing
+    # handle ajax request for comparing
     #[Route('/admin/compareSale/getProd', name:'comapre_sales')]
     public function getProdSales(Request $request,EntityManagerInterface $entityManager):Response
     {
