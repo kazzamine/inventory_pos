@@ -5,10 +5,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="9f00799e-a2f4-4745-b31f-91cebe650d6e" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/inventory_pos.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inventory_pos.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/.package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/.package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/styles/loginStyle.css" beforeDir="false" afterPath="$PROJECT_DIR$/assets/styles/loginStyle.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/composer.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/ExcelDataController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/ExcelDataController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/admin/category/listCategories.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/admin/category/listCategories.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/attachements/navbar.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/attachements/navbar.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/base.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/base.html.twig" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -17,7 +21,9 @@
   </component>
   <component name="ComposerSettings" synchronizationState="SYNCHRONIZE">
     <pharConfigPath>$PROJECT_DIR$/composer.json</pharConfigPath>
-    <execution />
+    <execution>
+      <executable path="composer" />
+    </execution>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -209,6 +215,7 @@
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
     &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
     &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
@@ -253,6 +260,9 @@
       <workItem from="1710854518936" duration="7726000" />
       <workItem from="1710928127144" duration="4405000" />
       <workItem from="1711014283952" duration="1635000" />
+      <workItem from="1711116377484" duration="2009000" />
+      <workItem from="1711120050250" duration="481000" />
+      <workItem from="1711359180469" duration="5780000" />
     </task>
     <servers />
   </component>

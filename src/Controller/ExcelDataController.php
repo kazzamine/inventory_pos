@@ -115,7 +115,7 @@ class ExcelDataController extends AbstractController
         $currentWorkSheet->setCellValue('B1','Username');
         $currentWorkSheet->setCellValue('C1','first name');
         $currentWorkSheet->setCellValue('D1','last name');
-        $currentWorkSheet->setCellValue('E1','adress');
+        $currentWorkSheet->setCellValue('E1','address');
         $currentWorkSheet->setCellValue('F1','city');
         $currentWorkSheet->setCellValue('G1','phone');
         $currentWorkSheet->setCellValue('H1','email');

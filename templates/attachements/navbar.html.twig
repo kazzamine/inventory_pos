@@ -1,9 +1,9 @@
 
-    <div id="sidebar" class="col-auto col-md-2 col-xl-2 px-sm-2 px-0" style="margin-top: -2em">
+    <div id="sidebar" class="col-auto col-md-2 col-xl-2 px-sm-2 px-0 collapse show" style="margin-top: -2em">
         <div class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white">
             <div class="position-fixed">
-                <a  class="d-flex align-items-center pb-2 mb-md-0 me-md-auto text-white text-decoration-none">
-                    <span class="fs-5 d-none d-sm-inline"> <img class="col-sm-1 img-fluid" src="{{ asset('/pictures/icon.svg') }}" alt="logo"> Inventory</span>
+                <a  class="text-white text-decoration-none" style="z-index: -1;">
+                    <img class="col-sm-1 img-fluid d-none d-sm-inline" src="{{ asset('/pictures/icon.svg') }}" alt="inventory">
                 </a>
                 <ul class="nav nav-pills navbar-expand flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start" id="menu">
                     {% if get_model_items() %}
@@ -15,18 +15,18 @@
                                             href="{{ path(item.path ) }}"
                                     {% endif %}
                                             class="nav-link align-middle px-0">
-                                        <i class="{{ item.icon }} navItemsColor"></i><span class="ms-1 d-none d-sm-inline navItemsColor">{{ item.modName }}</span>
+                                        <i class="{{ item.icon }} navItemsColor"></i><span class="ms-1 d-sm-inline navItemsColor">{{ item.modName }}</span>
                                     </a>
                                 </li>
                             {% else%}
                                 <li>
                                     <a href="#submenu{{ item.id }}" data-bs-toggle="collapse" class="nav-link px-0 align-middle">
-                                        <i title="{{ item.modName }}" class="{{ item.icon }} navItemsColor"></i><span class="ms-1 d-none d-sm-inline navItemsColor">{{ item.modName }}</span> </a>
+                                        <i title="{{ item.modName }}" class="{{ item.icon }} navItemsColor"></i><span class="ms-1 navItemsColor">{{ item.modName }}</span> </a>
                                     <ul class="collapse nav flex-column ms-1" id="submenu{{ item.id }}" data-bs-parent="#menu">
                                         {% for subitem in item.subModels %}
                                         <li class="w-100 offset-2">
                                             <a href="{{ path( subitem.path ) }}" class="nav-link px-0"><i title="{{ subitem.subModName }}" class="{{ subitem.icon }} navSubItemColor"></i>
-                                                <span class="d-none d-sm-inline navSubItemColor">{{ subitem.subModName }}</span> </a>
+                                                <span class="navSubItemColor">{{ subitem.subModName }}</span> </a>
                                         </li>
                                         {% endfor %}
                                     </ul>

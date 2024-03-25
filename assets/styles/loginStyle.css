@@ -27,6 +27,17 @@
     .gradient-form {
         height: 100vh !important;
     }
+
+}
+@media (max-width: 580px) {
+    #sidebar{
+        margin-left: 50px;
+    }
+}
+@media(min-width: 578px)and (max-width: 750px)  {
+    #content{
+        margin-left: 90px;
+    }
 }
 @media (min-width: 769px) {
     .gradient-custom-2 {
