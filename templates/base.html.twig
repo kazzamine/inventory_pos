@@ -10,7 +10,7 @@
 
         {% block javascripts %}
             {{ encore_entry_script_tags('app') }}
-            {% block importmap %}{{ importmap('app') }}{% endblock %}
+            {#{% block importmap %}{{ importmap('app') }}{% endblock %}#}
             {{ encore_entry_script_tags('adminEventListner') }}
         {% endblock %}
     </head>
@@ -19,9 +19,9 @@
             <div class="row flex-nowrap">
             {#including navbar #}
                 {% include 'attachements/navbar.html.twig' %}
-                <div class="col justify-content-center"  id="content">
-                    <button class="btn btn-outline-secondary d-lg-none"  type="button" data-bs-toggle="collapse" data-bs-target="#sidebar" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                        <i class="fa fa-bars" style="z-index: 99"></i>
+                <div class="col justify-content-center position-relative"  id="content">
+                    <button class="btn btn-outline-info d-lg-none offset-6" style="z-index: 98"  type="button" data-bs-toggle="collapse" data-bs-target="#sidebar" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                        <i class="fa fa-bars" ></i>
                     </button>
                     {% block body %}
 

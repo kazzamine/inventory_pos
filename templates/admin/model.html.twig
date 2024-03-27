@@ -120,19 +120,19 @@
             <div class="col-md-6 col-lg-12" id="message">
                 <fieldset></fieldset>
                 <div class="row">
-                    <div class="col-sm-6">
+                    <div class="col-sm-12 col-md-6">
                         <div class="has-feedback form-group mb-3"><label class="form-label" for="model_name">Model name</label><input class="form-control" type="text" id="model_name" name="model_name" placeholder="model name" required></div>
                     </div>
-                    <div class="col-sm-6">
+                    <div class="col-sm-12 col-md-6">
                         <div class="has-feedback form-group mb-3"><label class="form-label" for="model_path">Model path</label><input class="form-control" type="text" id="model_path" name="model_path" placeholder="model path" required></div>
                     </div>
                 </div>
 
                 <div class="row">
-                    <div class="col-sm-6">
+                    <div class="col-sm-12 col-md-6">
                         <div class="has-feedback form-group mb-3"><label class="form-label" for="model_icon">Model icon</label><input class="form-control" type="text" id="model_icon" name="model_icon" placeholder="model icon" required></div>
                     </div>
-                    <div class="col-sm-6">
+                    <div class="col-sm-12 col-md-6">
                         <div class="has-feedback form-group mb-3"><label class="form-label" for="model_role">Model Role</label>
                             <select class="form-select" id="model_role" name="model_role">
                                 {% for role in roles %}
@@ -143,7 +143,6 @@
                     </div>
                 </div>
                 <input type="hidden" name="_csrf_token" id="_csrf_token_addmodel" value="{{ csrf_token('addModel') }}">
-
                 <hr>
                 <div class="form-group mb-3"><button class="btn btn-primary d-block w-100" id="btn_addModel" type="button">add</button></div>
             </div>

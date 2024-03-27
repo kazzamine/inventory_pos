@@ -1,17 +1,13 @@
 .gradient-custom-2 {
-    /* fallback for old browsers */
+    /* for old browsers */
     background: #fccb90;
-
     background: -webkit-linear-gradient(to right, #4e93c5, #3c87b9, #226fa2, #023962);
-
     background: linear-gradient(to right, #4e93c5, #3c87b9, #226fa2, #023962);
 }
 .gradient-custom-3 {
-    /* fallback for old browsers */
+    /* for old browsers */
     background: #fccb90;
-
     background: -webkit-linear-gradient(to right, rgba(0, 0, 0, 0.87), #2d2d2d, #858585, #EEEEEE);
-
     background: linear-gradient(to right, rgba(0, 0, 0, 0.87), #2d2d2d, #858585, #EEEEEE);
 }
 .navItemsColor{
@@ -21,11 +17,20 @@
 .navSubItemColor{
     color: #9ad0ef;
     font-weight: bold;
-
 }
 @media (min-width: 768px) {
     .gradient-form {
         height: 100vh !important;
+    }
+}
+@media (max-width: 580px) {
+    #sidebar{
+        margin-left: 50px;
+    }
+}
+@media(min-width: 578px)and (max-width: 750px)  {
+    #content{
+        margin-left: 90px;
     }
 }
 @media (min-width: 769px) {
@@ -40,6 +45,5 @@
 }
 body{
     background: -webkit-linear-gradient(to right, #858585, #858585, #2d2d2d, rgba(0, 0, 0, 0.87));
-
     background: linear-gradient(to right, rgba(0, 0, 0, 0.87), #858585, #858585, #2d2d2d);
 }

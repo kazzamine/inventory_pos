@@ -61,6 +61,9 @@
                                                         <label  class="col-form-label">Quantity: {{ order.quantity }}</label>
                                                         <label class="offset-2 col-form-label">Total : {{ order.orderDetail.total }} MAD</label>
                                                     </div>
+                                                    <div class="form-group">
+                                                        <label class="offset-2 col-form-label"><a href="http://inventory.test/user/pdf?orderId={{ order.id }}" target="_blank"> <i class="fa-solid fa-file-pdf"></i> Download Invoice</a></label>
+                                                    </div>
                                                 </form>
                                             </div>
                                         </div>

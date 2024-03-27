@@ -16,7 +16,6 @@
             <div class="table-responsive table mt-2" id="dataTable" role="grid" aria-describedby="dataTable_info">
                 <form action="{{ path('app_categories') }}" class="col-sm-2 offset-8" id="searchForm" method="get" >
                     <input type="text" class="form-control" onkeyup="setTimeout(()=>document.getElementById('searchForm').submit(),'400')" autofocus onfocus="this.setSelectionRange(this.value.length,this.value.length);" id="searchValue" name="search" value="{{ search_term }}" placeholder="Search...">
-                    <button type="reset" onreset="document.getElementById('searchForm').submit()" class="btn" style="float: right;margin-right: 5%;margin-top: -35px;position: relative;z-index: 2;">x</button>
                     <button hidden type="submit">Search</button>
                 </form>
                 <table class="table table-hover table-striped my-0" id="category_datatable">
@@ -62,7 +61,9 @@
                                                         <input class="form-control" type="text" hidden name="catId" value="{{ category.id }}" >
 
                                                     </div>
-                                                    <div class="form-group">
+                                                    <br>
+                                                    <br>
+                                                    <div class="form-group offset-4">
                                                         <button type="submit" class="btn btn-warning" >update</button>
                                                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
 
