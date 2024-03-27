@@ -40,7 +40,6 @@ class CreateUserForm extends AbstractType{
             )
             ->add('email',EmailType::class,
                 array('attr'=>array('class'=>'form-control','placeholder'=>'email@email.com'),'required'=>true)
-
             )
             ->add('adress',TextType::class,
                 array('attr'=>array('class'=>'form-control'),'required'=>true)

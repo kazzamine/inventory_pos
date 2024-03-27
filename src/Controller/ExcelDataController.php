@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Order;
+use App\Entity\Product;
 use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
@@ -15,7 +16,7 @@ class ExcelDataController extends AbstractController
 {
     # orders in Excel
     #[Route('/admin/excel/orders', name: 'app_excel_orders')]
-    public function index(EntityManagerInterface $entityManager):StreamedResponse
+    public function ordersSpreadsheet(EntityManagerInterface $entityManager):StreamedResponse
     {
         $spreadsheet=new Spreadsheet();
         $currentWorkSheet=$spreadsheet->getActiveSheet();
@@ -87,7 +88,7 @@ class ExcelDataController extends AbstractController
 
     # users in an Excel file
     #[Route('/admin/excel/users', name: 'app_excel_users')]
-    public function usersExcel(EntityManagerInterface $entityManager):StreamedResponse
+    public function usersSpreadsheet(EntityManagerInterface $entityManager):StreamedResponse
     {
         $UsersSpreadsheet=new Spreadsheet();
         $currentWorkSheet=$UsersSpreadsheet->getActiveSheet();
@@ -156,6 +157,80 @@ class ExcelDataController extends AbstractController
         $date = date('m/d/Y h:i:s a', time());
         $response->headers->set('Content-Type','application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
         $response->headers->set('Content-Disposition', 'attachment;filename="users-'.$date.'.xlsx"');
+        $response->headers->set('Cache-Control','max-age=0');
+        return $response;
+    }
+
+    # Products spreadsheet (excel)
+    #[Route('/admin/excel/products',name: 'app_excel_products')]
+    public function productsSpreadsheet(EntityManagerInterface $entityManager):StreamedResponse
+    {
+        $productsSpredsheet=new Spreadsheet();
+        $activeSheet=$productsSpredsheet->getActiveSheet();
+        #spreadsheet style
+        $styleArray = [
+            'font' => [
+                'bold' => true,
+            ],
+            'alignment' => [
+                'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER,
+            ],
+            'fill' => [
+                'fillType' => \PhpOffice\PhpSpreadsheet\Style\Fill::FILL_GRADIENT_LINEAR,
+                'startColor' => [
+                    'argb' => '#FFA0A0A0',
+                ],
+                'endColor' => [
+                    'argb' => '#FFFFFFFF',
+                ],
+            ],
+        ];
+        $activeSheet->getStyle('A1:H1')->applyFromArray($styleArray);
+        # selecting data
+        $products=$entityManager->getRepository(Product::class)->findAll();
+        # column names
+        $activeSheet->setCellValue('A1','ID');
+        $activeSheet->setCellValue('B1','Product name');
+        $activeSheet->setCellValue('C1','Description');
+        $activeSheet->setCellValue('D1','Category');
+        $activeSheet->setCellValue('E1','Quantity');
+        $activeSheet->setCellValue('F1','Price');
+        $activeSheet->setCellValue('G1','Tax');
+        $activeSheet->setCellValue('H1','Created At');
+        #looping through data
+        $index=2;
+        foreach ($products as $product){
+            $activeSheet->setCellValue('A'.$index,$product->getId());
+            $activeSheet->setCellValue('B'.$index,$product->getProdName());
+            $activeSheet->setCellValue('C'.$index,$product->getProdDesc());
+            $activeSheet->setCellValue('D'.$index,$product->getCatId()->getCatName());
+            $activeSheet->setCellValue('E'.$index,$product->getStorage()->getStorageQuantity());
+            $activeSheet->setCellValue('F'.$index,$product->getPrice());
+            $activeSheet->setCellValue('G'.$index,$product->getTax());
+            $activeSheet->setCellValue('H'.$index,$product->getCreatedAt());
+            $index++;
+        }
+        # resizing columns based on text
+        $activeSheet->getColumnDimension('A')->setAutoSize(true);
+        $activeSheet->getColumnDimension('B')->setAutoSize(true);
+        $activeSheet->getColumnDimension('C')->setAutoSize(true);
+        $activeSheet->getColumnDimension('D')->setAutoSize(true);
+        $activeSheet->getColumnDimension('E')->setAutoSize(true);
+        $activeSheet->getColumnDimension('F')->setAutoSize(true);
+        $activeSheet->getColumnDimension('G')->setAutoSize(true);
+        $activeSheet->getColumnDimension('H')->setAutoSize(true);
+
+        #save file
+        $saveFile=new Xlsx($productsSpredsheet);
+        $response=new StreamedResponse(
+            function ()use($saveFile){
+                $saveFile->save('php://output');
+            }
+        );
+        # date of the export
+        $date = date('m/d/Y h:i:s',time());
+        $response->headers->set('Content-Type','application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        $response->headers->set('Content-Disposition', 'attachment;filename="products-'.$date.'.xlsx"');
         $response->headers->set('Cache-Control','max-age=0');
         return $response;
     }

@@ -211,7 +211,7 @@ class OrdersController extends AbstractController
             # success message
             flash()->addFlash('success','order Made','order made succesfully');
             $entityManager->getConnection()->commit();
-            # sending mail with reciept invoice
+            # sending mail with receipt invoice
             $mailServices->invoiceMail($orderRepo,$twig,$mailer,$orderDetId->getUserId()->getEmail(),$orderId);
             return $this->json(['orderId'=>$orderId]);
         }catch (\Exception $exception){
@@ -247,5 +247,4 @@ class OrdersController extends AbstractController
         $urlGenerate=$urlGenerator->generate('app_orders');
         return $this->redirect($urlGenerate);
     }
-
 }
