@@ -6,7 +6,7 @@
     <h3 class="text-dark mb-4">Orders</h3>
     <div class="card shadow">
         <div class="card-header py-3">
-            <p class="text-primary m-0 fw-bold">List of all orders</p> <span class="offset-8 text-secondary"><a role="button" class="text-decoration-none" href="{{ path('app_excel_orders') }}" target="_blank"><i class="fa-solid fa-file-excel"></i> Generate in Excel </a></span>
+            <p class="text-primary m-0 fw-bold">List of all orders</p> <span class="offset-8 text-secondary"><a role="button" class="text-decoration-none  btn btn-outline-secondary" href="{{ path('app_excel_orders') }}" target="_blank"><i class="fa-solid fa-file-excel"></i> Generate in Excel </a></span>
         </div>
         <div class="card-body">
             <div class="row">
@@ -49,20 +49,20 @@
                                              </div>
                                             <div class="modal-body">
                                                 <form>
-                                                    <div class="form-group">
-                                                        <label  class="col-form-label">Order : {{ order.id }}</label>
-                                                        <label class="offset-4 col-form-label">For : {{ order.orderDetail.userId.username }}</label>
+                                                    <div class="form-group row">
+                                                        <label  class="col-6 col-form-label">Order : {{ order.id }}</label>
+                                                        <label class="col-6 col-form-label">For : {{ order.orderDetail.userId.username }}</label>
                                                     </div>
-                                                    <div class="form-group">
-                                                        <label class="col-form-label">product: {{ order.prodId.prodName }}</label>
-                                                        <label  class="offset-2 col-form-label">Date : {{ order.orderDate|date('d-m-Y') }}</label>
+                                                    <div class="form-group row">
+                                                        <label class="col-6 col-form-label">product: {{ order.prodId.prodName }}</label>
+                                                        <label  class="col-6 col-form-label">Date : {{ order.orderDate|date('d-m-Y') }}</label>
                                                     </div>
-                                                    <div class="form-group">
-                                                        <label  class="col-form-label">Quantity: {{ order.quantity }}</label>
-                                                        <label class="offset-2 col-form-label">Total : {{ order.orderDetail.total }} MAD</label>
+                                                    <div class="form-group row">
+                                                        <label  class="col-6 col-form-label">Quantity: {{ order.quantity }}</label>
+                                                        <label class="col-6 col-form-label">Total : {{ order.orderDetail.total }} MAD</label>
                                                     </div>
-                                                    <div class="form-group">
-                                                        <label class="offset-2 col-form-label"><a href="http://inventory.test/user/pdf?orderId={{ order.id }}" target="_blank"> <i class="fa-solid fa-file-pdf"></i> Download Invoice</a></label>
+                                                    <div class="form-group row">
+                                                        <label class="offset-3 col-form-label"> <a class="text-decoration-none btn btn-outline-dark" href="http://inventory.test/user/pdf?orderId={{ order.id }}" target="_blank"><i class="fa-solid fa-file-arrow-down"></i> Download Invoice</a></label>
                                                     </div>
                                                 </form>
                                             </div>

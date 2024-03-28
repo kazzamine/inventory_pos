@@ -110,7 +110,7 @@ class OrdersController extends AbstractController
         ]);
     }
 //    //fetch product by category
-//    #[Route('/user/prodbycat',name:'prod_by_cat')]
+//    #[Route('/user/prodByCat',name:'prod_by_cat')]
 //    public function productByCat (Request $request,ProductRepository $productRepository):Response
 //    {
 //        $prod_id=$request->query->get('catId');
@@ -176,30 +176,29 @@ class OrdersController extends AbstractController
         $prod=$entityManager->getRepository(Product::class)->find($data['prodId']);
         $user = $this->getUser();
         $roles=$user->getRoles();
-        # if made by an admin he can chose which user want the order
+        # if made by an admin he can choose which user want the order
         if (in_array('ROLE_ADMIN', $roles, true)) {
             $user= $entityManager->getRepository(User::class)->find($data['userId']);
         }
         $paymentId=null;
         $commonService=new CommonServices();
         # start transaction for making the order
-        $entityManager->getConnection()->beginTransaction();
         try {
-            #adding card infos if payement method is cash
+            $entityManager->getConnection()->beginTransaction();
+            #adding card infos if payment method is cash
             if ($data['method'] == 'Visa' || $data['method'] == 'MasterCard') {
-                $inputFormat = 'Y-m-d';
                 # Create a DateTimeImmutable object from the string
                 $expdate = DateTime::createFromFormat('Y-m-d', $data['expDate']);
-                $paymentMethodId = $commonService->addToPaymentMethod($entityManager, $data['accNumber'],$expdate, $user, $data['method']);
-                $paymentId = $commonService->addPayment($entityManager, $paymentMethodId, $data['total'], 0);
+                $commonService->addToPaymentMethod($entityManager, $data['accNumber'],$expdate, $user, $data['method']);
+                $paymentId = $commonService->addPayment($entityManager, $data['method'], $data['total'], 0);
             } else {
-                $paymentMethodId = $commonService->addToPaymentMethod($entityManager, '0', null, $user, 'cash');
-                # if payment made by user
-                if (in_array('ROLE_USER', $roles, true)) {
-                    $paymentId = $commonService->addPayment($entityManager, $paymentMethodId, $data['total'],0);
-                }else{
+                $commonService->addToPaymentMethod($entityManager, '0', null, $user, 'cash');
                 #if payment made by cash made by an admin
-                $paymentId = $commonService->addPayment($entityManager, $paymentMethodId, $data['toGive'], $data['rest']);
+                if (in_array('ROLE_ADMIN', $roles, true)) {
+                    $paymentId = $commonService->addPayment($entityManager, 'cash', $data['toGive'], $data['rest']);
+                }else{
+                    # if payment made by user
+                    $paymentId = $commonService->addPayment($entityManager, 'cash', $data['total'],0);
                 }
             }
             # inserting order details
