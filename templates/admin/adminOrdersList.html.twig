@@ -42,29 +42,48 @@
                                     <div class="modal-dialog" role="document">
                                         <div class="modal-content">
                                             <div class="modal-header">
-                                                <h5 class="modal-title" id="exampleModalLabel">Order Detail</h5>
+                                                <h5 class="modal-title text-secondary" id="exampleModalLabel">Order detail</h5>
                                                 <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                                                     <span aria-hidden="true">&times;</span>
                                                 </button>
                                              </div>
                                             <div class="modal-body">
                                                 <form>
+                                                    <h6 class="text-decoration-underline">Order Info</h6>
                                                     <div class="form-group row">
-                                                        <label  class="col-6 col-form-label">Order : {{ order.id }}</label>
-                                                        <label class="col-6 col-form-label">For : {{ order.orderDetail.userId.username }}</label>
+                                                        <label  class="col-6 col-form-label"><span class="fw-bold">Order N° : </span>{{ order.id }}/{{ order.orderDate|date('m-Y')}}</label>
+                                                        <label  class="col-6 col-form-label"><span class="fw-bold">Date : </span>{{ order.orderDate|date('d-m-Y') }}</label>
                                                     </div>
                                                     <div class="form-group row">
-                                                        <label class="col-6 col-form-label">product: {{ order.prodId.prodName }}</label>
-                                                        <label  class="col-6 col-form-label">Date : {{ order.orderDate|date('d-m-Y') }}</label>
+                                                        <label class="col-6 col-form-label"><span class="fw-bold">product : </span>{{ order.prodId.prodName }}</label>
                                                     </div>
                                                     <div class="form-group row">
-                                                        <label  class="col-6 col-form-label">Quantity: {{ order.quantity }}</label>
-                                                        <label class="col-6 col-form-label">Total : {{ order.orderDetail.total }} MAD</label>
-                                                    </div>
-                                                    <div class="form-group row">
-                                                        <label class="offset-3 col-form-label"> <a class="text-decoration-none btn btn-outline-dark" href="http://inventory.test/user/pdf?orderId={{ order.id }}" target="_blank"><i class="fa-solid fa-file-arrow-down"></i> Download Invoice</a></label>
+                                                        <label  class="col-6 col-form-label"><span class="fw-bold">Quantity: </span>{{ order.quantity }}</label>
+                                                        <label class="col-6 col-form-label"><span class="fw-bold">Total : </span>{{ order.orderDetail.total }} MAD</label>
                                                     </div>
                                                 </form>
+                                                <hr class="mt-3 mb-3"/>
+                                                <form>
+                                                    <h6 class="text-decoration-underline">User Info</h6>
+                                                    <div class="form-group row">
+                                                        <label  class="col-6 col-form-label"><span class="fw-bold">Username : </span>{{ order.orderDetail.userId.username }}</label>
+                                                    </div>
+                                                    <div class="form-group row">
+                                                        <label class="col-6 col-form-label"><span class="fw-bold">First Name : </span>{{ order.orderDetail.userId.firstName }}</label>
+                                                        <label class="col-6 col-form-label"><span class="fw-bold">Last Name : </span>{{ order.orderDetail.userId.lastName }}</label>
+                                                    </div>
+                                                    <div class="form-group row">
+                                                        <label  class="col-form-label"><span class="fw-bold">Email: </span>{{ order.orderDetail.userId.email }}</label>
+                                                    </div>
+                                                    <div class="form-group row">
+                                                        <label class="col-form-label"><span class="fw-bold">Address : </span>{{ order.orderDetail.userId.adress }}</label>
+                                                        <label class="col-form-label"><span class="fw-bold">city : </span>{{ order.orderDetail.userId.city }}</label>
+
+                                                    </div>
+                                                </form>
+                                                <div class="form-group row">
+                                                    <label class="offset-3 col-form-label"> <a class="text-decoration-none btn btn-outline-dark" href="http://inventory.test/user/pdf?orderId={{ order.id }}" target="_blank"><i class="fa-solid fa-file-arrow-down"></i> Download Invoice</a></label>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
