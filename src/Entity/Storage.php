@@ -18,7 +18,8 @@ class Storage
     #[ORM\Column(nullable: true)]
     private ?int $storage_quantity = null;
 
-    #[ORM\OneToOne(inversedBy: 'storage', cascade: ['persist', 'remove'])]
+    #[ORM\OneToOne(inversedBy: 'storage', cascade: ['persist'])]
+    #[ORM\JoinColumn(onDelete: 'SET NULL')]
     private ?Product $prod_id = null;
 
     public function getId(): ?int

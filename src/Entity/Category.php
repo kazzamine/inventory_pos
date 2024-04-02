@@ -24,10 +24,11 @@ class Category
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $cat_desc = null;
 
-    #[ORM\OneToMany(targetEntity: Product::class, mappedBy: 'cat_id',cascade: ['remove'])]
+    #[ORM\OneToMany(targetEntity: Product::class, mappedBy: 'cat_id')]
     private Collection $products;
 
     #[ORM\ManyToOne(inversedBy: 'categories')]
+    #[ORM\JoinColumn(onDelete: 'SET NULL')]
     private ?User $user_id = null;
 
     #[ORM\Column(nullable: true)]

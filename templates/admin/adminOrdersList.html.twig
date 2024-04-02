@@ -65,6 +65,7 @@
                                                 <hr class="mt-3 mb-3"/>
                                                 <form>
                                                     <h6 class="text-decoration-underline">User Info</h6>
+                                                    {% if order.orderDetail.userId != null %}
                                                     <div class="form-group row">
                                                         <label  class="col-6 col-form-label"><span class="fw-bold">Username : </span>{{ order.orderDetail.userId.username }}</label>
                                                     </div>
@@ -80,6 +81,11 @@
                                                         <label class="col-form-label"><span class="fw-bold">city : </span>{{ order.orderDetail.userId.city }}</label>
 
                                                     </div>
+                                                    {% else %}
+                                                    <div class="form-group row">
+                                                        <label  class="col-6 col-form-label"><span class="fw-bold">This is a deleted user </span></label>
+                                                    </div>
+                                                    {% endif %}
                                                 </form>
                                                 <div class="form-group row">
                                                     <label class="offset-3 col-form-label"> <a class="text-decoration-none btn btn-outline-dark" href="http://inventory.test/user/pdf?orderId={{ order.id }}" target="_blank"><i class="fa-solid fa-file-arrow-down"></i> Download Invoice</a></label>

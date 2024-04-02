@@ -22,7 +22,7 @@
                         <th>username    <a href="{{ path('app_accounts_list', { 'sort_by': 'username', 'sort_order': (sort_by == 'username' and sort_order == 'asc') ? 'desc' : 'asc' }) }}"><i class="fa-solid fa-sort text-secondary"></i> </a></th>
                         <th>first name  <a href="{{ path('app_accounts_list', { 'sort_by': 'first_name', 'sort_order': (sort_by == 'first_name' and sort_order == 'asc') ? 'desc' : 'asc' }) }}"><i class="fa-solid fa-sort text-secondary"></i> </a></th>
                         <th>last name   <a href="{{ path('app_accounts_list', { 'sort_by': 'last_name', 'sort_order': (sort_by == 'last_name' and sort_order == 'asc') ? 'desc' : 'asc' }) }}"><i class="fa-solid fa-sort text-secondary"></i> </a></th>
-                        <th>address</th>
+                        <th>email</th>
                         <th>phone number</th>
                         <th>remove</th>
                     </tr>
@@ -33,7 +33,7 @@
                             <td>{{ user.username }}</td>
                             <td>{{ user.firstName }}</td>
                             <td>{{ user.lastName }}</td>
-                            <td>{{ user.adress }}</td>
+                            <td>{{ user.email }}</td>   
                             <td>{{ user.phone }}</td>
 
                             <td> <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#removeUser{{ user.id }}">Remove</button></td>

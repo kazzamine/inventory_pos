@@ -118,7 +118,7 @@ class ProductsController extends AbstractController
             $entityManager->remove($productToRemove);
             $entityManager->flush();
             # success response
-            flash()->addFlash('success', 'Removed', 'you successfuly removed the category');
+            flash()->addFlash('success', 'Removed', 'you successfuly removed the product');
         }catch (\Exception $ex){
                 flash()->addFlash('error',$ex->getCode(),$ex->getMessage());
         }

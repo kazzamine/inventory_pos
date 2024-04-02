@@ -21,6 +21,7 @@ class OrderDetail
     private Collection $order_id;
 
     #[ORM\ManyToOne(inversedBy: 'orderDetails')]
+    #[ORM\JoinColumn(onDelete: 'SET NULL')]
     private ?User $user_id = null;
 
     #[ORM\Column]

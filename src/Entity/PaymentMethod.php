@@ -17,6 +17,7 @@ class PaymentMethod
     private ?int $id = null;
 
     #[ORM\ManyToOne(inversedBy: 'paymentMethods')]
+    #[ORM\JoinColumn(onDelete: 'SET NULL')]
     private ?Provider $provider_id = null;
 
     #[ORM\Column]
@@ -25,7 +26,8 @@ class PaymentMethod
     #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $expire_date = null;
 
-    #[ORM\ManyToOne(inversedBy: 'paymentMethods')]
+    #[ORM\ManyToOne(inversedBy: 'paymentMethods',cascade:['remove'])]
+    #[ORM\JoinColumn(onDelete: 'SET NULL')]
     private ?User $user_id = null;
 
     public function getId(): ?int

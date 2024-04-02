@@ -32,7 +32,7 @@ class AccountsController extends AbstractController
         $sortBy = $request->query->get('sort_by', 'username');
         $sortOrder = $request->query->get('sort_order', 'asc');
         $currentPage = !$request->get('page') ? 1 : $request->get('page');
-        $allUsers = $entityManager->getRepository(User::class)->findBy([], [$sortBy => $sortOrder]);
+        $allUsers = $entityManager->getRepository(User::class)->findBy(['role_id'=>3], [$sortBy => $sortOrder]);
         #paginating
         $paginat = $paginator->paginate($allUsers, $currentPage, 10);
 
@@ -113,7 +113,7 @@ class AccountsController extends AbstractController
     #[Route('/accounts/remove','remove_user')]
     public function removeUser(Request $request,EntityManagerInterface $entityManager,UrlGeneratorInterface $urlGenerator):Response
     {   # generating return url after successful remove
-        $urlGenerate=$urlGenerator->generate('app_accounts_create');
+        $urlGenerate=$urlGenerator->generate('app_accounts_list');
         $userId=$request->query->get('userId');
         # check if user is selected
         if(!$userId){
