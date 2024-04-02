@@ -90,11 +90,14 @@ class OrdersController extends AbstractController
     #[Route('/user/orders/makeOrder/view', name: 'app_make_order')]
     public function makeOrderView(EntityManagerInterface $entityManager):Response
     {
-        # returning all products , payment methods and users ( if admin) to make an order
+        # all categories , products to display
         $allCategories=$entityManager->getRepository(Category::class)->findAll();
-        $allusers=$entityManager->getRepository(User::class)->findAll();
         $allProducts=$entityManager->getRepository(Product::class)->findAll();
+        # users
+        $allusers=$entityManager->getRepository(User::class)->findAll();
+        #payment providers
         $providers=$entityManager->getRepository(Provider::class)->findAll();
+        # check signed user roles
         $user = $this->getUser();
         $roles=$user->getRoles();
         $userRole='ROLE_USER';
@@ -174,15 +177,16 @@ class OrdersController extends AbstractController
         }
         # searching product by id
         $prod=$entityManager->getRepository(Product::class)->find($data['prodId']);
+        # signed user with it roles
         $user = $this->getUser();
         $roles=$user->getRoles();
-        # if made by an admin he can choose which user want the order
+        # allow admin to select buyer
         if (in_array('ROLE_ADMIN', $roles, true)) {
             $user= $entityManager->getRepository(User::class)->find($data['userId']);
         }
         $paymentId=null;
         $commonService=new CommonServices();
-        # start transaction for making the order
+        # start transaction
         try {
             $entityManager->getConnection()->beginTransaction();
             #adding card infos if payment method is cash

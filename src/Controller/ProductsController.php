@@ -70,7 +70,6 @@ class ProductsController extends AbstractController
         $prodPrice = $data['price'];
         $prodTax = $data['tax'];
         $storageQuantity=$data['storage'];
-        $imageFile=$data['prodImage'];
         # associated category
         $prodCat = $data['category'];
         $category=$entityManager->getRepository(Category::class)->find($prodCat);
@@ -84,15 +83,8 @@ class ProductsController extends AbstractController
         $newProd->setPrice($prodPrice);
         $newProd->setCatId($category);
         $newProd->setUserId($addBy);
-        # inserting product image
-        if($imageFile){
-            $newFilename = $prodName . '-' . uniqid() . '.' . $imageFile->guessExtension();
-            $imageFile->move(
-                $this->getParameter('image_product'),
-                $newFilename
-            );
-            $newProd->setPicture($newFilename);
-        }
+        $newProd->setPicture(null);
+
         $entityManager->persist($newProd);
         $entityManager->flush();
         # adding storage quantity
