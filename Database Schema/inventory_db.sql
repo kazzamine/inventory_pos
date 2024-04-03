@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Apr 02, 2024 at 03:20 PM
+-- Generation Time: Apr 02, 2024 at 09:36 PM
 -- Server version: 8.0.36-0ubuntu0.23.10.1
 -- PHP Version: 8.2.10-2ubuntu1
 
@@ -29,8 +29,8 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `category` (
   `id` int NOT NULL,
-  `cat_name` varchar(200) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `cat_desc` longtext COLLATE utf8mb4_unicode_ci,
+  `cat_name` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `cat_desc` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
   `user_id_id` int DEFAULT NULL,
   `created_at` datetime DEFAULT NULL,
   `updated_at` datetime DEFAULT NULL
@@ -41,7 +41,7 @@ CREATE TABLE `category` (
 --
 
 INSERT INTO `category` (`id`, `cat_name`, `cat_desc`, `user_id_id`, `created_at`, `updated_at`) VALUES
-(24, 'food', 'Fast food, fruits , vegetables..', 13, '2024-02-19 22:08:07', '2024-02-19 22:08:07'),
+(24, 'food', 'Fast food, fruits , vegetables...etc', 13, '2024-02-19 22:08:07', '2024-02-19 22:08:07'),
 (25, 'technologies', 'tech stuff (phones,laptops..)', 13, '2024-02-19 22:08:17', '2024-02-19 22:08:17'),
 (26, 'beauty', 'make up and stuff', 13, '2024-02-27 11:18:20', '2024-02-27 11:18:20'),
 (28, 'educational', 'all related things to education and school', 13, '2024-03-11 09:56:48', '2024-03-11 09:56:48');
@@ -54,9 +54,9 @@ INSERT INTO `category` (`id`, `cat_name`, `cat_desc`, `user_id_id`, `created_at`
 
 CREATE TABLE `messenger_messages` (
   `id` bigint NOT NULL,
-  `body` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
-  `headers` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
-  `queue_name` varchar(190) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `body` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `headers` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `queue_name` varchar(190) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` datetime NOT NULL,
   `available_at` datetime NOT NULL,
   `delivered_at` datetime DEFAULT NULL
@@ -197,10 +197,10 @@ INSERT INTO `messenger_messages` (`id`, `body`, `headers`, `queue_name`, `create
 
 CREATE TABLE `model` (
   `id` int NOT NULL,
-  `mod_name` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `icon` varchar(200) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `path` varchar(200) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `role` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `mod_name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `icon` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `path` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `role` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `role_id_id` int DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -216,7 +216,7 @@ INSERT INTO `model` (`id`, `mod_name`, `icon`, `path`, `role`, `role_id_id`) VAL
 (18, 'Orders', 'fa-solid fa-cart-shopping', '#', 'ROLE_USER', 3),
 (19, 'Payment', 'fa-solid fa-money-bill', 'app_provider_list', 'ROLE_ADMIN', 4),
 (20, 'model', 'fa-solid fa-bars', '#', 'ROLE_ADMIN', 4),
-(21, 'sales', 'fa-solid fa-chart-bar', '#', 'ROLE_ADMIN', 4);
+(21, 'Sales', 'fa-solid fa-chart-bar', '#', 'ROLE_ADMIN', 4);
 
 -- --------------------------------------------------------
 
@@ -289,7 +289,8 @@ INSERT INTO `order` (`id`, `quantity`, `discount`, `order_date`, `prod_id_id`, `
 (65, 1, 0, '2024-03-28', 12, 68, 69),
 (66, 1, 0, '2024-03-28', 13, 69, 70),
 (67, 1, 0, '2024-03-28', 14, 70, 71),
-(68, 1, 0, '2024-04-01', 12, 71, 72);
+(68, 1, 0, '2024-04-01', 12, 71, 72),
+(69, 10, 15, '2024-04-02', 14, 72, 73);
 
 -- --------------------------------------------------------
 
@@ -358,7 +359,8 @@ INSERT INTO `order_detail` (`id`, `total`, `user_id_id`) VALUES
 (68, 3000, 15),
 (69, 262.5, 18),
 (70, 2, 13),
-(71, 3000, 18);
+(71, 3000, 18),
+(72, 17, 18);
 
 -- --------------------------------------------------------
 
@@ -429,7 +431,8 @@ INSERT INTO `payement` (`id`, `amount`, `rest`, `payment_provider_id`) VALUES
 (69, 3000, 0, NULL),
 (70, 262.5, 0, 4),
 (71, 5, 3, 4),
-(72, 3000, 0, 5);
+(72, 3000, 0, 5),
+(73, 20, 3, 4);
 
 -- --------------------------------------------------------
 
@@ -439,7 +442,7 @@ INSERT INTO `payement` (`id`, `amount`, `rest`, `payment_provider_id`) VALUES
 
 CREATE TABLE `payment_method` (
   `id` int NOT NULL,
-  `acc_number` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `acc_number` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `expire_date` date DEFAULT NULL,
   `provider_id_id` int DEFAULT NULL,
   `user_id_id` int DEFAULT NULL
@@ -501,7 +504,8 @@ INSERT INTO `payment_method` (`id`, `acc_number`, `expire_date`, `provider_id_id
 (79, '8965325146', '2024-04-06', 1, 15),
 (80, '0', NULL, 4, 18),
 (81, '0', NULL, 4, 13),
-(82, '256332858889', '2024-05-11', 5, 18);
+(82, '256332858889', '2024-05-11', 5, 18),
+(83, '0', NULL, 4, 18);
 
 -- --------------------------------------------------------
 
@@ -511,8 +515,8 @@ INSERT INTO `payment_method` (`id`, `acc_number`, `expire_date`, `provider_id_id
 
 CREATE TABLE `product` (
   `id` int NOT NULL,
-  `prod_name` varchar(150) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `prod_desc` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `prod_name` varchar(150) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `prod_desc` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `price` double NOT NULL,
   `cat_id_id` int DEFAULT NULL,
   `tax` double DEFAULT NULL,
@@ -532,7 +536,7 @@ INSERT INTO `product` (`id`, `prod_name`, `prod_desc`, `price`, `cat_id_id`, `ta
 (12, 'phone', 'you can call ppl and text them that all', 2500, 25, 20, 13, '2024-02-21 08:29:41', '2024-02-21 08:29:41', NULL),
 (13, 'make up', 'for women', 250, 26, 5, 13, '2024-02-27 11:19:05', '2024-02-27 11:19:05', NULL),
 (14, 'pen', 'black pen to write', 2, 28, 0, 13, '2024-03-15 11:17:59', '2024-03-15 11:17:59', NULL),
-(15, 'usb', '128gb of stockage ,3.1 port ', 80, 25, 5, 13, '2024-04-02 15:01:19', '2024-04-02 15:01:19', NULL);
+(15, 'usb', '128gb of stockage ', 80, 25, 5, 13, '2024-04-02 15:01:19', '2024-04-02 15:01:19', NULL);
 
 -- --------------------------------------------------------
 
@@ -542,7 +546,7 @@ INSERT INTO `product` (`id`, `prod_name`, `prod_desc`, `price`, `cat_id_id`, `ta
 
 CREATE TABLE `provider` (
   `id` int NOT NULL,
-  `provider_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL
+  `provider_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -562,7 +566,7 @@ INSERT INTO `provider` (`id`, `provider_name`) VALUES
 
 CREATE TABLE `roles` (
   `id` int NOT NULL,
-  `role_name` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL
+  `role_name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -594,7 +598,7 @@ INSERT INTO `storage` (`id`, `storage_quantity`, `prod_id_id`) VALUES
 (10, 27, 11),
 (11, 11, 12),
 (12, 179, 13),
-(13, 264, 14),
+(13, 254, 14),
 (14, 50, 15);
 
 -- --------------------------------------------------------
@@ -605,9 +609,9 @@ INSERT INTO `storage` (`id`, `storage_quantity`, `prod_id_id`) VALUES
 
 CREATE TABLE `sub_model` (
   `id` int NOT NULL,
-  `submod_name` varchar(200) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `icon` varchar(200) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `path` varchar(200) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `submod_name` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `icon` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `path` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `model_id_id` int DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -637,17 +641,17 @@ INSERT INTO `sub_model` (`id`, `submod_name`, `icon`, `path`, `model_id_id`) VAL
 
 CREATE TABLE `user` (
   `id` int NOT NULL,
-  `username` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `first_name` varchar(150) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `last_name` varchar(150) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `username` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `first_name` varchar(150) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `last_name` varchar(150) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `password` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `roles` json NOT NULL,
-  `phone` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `adress` varchar(200) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `city` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `phone` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `adress` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `city` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `role_id_id` int DEFAULT NULL,
-  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `picture` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL
+  `email` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `picture` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -655,12 +659,14 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`id`, `username`, `first_name`, `last_name`, `password`, `roles`, `phone`, `adress`, `city`, `role_id_id`, `email`, `picture`) VALUES
-(13, 'admin', 'admin', 'admin', '$2y$13$DxDbBwsNX3k4j3RZ87r8m.tVPS9dxWwWVWuNP2b1q5oVmSEzBtrXy', '{\"1\": \"ROLE_ADMIN\"}', '0658858510', 'maamora', 'kenitra', 4, 'admin@gmail.com', NULL),
+(13, 'admin', 'admin', 'admin', '$2y$13$ploUHyvwR8xjTuszA/ufhOrTrZOzHBV4simLUi5qYIOgVLwzZwkAG', '{\"1\": \"ROLE_ADMIN\"}', '0658858510', 'siad', 'kenitra', 4, 'admin@gmail.com', NULL),
 (15, 'muichiroTo', 'muichiro', 'tokito', '$2y$13$W58vR4XnOWPTRB0z8oL0/.a/Jt.ODdPrvrHf0py9amBXsX.pKTt0C', '{\"role\": \"ROLE_USER\"}', '98765522', 'japan', 'k=japan', 3, 'tokito@gmail.com', '1329912-65d44f44150c7.jpg'),
 (17, 'pika', 'amine', 'obito', '$2y$13$1en7bxF21XvkMe2FfpHVfup5uFbf4K8XDI/wzPoUI4eauL/IBJGtK', '{\"role\": \"ROLE_USER\"}', '484551', 'maamora', 'keni', 3, 'amine@gmail.com', '1329912-65d479b4cad0f.jpg'),
 (18, 'kazzamine', 'amine', 'kazz', '$2y$13$LVJi4HvNeqds7ym1MCUtRuT575xt/2/0G.jsl6O3h6wYc6yxBAUv2', '{\"role\": \"ROLE_USER\"}', '78555', 'neighberhood', 'kenitra', 3, 'aminkazzout@gmail.com', '1495191068_yeah_pikachu_steam_avatars-65d48054d2615.jpg'),
 (22, 'shinobo', 'shinubo', 'kuki', '$2y$13$BWG7Tw/0pWxu4V0HPnOJWuhOsIwHfiDv4UOrUGYs50YbyWMWbY6x2', '{\"role\": \"ROLE_USER\"}', '98765522', 'somewhere', 'Kenitra', 3, 'shinobo@gmail.com', 'shinobu-65eaebe11d259.jpg'),
-(23, 'mitsuri', 'mit', 'suri', '$2y$13$gJ2mMnGNB3hbUtddeBeaVupsbDdEEfMtbWqzV49tryWdlJ7mgHXFK', '{\"role\": \"ROLE_USER\"}', '98765522', 'mugen', 'Casablanca', 3, 'mito@gmail.om', 'shinobu-65eb1f8915615.jpg');
+(23, 'mitsuri', 'mit', 'suri', '$2y$13$gJ2mMnGNB3hbUtddeBeaVupsbDdEEfMtbWqzV49tryWdlJ7mgHXFK', '{\"role\": \"ROLE_USER\"}', '98765522', 'mugen', 'Casablanca', 3, 'mito@gmail.om', 'shinobu-65eb1f8915615.jpg'),
+(33, 'nezuko', 'nezuko', 'tanjiro', '$2y$13$UkStmnE6tuZmevfPE1OGYeTTvuiyoS6F0Jsqm2ZLyF2zPmG9Gsqsm', '{\"role\": \"ROLE_USER\"}', '0655224488', 'a place', 'Khouribga', 3, 'nezuko@gmail.com', 'shinobu-660c22fedebf5.jpg'),
+(34, 'kanekikun', 'kaneki', 'kun the ghoul', '$2y$13$AM7FYr.fcrSwnbAwYpvS4eqNDUOnq5Jou2QNvHktGI8k2vVNXFq9O', '{\"role\": \"ROLE_USER\"}', '0658889332', 'ghoul house', 'Khemisset', 3, 'kun@gmail.com', 'zJPOhv-660c236c13ec9.jpg');
 
 --
 -- Indexes for dumped tables
@@ -782,31 +788,31 @@ ALTER TABLE `messenger_messages`
 -- AUTO_INCREMENT for table `model`
 --
 ALTER TABLE `model`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
 -- AUTO_INCREMENT for table `order`
 --
 ALTER TABLE `order`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=69;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=70;
 
 --
 -- AUTO_INCREMENT for table `order_detail`
 --
 ALTER TABLE `order_detail`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=72;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=73;
 
 --
 -- AUTO_INCREMENT for table `payement`
 --
 ALTER TABLE `payement`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=73;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=74;
 
 --
 -- AUTO_INCREMENT for table `payment_method`
 --
 ALTER TABLE `payment_method`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=83;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=84;
 
 --
 -- AUTO_INCREMENT for table `product`
@@ -842,7 +848,7 @@ ALTER TABLE `sub_model`
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
 
 --
 -- Constraints for dumped tables
@@ -852,7 +858,7 @@ ALTER TABLE `user`
 -- Constraints for table `category`
 --
 ALTER TABLE `category`
-  ADD CONSTRAINT `FK_64C19C19D86650F` FOREIGN KEY (`user_id_id`) REFERENCES `user` (`id`);
+  ADD CONSTRAINT `FK_64C19C19D86650F` FOREIGN KEY (`user_id_id`) REFERENCES `user` (`id`) ON DELETE SET NULL ON UPDATE RESTRICT;
 
 --
 -- Constraints for table `model`
@@ -872,7 +878,7 @@ ALTER TABLE `order`
 -- Constraints for table `order_detail`
 --
 ALTER TABLE `order_detail`
-  ADD CONSTRAINT `FK_ED896F469D86650F` FOREIGN KEY (`user_id_id`) REFERENCES `user` (`id`);
+  ADD CONSTRAINT `FK_ED896F469D86650F` FOREIGN KEY (`user_id_id`) REFERENCES `user` (`id`) ON DELETE SET NULL ON UPDATE RESTRICT;
 
 --
 -- Constraints for table `payement`
@@ -884,21 +890,21 @@ ALTER TABLE `payement`
 -- Constraints for table `payment_method`
 --
 ALTER TABLE `payment_method`
-  ADD CONSTRAINT `FK_7B61A1F626122B23` FOREIGN KEY (`provider_id_id`) REFERENCES `provider` (`id`),
-  ADD CONSTRAINT `FK_7B61A1F69D86650F` FOREIGN KEY (`user_id_id`) REFERENCES `user` (`id`);
+  ADD CONSTRAINT `FK_7B61A1F626122B23` FOREIGN KEY (`provider_id_id`) REFERENCES `provider` (`id`) ON DELETE SET NULL ON UPDATE RESTRICT,
+  ADD CONSTRAINT `FK_7B61A1F69D86650F` FOREIGN KEY (`user_id_id`) REFERENCES `user` (`id`) ON DELETE SET NULL ON UPDATE RESTRICT;
 
 --
 -- Constraints for table `product`
 --
 ALTER TABLE `product`
-  ADD CONSTRAINT `FK_D34A04AD9D86650F` FOREIGN KEY (`user_id_id`) REFERENCES `user` (`id`),
-  ADD CONSTRAINT `FK_D34A04ADC33F2EBA` FOREIGN KEY (`cat_id_id`) REFERENCES `category` (`id`);
+  ADD CONSTRAINT `FK_D34A04AD9D86650F` FOREIGN KEY (`user_id_id`) REFERENCES `user` (`id`) ON DELETE SET NULL ON UPDATE RESTRICT,
+  ADD CONSTRAINT `FK_D34A04ADC33F2EBA` FOREIGN KEY (`cat_id_id`) REFERENCES `category` (`id`) ON DELETE SET NULL ON UPDATE RESTRICT;
 
 --
 -- Constraints for table `storage`
 --
 ALTER TABLE `storage`
-  ADD CONSTRAINT `FK_547A1B34F91A0F34` FOREIGN KEY (`prod_id_id`) REFERENCES `product` (`id`);
+  ADD CONSTRAINT `FK_547A1B34F91A0F34` FOREIGN KEY (`prod_id_id`) REFERENCES `product` (`id`) ON DELETE SET NULL;
 
 --
 -- Constraints for table `sub_model`
