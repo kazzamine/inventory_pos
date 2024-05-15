@@ -52,16 +52,16 @@ class User implements UserInterface,PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 100)]
     private ?string $city = null;
 
-    #[ORM\OneToMany(targetEntity: Product::class, mappedBy: 'user_id',cascade: ['remove'])]
+    #[ORM\OneToMany(targetEntity: Product::class, mappedBy: 'user_id')]
     private Collection $products;
 
-    #[ORM\OneToMany(targetEntity: Category::class, mappedBy: 'user_id',cascade: ['remove'])]
+    #[ORM\OneToMany(targetEntity: Category::class, mappedBy: 'user_id')]
     private Collection $categories;
 
-    #[ORM\OneToMany(targetEntity: PaymentMethod::class, mappedBy: 'user_id',cascade: ['remove'])]
+    #[ORM\OneToMany(targetEntity: PaymentMethod::class, mappedBy: 'user_id')]
     private Collection $paymentMethods;
 
-    #[ORM\OneToMany(targetEntity: OrderDetail::class, mappedBy: 'user_id',cascade: ['remove'])]
+    #[ORM\OneToMany(targetEntity: OrderDetail::class, mappedBy: 'user_id')]
     private Collection $orderDetails;
 
     #[ORM\ManyToOne(inversedBy: 'users')]

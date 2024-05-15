@@ -33,6 +33,7 @@ class FeaturesController extends AbstractController
             $sender=$form->get('email')->getData();
             # sending mail
             $mailServices->contactUsMessage($mailer,$sender,$subject,$content);
+            flash()->addFlash('success','mail sent','your request has been sent, we will reply as soon as possible');
             return $this->render('features/contactUs.html.twig',
                 ['form'=>$form]);
         }

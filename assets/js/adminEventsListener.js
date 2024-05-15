@@ -87,7 +87,6 @@ const txtProdDesc=$('#description')
 const txtProdTax=$('#tax')
 const txtProdCat=$('#category')
 const storage=$('#storage')
-const prodImage=$('#prodImage')
 const prodCsrfToken=$('#_csrf_token')
 //event of adding new category
 btnAddProd.on('click',(e)=>{
@@ -100,7 +99,6 @@ btnAddProd.on('click',(e)=>{
             'tax':txtProdTax.val(),
             'category':txtProdCat.val(),
             'storage':storage.val(),
-            'prodImage':prodImage.prop('files')[0]
         }
         addAjax('/admin/product/add', data,prodCsrfToken.val());
         location.reload(true);

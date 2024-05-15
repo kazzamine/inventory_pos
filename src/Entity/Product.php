@@ -27,10 +27,12 @@ class Product
     #[ORM\Column]
     private ?float $price = null;
 
-    #[ORM\ManyToOne(cascade: ['remove'],inversedBy: 'products')]
+    #[ORM\ManyToOne(inversedBy: 'products')]
+    #[ORM\JoinColumn(onDelete: 'SET NULL')]
     private ?Category $cat_id = null;
 
     #[ORM\ManyToOne(inversedBy: 'products')]
+    #[ORM\JoinColumn(onDelete: 'SET NULL')]
     private ?User $user_id = null;
 
     #[ORM\Column(nullable: true)]

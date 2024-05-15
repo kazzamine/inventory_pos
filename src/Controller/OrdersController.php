@@ -90,11 +90,14 @@ class OrdersController extends AbstractController
     #[Route('/user/orders/makeOrder/view', name: 'app_make_order')]
     public function makeOrderView(EntityManagerInterface $entityManager):Response
     {
-        # returning all products , payment methods and users ( if admin) to make an order
+        # all categories , products to display
         $allCategories=$entityManager->getRepository(Category::class)->findAll();
-        $allusers=$entityManager->getRepository(User::class)->findAll();
         $allProducts=$entityManager->getRepository(Product::class)->findAll();
+        # users
+        $allusers=$entityManager->getRepository(User::class)->findAll();
+        #payment providers
         $providers=$entityManager->getRepository(Provider::class)->findAll();
+        # check signed user roles
         $user = $this->getUser();
         $roles=$user->getRoles();
         $userRole='ROLE_USER';
@@ -110,7 +113,7 @@ class OrdersController extends AbstractController
         ]);
     }
 //    //fetch product by category
-//    #[Route('/user/prodbycat',name:'prod_by_cat')]
+//    #[Route('/user/prodByCat',name:'prod_by_cat')]
 //    public function productByCat (Request $request,ProductRepository $productRepository):Response
 //    {
 //        $prod_id=$request->query->get('catId');
@@ -174,32 +177,32 @@ class OrdersController extends AbstractController
         }
         # searching product by id
         $prod=$entityManager->getRepository(Product::class)->find($data['prodId']);
+        # signed user with it roles
         $user = $this->getUser();
         $roles=$user->getRoles();
-        # if made by an admin he can chose which user want the order
+        # allow admin to select buyer
         if (in_array('ROLE_ADMIN', $roles, true)) {
             $user= $entityManager->getRepository(User::class)->find($data['userId']);
         }
         $paymentId=null;
         $commonService=new CommonServices();
-        # start transaction for making the order
-        $entityManager->getConnection()->beginTransaction();
+        # start transaction
         try {
-            #adding card infos if payement method is cash
+            $entityManager->getConnection()->beginTransaction();
+            #adding card infos if payment method is cash
             if ($data['method'] == 'Visa' || $data['method'] == 'MasterCard') {
-                $inputFormat = 'Y-m-d';
                 # Create a DateTimeImmutable object from the string
                 $expdate = DateTime::createFromFormat('Y-m-d', $data['expDate']);
-                $paymentMethodId = $commonService->addToPaymentMethod($entityManager, $data['accNumber'],$expdate, $user, $data['method']);
-                $paymentId = $commonService->addPayment($entityManager, $paymentMethodId, $data['total'], 0);
+                $commonService->addToPaymentMethod($entityManager, $data['accNumber'],$expdate, $user, $data['method']);
+                $paymentId = $commonService->addPayment($entityManager, $data['method'], $data['total'], 0);
             } else {
-                $paymentMethodId = $commonService->addToPaymentMethod($entityManager, '0', null, $user, 'cash');
-                # if payment made by user
-                if (in_array('ROLE_USER', $roles, true)) {
-                    $paymentId = $commonService->addPayment($entityManager, $paymentMethodId, $data['total'],0);
-                }else{
+                $commonService->addToPaymentMethod($entityManager, '0', null, $user, 'cash');
                 #if payment made by cash made by an admin
-                $paymentId = $commonService->addPayment($entityManager, $paymentMethodId, $data['toGive'], $data['rest']);
+                if (in_array('ROLE_ADMIN', $roles, true)) {
+                    $paymentId = $commonService->addPayment($entityManager, 'cash', $data['toGive'], $data['rest']);
+                }else{
+                    # if payment made by user
+                    $paymentId = $commonService->addPayment($entityManager, 'cash', $data['total'],0);
                 }
             }
             # inserting order details

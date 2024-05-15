@@ -18,22 +18,22 @@
                 <div class="col-md-6 col-lg-12 col-sm-12" id="message">
                     <fieldset></fieldset>
                     <div class="row">
-
+{# 
                         <div class="d-flex justify-content-center mb-4">
                             <div id="pictureContainer">
                                 <img id="selectedPic" src=""
                                      class="rounded-circle" style="width: 200px; height: 200px; object-fit: cover;" alt="no picture found" />
                             </div>
-                        </div>
-                        <div class="d-flex justify-content-center">
+                        </div> #}
+                      {#   <div class="d-flex justify-content-center">
                             <div class="btn btn-primary btn-rounded">
                                 <label class="form-label text-white m-1" for="prodImage">Choose file</label>
                                 <input type="file"  class="form-control d-none" id="prodImage" onchange="displaySelectedPicture()">
                             </div>
-                        </div>
+                        </div> #}
 
                     </div>
-                    <script>
+                  {#   <script>
                         function displaySelectedPicture() {
                             var input = document.getElementById('prodImage');
                             var container = document.getElementById('pictureContainer');
@@ -51,7 +51,7 @@
                             }
                         }
                     </script>
-
+ #}
                     <div class="row">
                         <div class="col-sm-12 col-md-6">
                             <div class="has-feedback form-group mb-3"><label class="form-label" for="product_name">Product name</label><input class="form-control" type="text" id="product_name" title="please fill this field" name="product_name" placeholder="product_name" required></div>
